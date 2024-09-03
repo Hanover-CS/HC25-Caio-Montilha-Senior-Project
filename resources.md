@@ -43,8 +43,25 @@
 ## Technologies and Tools
 
 ### 1. Kotlin Programming Language
+- **Relation to my App**:
+Kotlin is the preferred programming language for Android app development and is fully supported by Google. It is modern and designed to be fully interoperable with Java. For my ridesharing app, Kotlin offers concise syntax, which leads to reduced standard code, making development more efficient.
+- **Description**:
+Kotlin is a statically typed programming language developed by JetBrains. It runs on the Java Virtual Machine (JVM) and can also be compiled into JavaScript, making it versatile for different platforms. Kotlin is known for its seamless integration with existing Java code, which is particularly useful in Android development.
+- **Key Features**: Key features relevant to my project include:
+  - Null Safety: Kotlin’s type system is designed to eliminate the danger of null pointer exceptions, which enhances the stability of the app.
+  - Coroutines: Kotlin coroutines simplify asynchronous programming. This allows for more efficient and responsive app performance, especially when dealing with network requests and database operations, like those required in a ridesharing app.
+  - Interoperability: Kotlin can easily interoperate with Java, allowing the use of existing Java libraries and frameworks within my app. This interoperability provides flexibility in selecting the best tools for different tasks. With access to a wide variety of libraries, Kotlin’s interoperability ensures that I can integrate the most suitable ones to meet the specific needs of my app.
+
 
 ### 2. Java Programming Language
+- **Relation to my App**:
+Java has been the traditional language for Android development and remains a popular choice due to its library support and common use.
+- **Description**:
+Java is an object-oriented programming language used in Android development. It is known for its portability and scalability, which includes a large array of libraries and frameworks (this can be interesting for my application). Java's stability makes it a reliable choice for building complex Android applications. I am still debating whether I will use Java or Kotlin for my project.
+- **Key Features**: Key features relevant to my project include:
+  - Platform Independence: Java code runs on the Java Virtual Machine (JVM). This makes it portable across different platforms, which is beneficial for long-term maintenance and scalability of the app.
+  - Rich Library Ecosystem: Java’s library ecosystem provides many tools and frameworks that can be used to implement features like networking, data handling, and UI components for my app. The availability of a variety of tools and libraries is an important factor to consider when deciding which programming language to use in my project.
+  - Established Community and Resources: Java’s long history in Android development means there is lots of documentation, tutorials, and community support, which can be helpful during the development process. This means that finding information and troubleshooting issues is generally easier with Java.
 
 ### 3. Firebase
 
