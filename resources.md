@@ -53,7 +53,6 @@ Kotlin is a statically typed programming language developed by JetBrains. It run
   - Coroutines: Kotlin coroutines simplify asynchronous programming. This allows for more efficient and responsive app performance, especially when dealing with network requests and database operations, like those required in a ridesharing app.
   - Interoperability: Kotlin can easily interoperate with Java, allowing the use of existing Java libraries and frameworks within my app. This interoperability provides flexibility in selecting the best tools for different tasks. With access to a wide variety of libraries, Kotlin’s interoperability ensures that I can integrate the most suitable ones to meet the specific needs of my app.
 
-
 ### 2. Java Programming Language
 
 - **Relation to my App**:
@@ -65,16 +64,35 @@ Java is an object-oriented programming language used in Android development. It 
   - Rich Library Ecosystem: Java’s library ecosystem provides many tools and frameworks that can be used to implement features like networking, data handling, and UI components for my app. The availability of a variety of tools and libraries is an important factor to consider when deciding which programming language to use in my project.
   - Established Community and Resources: Java’s long history in Android development means there is lots of documentation, tutorials, and community support, which can be helpful during the development process. This means that finding information and troubleshooting issues is generally easier with Java.
 
-### 3. Firebase
+### 3. Android SDK
 
-- **Relation to my App**: Firebase is a platform that provides backend services like real-time databases, authentication, and analytics, which are essential for my ridesharing app, so it could be an important tool to use in my project.
-- **Description**: Firebase offers a suite of tools that can handle many backend requirements, including real-time data syncing, push notifications, and secure authentication processes.
+- **Relation to my App**: The Android Software Development Kit is essential for developing any Android application, including my ridesharing app. It provides the tools, libraries, and documentation to build Android apps.
+- **Description**: The Android SDK includes several development tools and APIs required for Android app development.
+- **Key Features**:
+  - Emulators and Debugging Tools: Allows testing the app on various Android devices without needing physical hardware(emulator). The SDK also includes powerful debugging tools to identify and fix issues during development.
+  - Android APIs: Provides access to Android’s features, including telephony services, camera integration, and notification management.
+  - Build Tools: The SDK also includes Gradle build tools.
+
+### 4. Flutter Framework
+
+- **Relation to my App**: Flutter is an open-source UI software development kit created by Google. It’s an alternative for developing cross-platform apps, so this could allow me to target both Android and iOS with the same codebase.
+- **Description**: Flutter provides a variety set of pre-designed widgets.
+- **Key Features**:
+  - Cross-Platform Development: Run on both Android and iOS.
+  - Variety Widgets and Customization: Flutter offers a wide library of widgets that can be customized to match the app’s design needs.
+  - Performance: Flutter compiles native ARM code, this is important for real-time features like location tracking in a ridesharing app like mine.
+  - Firebase Integration: Flutter integrates well with Firebase.
+
+### 5. Firebase
+
+- **Relation to my App**: Firebase is a platform that provides backend services like real-time databases, authentication, and analytics, which can help me with my ridesharing app.
+- **Description**: Firebase offers tools that can handle many backend requirements, including real-time data syncing, push notifications, and secure authentication processes.
 - **Key Features**: Key features relevant to my project include:
-  - Firebase Authentication: Simplifies the process of user verification and login with various providers like Google and email/password.
+  - Firebase Authentication: Simplifies the process of user verification, email/password.
   - Cloud Firestore: A real-time NoSQL database that allows me to store and sync data for my app, ideal for managing rides and user interactions.
   - Firebase Cloud Messaging: Enables push notifications to keep users informed of ride requests and updates.
 
-### 4. AWS Amplify
+### 6. AWS Amplify
 
 - **Relation to my App**: AWS Amplify is an alternative to Firebase that provides backend and frontend services, including real-time data, authentication, and cloud storage, which can be essential for my ridesharing app.
 - **Description**: AWS Amplify offers a suite of tools to build scalable mobile and web apps. It works well with various AWS services, such as DynamoDB (for databases), Cognito (for authentication), and S3 (for storage), providing flexible solutions.
@@ -83,7 +101,7 @@ Java is an object-oriented programming language used in Android development. It 
   - AWS Cognito: Handles user authentication and authorization, with support for multi-factor authentication.
   - Scalability: Seamlessly integrates with other AWS services to scale as my app grows, ensuring high availability and performance.
 
-### 5. Google Maps SDK for Android
+### 7. Google Maps SDK for Android
 
 - **Relation to my App**: Essential for implementing map features in my ridesharing app, such as real-time tracking, route plotting, and distance calculation.
 - **Description**: Google Maps SDK for Android allows me to integrate maps and location-based services into my RidesharingHC app. It provides tools for displaying maps, adding markers, and navigating routes.
@@ -92,7 +110,7 @@ Java is an object-oriented programming language used in Android development. It 
   - Geocoding and Reverse Geocoding: Convert between addresses and geographic coordinates, crucial for pinpointing ride pickup and drop-off locations.
   - Directions API: Calculate optimal routes between two locations, helping users plan their rides efficiently.
  
-### 6. Retrofit
+### 8. Retrofit
 
 - **Relation to my App**: Retrofit is a popular HTTP client for Kotlin that simplifies making network requests, especially when communicating with RESTful APIs or backend services.
 - **Description**: Retrofit allows developers to easily manage API calls, parse JSON responses, and handle networking tasks. It’s especially useful for making HTTP requests to external services, such as my backend or any other APIs.
@@ -101,7 +119,7 @@ Java is an object-oriented programming language used in Android development. It 
   - JSON Parsing: Works with libraries like Gson or Moshi to convert JSON responses into Kotlin objects.
   - Error Handling: Provides built-in mechanisms for managing errors and retries, ensuring a robust network layer.
  
-### 7. Google Play Services Location API
+### 9. Google Play Services Location API
 
 - **Relation to my App**: Provides location services that are vital for tracking user movements and determining the best routes for my ridesharing app.
 - **Description**: This API gives me access to Google’s location-based services, including high-accuracy location tracking and activity recognition.
