@@ -12,7 +12,20 @@ This project involves the development of a mobile app designed to facilitate rid
 - **In-App Communication**: Secure messaging system for drivers and passengers to coordinate pickup and drop-off details.
 - **Map Integration**: Integration with Google Maps for real-time navigation, route planning, and distance calculation [1].
 
-## 2. Comparable Existing Solutions
+## 4. UI Mockups and Design
+
+### Notebook Sketches
+In the initial stages of design, I also made use of hand-drawn sketches to brainstorm and visualize my app's UI. These sketches were created in my notebook and represent the first conceptualization of the app's interface, including the layout of screens, navigation flows, and key elements such as buttons, input fields, and maps.
+Here are the images:
+- *Image 1*: Concept for the splash screen, login, and registration screens.
+![Splash Screen, Login and Register](splashScreen_login_register.png)
+- *Image 2*: Initial concept for the home screen, including options to offer or request a ride.
+![Home Screen Concept](homeScreen_.png)
+- *Image 3*: Sketch of the offer ride screen and user profile screen.
+![Offer Ride Screen and User Profile Screen](offer_ride_screen_user_profile_screen.png)
+
+  
+## 3. Comparable Existing Solutions
 
 ### Whirl Project on GitHub
 Whirl is an open-source ridesharing app focused on private communities, making it relevant for comparison with my project idea[2]. It emphasizes user privacy and community-specific features, which align closely with the goals of this project. However, Whirl lacks specific features like student verification tied to college credentials and in-app communication, which are crucial for the college environment.
@@ -23,7 +36,7 @@ Sride is an open-source ridesharing app that focuses on community-based rideshar
 ### Kotlin Uber Clone by EDMT Dev
 The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series that walks developers through the entire process of building an Uber-like ridesharing app using Android Studio and Kotlin. The series covers a wide range of topics, from setting up the project and integrating user authentication to implementing real-time location tracking and ride-matching algorithms[4]. While this tutorial provides a strong foundation for building a ridesharing app, it lacks certain customizations that are essential for a college-specific environment, such as student verification and community-focused features. For all that, the tutorial is a valuable resource for understanding the technical stack and development practices necessary for my project.
 
-## 3. Relevant Technologies and Tools
+## 4. Relevant Technologies and Tools
 
 ### Android SDK
 - **Relation to my App**: The Android Software Development Kit is essential for developing any Android application, including my ridesharing app. It provides the tools, libraries, and documentation to build Android apps.
@@ -57,7 +70,7 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
   - State Management: Simplifies the handling of UI state changes.
   - Performance: It sounds like it is designed to offer high performance.
 
-## 4. References
+## 5. References
 Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical references:
 - [1] Google, "Google Maps SDK for Android," https://developers.google.com/maps/documentation/android-sdk/overview (accessed Sept. 2, 2024).
 - [2] GitHub, "Whirl Project," https://github.com/cs340-20/Whirl (accessed Sept. 3, 2024).
