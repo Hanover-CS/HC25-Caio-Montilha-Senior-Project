@@ -20,6 +20,8 @@ Whirl is an open-source ridesharing app focused on private communities, making i
 ### Sride Project on GitHub
 Sride is an open-source ridesharing app that focuses on community-based ridesharing [3]. While it offers features such as ride matching, user profiles, and scheduling, it is more generalized and does not cater specifically to college communities. My college-focused ridesharing app will build on these features, adding specific functionalities such as verification tied to college credentials.
 
+### Kotlin Uber Clone by EDMT Dev
+The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series that walks developers through the entire process of building an Uber-like ridesharing app using Android Studio and Kotlin. The series covers a wide range of topics, from setting up the project and integrating user authentication to implementing real-time location tracking and ride-matching algorithms[4]. While this tutorial provides a strong foundation for building a ridesharing app, it lacks certain customizations that are essential for a college-specific environment, such as student verification and community-focused features. For all that, the tutorial is a valuable resource for understanding the technical stack and development practices necessary for my project.
 
 ## 3. Relevant Technologies and Tools
 
@@ -32,14 +34,14 @@ Sride is an open-source ridesharing app that focuses on community-based rideshar
   - Build Tools: The SDK also includes Gradle build tools.
 
 ### Kotlin Programming Language
-- **Relation to my App**: Kotlin is the preferred programming language for Android app development and is fully supported by Google. It is modern and designed to be fully interoperable with Java. For my ridesharing app, Kotlin offers concise syntax, which leads to reduced standard code, making development more efficient[4].
+- **Relation to my App**: Kotlin is the preferred programming language for Android app development and is fully supported by Google. It is modern and designed to be fully interoperable with Java. For my ridesharing app, Kotlin offers concise syntax, which leads to reduced standard code, making development more efficient[5].
 - **Description**: Kotlin is a statically typed programming language developed by JetBrains. It runs on the Java Virtual Machine (JVM) and can also be compiled into JavaScript, making it versatile for different platforms. Kotlin is known for its seamless integration with existing Java code, which is particularly useful in Android development.
 - **Key Features**: Key features relevant to my project include:
   - Null Safety: Kotlin’s type system is designed to eliminate the danger of null pointer exceptions, which enhances the stability of the app.
   - Interoperability: Kotlin can easily interoperate with Java, allowing the use of existing Java libraries and frameworks within my app. This interoperability provides flexibility in selecting the best tools for different tasks. With access to a wide variety of libraries, Kotlin’s interoperability ensures that I can integrate the most suitable ones to meet the specific needs of my app.
 
 ### Firebase
-- **Relation to my App**: Firebase is a platform that provides backend services like real-time databases, authentication, and analytics, which can help me with my ridesharing app[5].
+- **Relation to my App**: Firebase is a platform that provides backend services like real-time databases, authentication, and analytics, which can help me with my ridesharing app[6].
 - **Description**: Firebase offers tools that can handle many backend requirements, including real-time data syncing, push notifications, and secure authentication processes.
 - **Key Features**: Key features relevant to my project include:
   - Firebase Authentication: Simplifies the process of user verification, email/password.
@@ -47,7 +49,7 @@ Sride is an open-source ridesharing app that focuses on community-based rideshar
   - Firebase Cloud Messaging: Enables push notifications to keep users informed of ride requests and updates.
 
  ### Jetpack Compose UI App Development Toolkit
-- **Relation to my App**: Jetpack Compose is a toolkit for building native Android UI, offering a more declarative approach to designing user interfaces. It allows for more concise and readable code, which can speed up the development process and improve UI consistency across the app. Given that my ridesharing app will require a responsive and user-friendly interface, Jetpack Compose can be highly relevant[6].
+- **Relation to my App**: Jetpack Compose is a toolkit for building native Android UI, offering a more declarative approach to designing user interfaces. It allows for more concise and readable code, which can speed up the development process and improve UI consistency across the app. Given that my ridesharing app will require a responsive and user-friendly interface, Jetpack Compose can be highly relevant[7].
 - **Description**: UI toolkit by Google designed for building native Android applications using Kotlin. It allows developers to create user interfaces using a declarative programming model, what I understand from the documentation and research is that UI elements are defined in terms of how they should look based on their current state. 
 - **Key Features**:
   - Declarative UI: Allows developers to describe the UI in Kotlin code, leading to more expressive UI components. This can speed up my project development.
@@ -60,6 +62,7 @@ Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical re
 - [1] Google, "Google Maps SDK for Android," https://developers.google.com/maps/documentation/android-sdk/overview (accessed Sept. 2, 2024).
 - [2] GitHub, "Whirl Project," https://github.com/cs340-20/Whirl (accessed Sept. 3, 2024).
 - [3] GitHub, "sride Project," https://github.com/AuYuRa/sride?tab=readme-ov-file (accessed Sept. 3, 2024).
-- [4] JetBrains, "Kotlin for Android Developers," https://kotlinlang.org/docs/android-overview.html (accessed Sept. 4, 2024).
-- [5] Google, "Firebase for Android," https://firebase.google.com/docs/android/setup (accessed Sept. 4, 2024).
-- [6] Google, "Jetpack Compose," https://developer.android.com/compose (accessed Sept. 5, 2024).
+- [4] EDMT Dev, "Kotlin Uber Clone YouTube Playlist," https://youtube.com/playlist?list=PLaoF-xhnnrRW4HZNwZZ6MS12aWn-m3nGd&si=egE4xzk3ETiClZFg (accessed Sept. 6, 2024).
+- [5] JetBrains, "Kotlin for Android Developers," https://kotlinlang.org/docs/android-overview.html (accessed Sept. 4, 2024).
+- [6] Google, "Firebase for Android," https://firebase.google.com/docs/android/setup (accessed Sept. 4, 2024).
+- [7] Google, "Jetpack Compose," https://developer.android.com/compose (accessed Sept. 5, 2024).
