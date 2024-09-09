@@ -12,7 +12,7 @@ This project involves the development of a mobile app designed to facilitate rid
 - **In-App Communication**: Secure messaging system for drivers and passengers to coordinate pickup and drop-off details.
 - **Map Integration**: Integration with Google Maps for real-time navigation, route planning, and distance calculation [1].
 
-## 4. UI Mockups and Design
+## 2. UI Mockups and Design
 
 ### Notebook Sketches
 In the initial stages of design, I also made use of hand-drawn sketches to brainstorm and visualize my app's UI. These sketches were created in my notebook and represent the first conceptualization of the app's interface, including the layout of screens, navigation flows, and key elements such as buttons, input fields, and maps.
