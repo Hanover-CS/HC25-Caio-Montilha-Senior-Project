@@ -72,10 +72,16 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
 
 ## 5. References
 Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical references:
-- [1] Google, "Google Maps SDK for Android," https://developers.google.com/maps/documentation/android-sdk/overview (accessed Sept. 2, 2024).
-- [2] GitHub, "Whirl Project," https://github.com/cs340-20/Whirl (accessed Sept. 3, 2024).
-- [3] GitHub, "sride Project," https://github.com/AuYuRa/sride?tab=readme-ov-file (accessed Sept. 3, 2024).
-- [4] EDMT Dev, "Kotlin Uber Clone YouTube Playlist," https://youtube.com/playlist?list=PLaoF-xhnnrRW4HZNwZZ6MS12aWn-m3nGd&si=egE4xzk3ETiClZFg (accessed Sept. 6, 2024).
-- [5] JetBrains, "Kotlin for Android Developers," https://kotlinlang.org/docs/android-overview.html (accessed Sept. 4, 2024).
-- [6] Google, "Firebase for Android," https://firebase.google.com/docs/android/setup (accessed Sept. 4, 2024).
-- [7] Google, "Jetpack Compose," https://developer.android.com/compose (accessed Sept. 5, 2024).
+- [1] Google, "Google Maps SDK for Android," Google. https://developers.google.com/maps/documentation/android-sdk/overview (accessed Sept. 2, 2024).
+
+- [2] GitHub, "Whirl Project," Github, Whirl, 2020. https://github.com/cs340-20/Whirl (accessed Sept. 3, 2024).
+
+- [3] GitHub, "Sride Project," Github, Sride, 2022. https://github.com/AuYuRa/sride?tab=readme-ov-file (accessed Sept. 3, 2024).
+
+- [4] EDMT Dev, "Kotlin Uber Clone YouTube Playlist," YouTube, EDMT Dev, 2020. https://youtube.com/playlist?list=PLaoF-xhnnrRW4HZNwZZ6MS12aWn-m3nGd&si=egE4xzk3ETiClZFg. (accessed Sept. 6, 2024).
+
+- [5] JetBrains, "Kotlin for Android Developers," Kotlin Help. https://kotlinlang.org/docs/android-overview.html (accessed Sept. 4, 2024).
+
+- [6] Google, "Firebase for Android," Firebase. https://firebase.google.com/docs/android/setup (accessed Sept. 4, 2024).
+
+- [7] Google, "Jetpack Compose," Android Developers. https://developer.android.com/compose (accessed Sept. 5, 2024).
