@@ -17,11 +17,13 @@ This project involves the development of a mobile app designed to facilitate rid
 ### Notebook Sketches
 In the initial stages of design, I also made use of hand-drawn sketches to brainstorm and visualize my app's UI. These sketches were created in my notebook and represent the first conceptualization of the app's interface, including the layout of screens, navigation flows, and key elements such as buttons, input fields, and maps.
 Here are the images:
-- *Image 1*: Concept for the splash screen, login, and registration screens.
+- **Image 1**: Concept for the splash screen, login, and registration screens.
 <img src="splashScreen_login_register.png" alt="Splash Screen, Login and Register" height="450">
-- *Image 2*: Initial concept for the home screen, including options to offer or request a ride.
+
+- **Image 2**: Initial concept for the home screen, including options to offer or request a ride.
 <img src="homeScreen_.png" alt="Home Screen Concept" height="450">
-- *Image 3*: Sketch of the offer ride screen and user profile screen.
+
+- **Image 3**: Sketch of the offer ride screen and user profile screen.
 <img src="offer_ride_screen_user_profile_screen.png" alt="Offer Ride Screen and User Profile Screen" height="450">
 
   
