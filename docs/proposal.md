@@ -26,7 +26,6 @@ Here are the images:
 - **Image 3**: Sketch of the offer ride screen and user profile screen.
 <img src="offer_ride_screen_user_profile_screen.png" alt="Offer Ride Screen and User Profile Screen" height="450">
 
-  
 ## 3. Comparable Existing Solutions
 
 ### Whirl Project on GitHub
@@ -63,7 +62,7 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
   - Cloud Firestore: A real-time NoSQL database that allows me to store and sync data for my app, ideal for managing rides and user interactions.
   - Firebase Cloud Messaging: Enables push notifications to keep users informed of ride requests and updates.
 
- ### Jetpack Compose UI App Development Toolkit
+### Jetpack Compose UI App Development Toolkit
 - **Relation to my App**: Jetpack Compose is a toolkit for building native Android UI, offering a more declarative approach to designing user interfaces. It allows for more concise and readable code, which can speed up the development process and improve UI consistency across the app. Given that my ridesharing app will require a responsive and user-friendly interface, Jetpack Compose can be highly relevant[7].
 - **Description**: UI toolkit by Google designed for building native Android applications using Kotlin. It allows developers to create user interfaces using a declarative programming model, what I understand from the documentation and research is that UI elements are defined in terms of how they should look based on their current state. 
 - **Key Features**:
@@ -72,7 +71,11 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
   - State Management: Simplifies the handling of UI state changes.
   - Performance: It sounds like it is designed to offer high performance.
 
-## 5. References
+### 5. Cloud Storage
+
+
+
+## 6. References
 Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical references:
 - [1] Google, "Google Maps SDK for Android," Google. https://developers.google.com/maps/documentation/android-sdk/overview (accessed Sept. 2, 2024).
 
