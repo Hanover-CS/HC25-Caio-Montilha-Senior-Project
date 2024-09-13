@@ -11,6 +11,7 @@ This project involves the development of a mobile app designed to facilitate rid
 - **Rating and Review System**: Users can rate and review drivers and passengers to ensure a safe and reliable community.
 - **In-App Communication**: Secure messaging system for drivers and passengers to coordinate pickup and drop-off details.
 - **Map Integration**: Integration with Google Maps for real-time navigation, route planning, and distance calculation [1].
+---
 
 ## 2. UI Mockups and Design
 
@@ -26,6 +27,7 @@ Here are the images:
 - **Image 3**: Sketch of the offer ride screen and user profile screen.
 <img src="offer_ride_screen_user_profile_screen.png" alt="Offer Ride Screen and User Profile Screen" height="450">
 
+---
 ## 3. Comparable Existing Solutions
 
 ### Whirl Project on GitHub
@@ -36,7 +38,7 @@ Sride is an open-source ridesharing app that focuses on community-based rideshar
 
 ### Kotlin Uber Clone by EDMT Dev
 The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series that walks developers through the entire process of building an Uber-like ridesharing app using Android Studio and Kotlin. The series covers a wide range of topics, from setting up the project and integrating user authentication to implementing real-time location tracking and ride-matching algorithms[4]. While this tutorial provides a strong foundation for building a ridesharing app, it lacks certain customizations that are essential for a college-specific environment, such as student verification and community-focused features. For all that, the tutorial is a valuable resource for understanding the technical stack and development practices necessary for my project.
-
+---
 ## 4. Relevant Technologies and Tools
 
 ### Android SDK
@@ -70,11 +72,11 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
   - Integration with Android: Fully compatible with existing Android views and Jetpack libraries.
   - State Management: Simplifies the handling of UI state changes.
   - Performance: It sounds like it is designed to offer high performance.
+---
+## 5. Cloud Storage
 
-### 5. Cloud Storage
 
-
-
+---
 ## 6. References
 Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical references:
 - [1] Google, "Google Maps SDK for Android," Google. https://developers.google.com/maps/documentation/android-sdk/overview (accessed Sept. 2, 2024).
