@@ -10,3 +10,5 @@ kramdown:
 remote_theme: pages-themes/time-machine
 plugins:
   - jekyll-remote-theme
+title: "RideSharingHC Project Lobby"
+description: "HC25-Caio-Montilha-Senior-Project"
