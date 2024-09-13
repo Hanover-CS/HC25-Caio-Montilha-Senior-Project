@@ -1,3 +1,17 @@
+<style>
+    body {
+        color: #ff073a; /* Red neon for body text */
+    }
+
+    a {
+        color: #00ffff; /* Blue neon for links */
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #ff073a; /* Red neon for all headings */
+    }
+</style>
+
 # RideSharingHC Project Lobby
 
 Welcome to my RideSharingHC app, an innovative solution aimed at providing a secure and user-friendly platform for ride-sharing within the college community. Below, you will find links to important documents and presentations related to my project. Here you can learn more about the progress and future plans for this project.
