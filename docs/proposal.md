@@ -11,6 +11,7 @@ This project involves the development of a mobile app designed to facilitate rid
 - **Rating and Review System**: Users can rate and review drivers and passengers to ensure a safe and reliable community.
 - **In-App Communication**: Secure messaging system for drivers and passengers to coordinate pickup and drop-off details.
 - **Map Integration**: Integration with Google Maps for real-time navigation, route planning, and distance calculation [1].
+
 ---
 
 ## 2. UI Mockups and Design
@@ -76,7 +77,9 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
   - Integration with Android: Fully compatible with existing Android views and Jetpack libraries.
   - State Management: Simplifies the handling of UI state changes.
   - Performance: It sounds like it is designed to offer high performance.
+
 ---
+
 ## 5. Cloud Storage
 ### Firebase Cloud Storage
 - **Relation to my App**: Firebase Cloud Storage is my choice for storing and serving user-generated content in my ridesharing app.
