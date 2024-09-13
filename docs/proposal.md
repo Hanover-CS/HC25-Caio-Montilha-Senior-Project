@@ -41,6 +41,7 @@ Sride is an open-source ridesharing app that focuses on community-based rideshar
 
 ### Kotlin Uber Clone by EDMT Dev
 The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series that walks developers through the entire process of building an Uber-like ridesharing app using Android Studio and Kotlin. The series covers a wide range of topics, from setting up the project and integrating user authentication to implementing real-time location tracking and ride-matching algorithms[4]. While this tutorial provides a strong foundation for building a ridesharing app, it lacks certain customizations that are essential for a college-specific environment, such as student verification and community-focused features. For all that, the tutorial is a valuable resource for understanding the technical stack and development practices necessary for my project.
+
 ---
 ## 4. Relevant Technologies and Tools
 
@@ -77,7 +78,13 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
   - Performance: It sounds like it is designed to offer high performance.
 ---
 ## 5. Cloud Storage
-
+### Firebase Cloud Storage
+- **Relation to my App**: Firebase Cloud Storage is my choice for storing and serving user-generated content in my ridesharing app.
+- **Description**: Firebase Cloud Storage is basically built for app developers who need to store and serve user-generated content[8].
+- **Key Features**:
+  - Automatic Scaling: As more users join the app, Firebase Cloud Storage automatically scales to accommodate the increased demand.
+  - Firebase Authentication Integration: Provides secure access to files using Firebase Authentication, ensuring that only authorized users can access their content.
+  - High Performance: Firebase Cloud Storage is optimized for high performance, which in my case is important for a good user experience.
 
 ---
 ## 6. References
@@ -95,3 +102,5 @@ Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical re
 - [6] Google, "Firebase for Android," Firebase. https://firebase.google.com/docs/android/setup (accessed Sept. 4, 2024).
 
 - [7] Google, "Jetpack Compose," Android Developers. https://developer.android.com/compose (accessed Sept. 5, 2024).
+
+- [8] Google, "Get Started with Cloud Storage on Android," Firebase. https://firebase.google.com/docs/storage/android/start (accessed Sept. 13, 2024).
