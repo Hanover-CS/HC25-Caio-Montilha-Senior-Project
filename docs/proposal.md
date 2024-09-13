@@ -25,6 +25,7 @@ Here are the images:
 <img src="homeScreen_.png" alt="Home Screen Concept" height="450">
 
 - **Image 3**: Sketch of the offer ride screen and user profile screen.
+
 <img src="offer_ride_screen_user_profile_screen.png" alt="Offer Ride Screen and User Profile Screen" height="450">
 
 ---
