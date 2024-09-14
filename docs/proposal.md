@@ -32,6 +32,7 @@ Here are the images:
 <img src="offer_ride_screen_user_profile_screen.png" alt="Offer Ride Screen and User Profile Screen" height="450">
 
 ---
+
 ## 3. Comparable Existing Solutions
 
 ### Whirl Project on GitHub
@@ -44,6 +45,7 @@ Sride is an open-source ridesharing app that focuses on community-based rideshar
 The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series that walks developers through the entire process of building an Uber-like ridesharing app using Android Studio and Kotlin. The series covers a wide range of topics, from setting up the project and integrating user authentication to implementing real-time location tracking and ride-matching algorithms[4]. While this tutorial provides a strong foundation for building a ridesharing app, it lacks certain customizations that are essential for a college-specific environment, such as student verification and community-focused features. For all that, the tutorial is a valuable resource for understanding the technical stack and development practices necessary for my project.
 
 ---
+
 ## 4. Relevant Technologies and Tools
 
 ### Android SDK
@@ -68,9 +70,13 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
   - Firebase Authentication: Simplifies the process of user verification, email/password.
   - Cloud Firestore: A real-time NoSQL database that allows me to store and sync data for my app, ideal for managing rides and user interactions.
   - Firebase Cloud Messaging: Enables push notifications to keep users informed of ride requests and updates.
+  - Firebase Cloud Storage: Firebase Cloud Storage is my choice for storing and serving user-generated content in my ridesharing app. It is basically built for app developers who need to store and serve user-generated content[7]
+  - Firebase Authentication Integration: Provides secure access to files using Firebase Authentication, ensuring that only authorized users can access their content.
+  - Automatic Scaling: As more users join the app, Firebase Cloud Storage automatically scales to accommodate the increased demand.
+  - High Performance: Firebase Cloud Storage is optimized for high performance, which in my case is important for a good user experience.
 
 ### Jetpack Compose UI App Development Toolkit
-- **Relation to my App**: Jetpack Compose is a toolkit for building native Android UI, offering a more declarative approach to designing user interfaces. It allows for more concise and readable code, which can speed up the development process and improve UI consistency across the app. Given that my ridesharing app will require a responsive and user-friendly interface, Jetpack Compose can be highly relevant[7].
+- **Relation to my App**: Jetpack Compose is a toolkit for building native Android UI, offering a more declarative approach to designing user interfaces. It allows for more concise and readable code, which can speed up the development process and improve UI consistency across the app. Given that my ridesharing app will require a responsive and user-friendly interface, Jetpack Compose can be highly relevant[8].
 - **Description**: UI toolkit by Google designed for building native Android applications using Kotlin. It allows developers to create user interfaces using a declarative programming model, what I understand from the documentation and research is that UI elements are defined in terms of how they should look based on their current state. 
 - **Key Features**:
   - Declarative UI: Allows developers to describe the UI in Kotlin code, leading to more expressive UI components. This can speed up my project development.
@@ -80,16 +86,6 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
 
 ---
 
-## 5. Cloud Storage
-### Firebase Cloud Storage
-- **Relation to my App**: Firebase Cloud Storage is my choice for storing and serving user-generated content in my ridesharing app.
-- **Description**: Firebase Cloud Storage is basically built for app developers who need to store and serve user-generated content[8].
-- **Key Features**:
-  - Automatic Scaling: As more users join the app, Firebase Cloud Storage automatically scales to accommodate the increased demand.
-  - Firebase Authentication Integration: Provides secure access to files using Firebase Authentication, ensuring that only authorized users can access their content.
-  - High Performance: Firebase Cloud Storage is optimized for high performance, which in my case is important for a good user experience.
-
----
 ## 6. References
 Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical references:
 - [1] Google, "Google Maps SDK for Android," Google. https://developers.google.com/maps/documentation/android-sdk/overview (accessed Sept. 2, 2024).
@@ -104,6 +100,6 @@ Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical re
 
 - [6] Google, "Firebase for Android," Firebase. https://firebase.google.com/docs/android/setup (accessed Sept. 4, 2024).
 
-- [7] Google, "Jetpack Compose," Android Developers. https://developer.android.com/compose (accessed Sept. 5, 2024).
+- [7] Google, "Get Started with Cloud Storage on Android," Firebase. https://firebase.google.com/docs/storage/android/start (accessed Sept. 13, 2024).
 
-- [8] Google, "Get Started with Cloud Storage on Android," Firebase. https://firebase.google.com/docs/storage/android/start (accessed Sept. 13, 2024).
+- [8] Google, "Jetpack Compose," Android Developers. https://developer.android.com/compose (accessed Sept. 5, 2024).
