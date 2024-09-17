@@ -27,6 +27,8 @@ The sketch for the **splash screen**, login, and registration screens is designe
 
 Additionally, the design of these screens is intended to be clean and simple, aiming to make the entry process into the app as smooth as possible for both new and returning users.
 
+---
+
 - **Image 2**: Initial concept for the home screen, including options to offer or request a ride.
 
 <img src="homeScreen_.png" alt="Home Screen Concept" height="450">
@@ -34,6 +36,8 @@ Additionally, the design of these screens is intended to be clean and simple, ai
 The **home screen** serves as the central hub for users once they log in. It provides access to key features, such as finding a ride, offering a ride, and accessing user profiles. The screen also displays current ride requests, making it easy for users to see who needs a ride or who is offering one. Also, the **ride request screen** provides a streamlined interface for users to create and customize their ride requests. It allows users to specify the drop-off location, date, and time of the ride, making it easy to connect with available drivers who match their specific needs and preferences.
 
 This design prioritizes ease of navigation and functionality, ensuring that users can quickly perform essential actions.
+
+---
 
 - **Image 3**: Sketch of the offer ride screen and user profile screen.
 
