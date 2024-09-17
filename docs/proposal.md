@@ -21,27 +21,28 @@ In the initial stages of design, I also made use of hand-drawn sketches to brain
 Here are the images[2]:
 - **Image 1**: Concept for the splash screen, login, and registration screens.
 
+<img src="splashScreen_login_register.png" alt="Splash Screen, Login and Register" height="450">
+
 The sketch for the **splash screen**, login, and registration screens is designed to make a great first impression by featuring an attractive logo against a background color that reflects the community's identity. The **login/registration screen** appears immediately after the splash screen, allowing new users to create an account or existing users to log in quickly and easily.
 
 Additionally, the design of these screens is intended to be clean and simple, aiming to make the entry process into the app as smooth as possible for both new and returning users.
 
-<img src="splashScreen_login_register.png" alt="Splash Screen, Login and Register" height="450">
-
 - **Image 2**: Initial concept for the home screen, including options to offer or request a ride.
+
+<img src="homeScreen_.png" alt="Home Screen Concept" height="450">
 
 The **home screen** serves as the central hub for users once they log in. It provides access to key features, such as finding a ride, offering a ride, and accessing user profiles. The screen also displays current ride requests, making it easy for users to see who needs a ride or who is offering one. Also, the **ride request screen** provides a streamlined interface for users to create and customize their ride requests. It allows users to specify the drop-off location, date, and time of the ride, making it easy to connect with available drivers who match their specific needs and preferences.
 
 This design prioritizes ease of navigation and functionality, ensuring that users can quickly perform essential actions.
 
-<img src="homeScreen_.png" alt="Home Screen Concept" height="450">
-
 - **Image 3**: Sketch of the offer ride screen and user profile screen.
+
+<img src="offer_ride_screen_user_profile_screen.png" alt="Offer Ride Screen and User Profile Screen" height="450">
 
 The **offer ride screen** enables drivers to set up ride offers by entering route details, available seats, and ride preferences. This screen is designed to simplify the process of sharing rides, making it easy for drivers to connect with potential riders based on their journey details.
 
 The **user profile screen** allows users to manage their personal information, customize preferences, and adjust account settings. This screen is crucial for maintaining a personalized and secure experience for the users.
 
-<img src="offer_ride_screen_user_profile_screen.png" alt="Offer Ride Screen and User Profile Screen" height="450">
 
 ---
 
