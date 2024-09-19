@@ -1,4 +1,4 @@
-# **UI Design with Jetpack Compose - Tutorial**
+# UI Design with Jetpack Compose - Tutorial
 
 Welcome to the **Jetpack Compose** tutorial for building modern UIs for Android apps. In this guide, you will learn the essential features and tools needed to build modern UIs for Android apps. This tutorial will focus on key concepts like composable functions, layouts, material design, and animations.
 
