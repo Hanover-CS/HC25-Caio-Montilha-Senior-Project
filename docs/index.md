@@ -18,7 +18,7 @@ RideSharingHC is designed to facilitate ride-sharing for students. By focusing o
 
 ## 🎤 **Project Presentations**
 
-- **[Presentation](https://github.com/your-username/repository-name/path-to-pdf/RideSharingHC_Presentation.pdf)**
+- **[Presentation](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/RideSharingHC_Presentation.pdf)**
 
 
 ---
