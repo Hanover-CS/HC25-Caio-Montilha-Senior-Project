@@ -9,7 +9,7 @@ Welcome to the **Jetpack Compose** tutorial for building modern UIs for Android 
 - How to use **layouts** to arrange your UI components effectively.
 - Apply **Material Design** elements such as buttons, cards, and icons.
 - Create **lists** to handle dynamic data efficiently.
-- Add smooth **animations** to enhance the user experience.
+- Add **animations** to enhance the user experience.
 
 ---
 
@@ -20,7 +20,7 @@ Welcome to the **Jetpack Compose** tutorial for building modern UIs for Android 
 3. [Setting Up Jetpack Compose](setup.md) - Start your project and set up Jetpack Compose.
 4. [Creating the Splash Screen](splash_screen.md) - Design a splash screen for your app's entry point.
 5. [Creating Lists in Jetpack Compose](list.md) - Learn how to build lists and display dynamic data.
-6. [Adding Animations](animations.md) - Create smooth animations for improved user interaction.
+6. [Adding Animations](animations.md) - Create animations for improved user interaction.
 7. [Conclusion](conclusion.md) - Wrap up the tutorial and explore further resources.
 
 ---
@@ -36,7 +36,7 @@ Jetpack Compose is Google’s modern toolkit for building native UIs in Android.
 Before you dive in, make sure you have the following ready:
 
 - **Android Studio** installed with the latest version.
-- A Basic **Kotlin** knowledge (in this guide I will use Kotlin).
+- A Basic **Kotlin** knowledge.
 - A basic understanding of Android development.
 
 
