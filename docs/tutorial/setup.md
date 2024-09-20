@@ -5,7 +5,7 @@ To get started with **Jetpack Compose** in Android Studio, follow the steps belo
 ### 🛠️ **Step 1: Open Android Studio**
 Make sure you have the **latest version of Android Studio** installed. If not, you can download it here:
 
-- [**Download Android Studio**](https://developer.android.com/studio)
+- [Download Android Studio](https://developer.android.com/studio)
 
 ### 🧑‍💻 **Step 2: Create a New Project**
 
@@ -13,6 +13,7 @@ Make sure you have the **latest version of Android Studio** installed. If not, y
 2. In the templates list, choose **"Empty Compose Activity"**. This template will set up the basic files needed to start using Jetpack Compose right away.
 
 <img src="empty_compose_activity.png" alt="Empty Compose Activity Image" width="150"/>
+
 
 3. Name your project and configure your package details.
 
@@ -31,7 +32,7 @@ dependencies {
 
 Make sure to sync your project after adding or updating these dependencies. If you need more details on how to manage dependencies, check out the official documentation:
 
-- [**Gradle Dependencies Guide**](https://developer.android.com/build/dependencies)
+- [Gradle Dependencies Guide](https://developer.android.com/build/dependencies)
 
 ---
 
@@ -43,9 +44,9 @@ Once your dependencies are updated, hit the **"Sync Now"** button in Android Stu
 ### 📚 **Resources for Setting Up Jetpack Compose**
 If you’re encountering any issues or need more information, here are some helpful resources:
 
-- [**Jetpack Compose Documentation**](https://developer.android.com/jetpack/compose)
-- [**How to Create a New Jetpack Compose Project**](https://developer.android.com/jetpack/compose/setup)
-- [**Gradle Setup for Compose**](https://developer.android.com/develop/ui/compose/compiler)
+- [Jetpack Compose Documentation](https://developer.android.com/jetpack/compose)
+- [How to Create a New Jetpack Compose Project](https://developer.android.com/jetpack/compose/setup)
+- [Gradle Setup for Compose](https://developer.android.com/develop/ui/compose/compiler)
 
 ---
 
