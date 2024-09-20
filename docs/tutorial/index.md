@@ -21,9 +21,8 @@ Welcome to the **Jetpack Compose** tutorial for building modern UIs for Android 
 4. [Basic Composables](basic_composables.md) - Understand essential building blocks like Text, Button, and layout components to create simple user interfaces.
 5. [Creating the Splash Screen](splash_screen.md) - Design a splash screen for your app's entry point.
 6. [Layouts and Arrangement](layouts.md) - Learn how to arrange UI elements with Row and Column, for flexible and responsive layouts.
-7. [Creating Lists in Jetpack Compose](list.md) - Learn how to build lists and display dynamic data.
-8. [Adding Animations](animations.md) - Create animations for improved user interaction.
-9. [Conclusion](conclusion.md) - Wrap up the tutorial and explore further resources.
+7. [Creating Lists](list.md) - Learn how to build lists and display dynamic data with Jetpack Compose.
+8. [Conclusion](conclusion.md) - Wrap up the tutorial and explore further resources.
 
 ---
 
@@ -38,7 +37,7 @@ Jetpack Compose is Google’s modern toolkit for building native UIs in Android.
 Before you dive in, make sure you have the following ready:
 
 - **Android Studio** installed with the latest version.
-- A Basic **Kotlin** knowledge.
+- A basic **Kotlin** knowledge.
 - A basic understanding of Android development.
 
 
