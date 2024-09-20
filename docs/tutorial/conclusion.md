@@ -38,3 +38,7 @@ To continue learning Jetpack Compose, here are some useful resources:
 
 I hope this tutorial has been helpful. If you have any questions, check out the resources listed above.
 
+---
+
+Go back to [HOME](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/)
+
