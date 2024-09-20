@@ -1,3 +1,5 @@
+<button onclick="window.history.back()" class="back-button">← Back</button>
+
 # **Setting Up Jetpack Compose**
 
 To get started with **Jetpack Compose** in Android Studio, follow the steps below:

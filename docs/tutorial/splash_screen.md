@@ -1,3 +1,5 @@
+<button onclick="window.history.back()" class="back-button">← Back</button>
+
 # 🌟 **Creating the Splash Screen**
 
 The splash screen is the first screen users see when they open your app. It’s a great opportunity to create a visually appealing first impression(in my case I like to use the logo of my app to capture the users attention). In this section, you will learn how to create a simple splash screen using **Jetpack Compose**.

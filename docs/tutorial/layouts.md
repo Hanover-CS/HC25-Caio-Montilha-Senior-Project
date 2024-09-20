@@ -1,3 +1,5 @@
+<button onclick="window.history.back()" class="back-button">← Back</button>
+
 #  🧩 **Layouts and Arrangement: Row and Column**
 
 In Jetpack Compose, organizing UI components in a **Row** or **Column** layout is important to building dynamic designs. The `Row` and `Column` provide flexibility to align, space, and arrange elements easily.

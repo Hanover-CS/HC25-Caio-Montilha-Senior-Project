@@ -1,10 +1,4 @@
-<button onclick="goBack()" class="back-button">← Back</button>
-
-<script>
-function goBack() {
-  window.history.back();
-}
-</script>
+<button onclick="window.history.back()" class="back-button">← Back</button>
 
 # Project Presentation
 

@@ -1,7 +1,4 @@
-<div style="display: flex; justify-content: space-between;">
-  [← Back](javascript:history.back())
-  [Introduction →](introduction.md)
-</div>
+<button onclick="window.history.back()" class="back-button">← Back</button>
 
 # UI Design with Jetpack Compose - Tutorial
 
@@ -45,5 +42,9 @@ Before you dive in, make sure you have the following ready:
 - A basic **Kotlin** knowledge.
 - A basic understanding of Android development.
 
+---
 
+### 🚀 **Get Started**
+
+[Click here to get started with the Introduction!](introduction.md)
 
