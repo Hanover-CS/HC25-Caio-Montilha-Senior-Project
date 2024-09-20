@@ -1,3 +1,11 @@
+<button onclick="goBack()" class="back-button">← Back</button>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
 # Ridesharing App for College Community
 
 ## 1. Project Description
