@@ -57,10 +57,10 @@ Here are a few ways you can build up your splash screen:
 ---
 
 ### 📚 **Related Resources**
-- [**Jetpack Compose Navigation**](https://developer.android.com/jetpack/compose/navigation)
-- [**Splash screens | Views**](https://developer.android.com/develop/ui/views/launch/splash-screen)
-- [**How to apply splash screen with jetpack compose**](https://stackoverflow.com/questions/77187576/how-to-apply-splash-screen-with-jetpack-compose)
-- [**Splash Screen API with Jetpack Compose | by Maria Luíza**](https://medium.com/mobile-app-development-publication/splash-screen-api-with-jetpack-compose-9001c561b9c8)
+- [Jetpack Compose Navigation](https://developer.android.com/jetpack/compose/navigation)
+- [Splash screens Views](https://developer.android.com/develop/ui/views/launch/splash-screen)
+- [How to apply splash screen with jetpack compose](https://stackoverflow.com/questions/77187576/how-to-apply-splash-screen-with-jetpack-compose)
+- [Splash Screen API with Jetpack Compose by Maria Luíza](https://medium.com/mobile-app-development-publication/splash-screen-api-with-jetpack-compose-9001c561b9c8)
 
 ---
 
