@@ -43,7 +43,7 @@ override fun SplashScreen(navController: NavController) {
 - **Box Layout**: We use `Box` to place the image in the center of the screen.
 - **Image**: The `Image` composable displays the app logo or any splash image.
 - **LaunchedEffect**: We use `LaunchedEffect` with `delay()` to pause for 3 seconds before navigating to the home screen.
-- **Navigation**: After the delay, the `navController.navigate()` method moves the user to the next screen (in my case it would be the, login/register screen, but in yours it can be other like for example home screen).
+- **Navigation**: After the delay, the `navController.navigate()` method moves the user to the next screen (in my case it would be the, login/register screen, but in yours it can be another like for example home screen).
 
 ---
 
@@ -64,4 +64,4 @@ Here are a few ways you can build up your splash screen:
 
 ---
 
-With everything set up. Continue to **[Creating Lists in Jetpack Compose](layouts.md)**.
+With everything set up. Continue to **[Creating Layouts in Jetpack Compose](layouts.md)**.

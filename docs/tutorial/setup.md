@@ -7,6 +7,8 @@ Make sure you have the **latest version of Android Studio** installed. If not, y
 
 - [Download Android Studio](https://developer.android.com/studio)
 
+---
+
 ### 🧑‍💻 **Step 2: Create a New Project**
 
 1. Open Android Studio and select **"Create a New Project"**.
@@ -14,8 +16,11 @@ Make sure you have the **latest version of Android Studio** installed. If not, y
 
 <img src="empty_compose_activity.png" alt="Empty Compose Activity Image" width="150"/>
 
+<br>
 
 3. Name your project and configure your package details.
+
+---
 
 ### 🗂️ **Step 3: Check Your Dependencies**
 Ensure that your project includes the necessary **Jetpack Compose** dependencies in your `build.gradle` file. Navigate to your project’s `build.gradle` file and confirm that the following dependencies are present:

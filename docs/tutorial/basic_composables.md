@@ -1,4 +1,4 @@
-# 4. 🛠️ **Basic Composables**
+#  🛠️ **Basic Composables**
 
 In this section, you’ll learn about **Composables**, the basics building blocks of Jetpack Compose UI. Composables allow you to define the structure and appearance of your app’s UI.
 
