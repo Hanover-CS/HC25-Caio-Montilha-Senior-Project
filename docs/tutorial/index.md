@@ -1,8 +1,7 @@
-<div class="nav-buttons">
-  <button onclick="goBack()" class="back-button" style="float: left;">← Back</button>
-  <a href="introduction.md" class="next-button" style="float: right; text-decoration: none; background-color: transparent; border: none; color: #007bff; font-size: 16px; cursor: pointer;">Introduction →</a>
+<div style="display: flex; justify-content: space-between;">
+  [← Back](javascript:history.back())
+  [Introduction →](introduction.md)
 </div>
-
 
 # UI Design with Jetpack Compose - Tutorial
 
