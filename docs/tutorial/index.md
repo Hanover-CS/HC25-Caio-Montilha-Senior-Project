@@ -1,8 +1,15 @@
-<button onclick="goBack()" class="back-button">← Back</button>
+<div class="nav-buttons">
+  <button onclick="goBack()" class="back-button" style="float: left;">← Back</button>
+  <button onclick="goNext()" class="next-button" style="float: right;">Introduction →</button>
+</div>
 
 <script>
 function goBack() {
   window.history.back();
+}
+
+function goNext() {
+  window.location.href = "introduction.md";
 }
 </script>
 

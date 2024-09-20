@@ -26,10 +26,5 @@ theme_config:
   show_misc_list: true # show generic vertical list for misc details, add _data/home.yml
   show_reading_time: true # show number of words and reading time in the blog posts
   show_tags: true # show tags in a blog posts
-  home:
-    title_projects: Home
-    title_misc_list: Project Proposal
-    title_blog: Presentation
-    title_old_projects: Tutorial
 
 
