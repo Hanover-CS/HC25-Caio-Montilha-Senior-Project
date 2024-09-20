@@ -1,4 +1,4 @@
-# 2. 🛠️ **Basic Composables**
+# 4. 🛠️ **Basic Composables**
 
 In this section, you’ll learn about **Composables**, the basics building blocks of Jetpack Compose UI. Composables allow you to define the structure and appearance of your app’s UI.
 
@@ -115,4 +115,8 @@ In this example:
 
 - [Jetpack Compose Text](https://developer.android.com/develop/ui/compose/text)
 - [Jetpack Compose Buttons](https://developer.android.com/develop/ui/compose/components/button)
+
+---
+
+With the fundamental building blocks covered. Continue to **[Creating the Splash Screen](splash_screen.md)**.
 
