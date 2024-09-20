@@ -10,8 +10,8 @@ Before diving into this tutorial, ensure you have the following:
 
 If you are unfamiliar with these topics, you can check out the following resources:
 
-- 📖 [**Kotlin Language Documentation**](https://kotlinlang.org/docs/reference/) – Learn the fundamentals of Kotlin.
-- 💻 [**Android Studio Setup Guide**](https://developer.android.com/studio/intro) – Install and configure Android Studio.
+- 📖 [Kotlin Language Documentation](https://kotlinlang.org/docs/reference/) – Learn the fundamentals of Kotlin.
+- 💻 [Android Studio Setup Guide](https://developer.android.com/studio/intro) – Install and configure Android Studio.
 
 ---
 
