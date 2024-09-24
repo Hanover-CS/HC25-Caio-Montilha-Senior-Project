@@ -5,7 +5,9 @@
 ## 1. Project Description
 
 ### Introduction:
-This project involves the development of a mobile app designed to facilitate ridesharing within a college community. The app will provide a platform for students, faculty, and staff to offer and find rides to nearby locations. As an international student without a car, I often face challenges in finding rides to places like Walmart, pharmacies, restaurants, and other essential locations. I believe that a ridesharing app could greatly simplify my life and the lives of other students who do not have cars. Additionally, such an app would help foster a stronger sense of community, encouraging people to assist one another and build connections within the college environment.
+This project involves the development of a mobile app designed to facilitate ridesharing within a college community. The app will provide a platform for students, faculty, and staff to offer and find rides to nearby locations.
+
+As an international student without a car, I often face challenges in finding rides to places like Walmart, pharmacies, restaurants, and other essential locations. I believe that a ridesharing app could greatly simplify my life and the lives of other students who do not have cars. Additionally, such an app would help foster a stronger sense of community, encouraging people to assist one another and build connections within the college environment.
 
 ### Main Features:
 - **User Authentication and Verification**: Secure sign-up and login process, with user verification tied to college credentials.
@@ -19,10 +21,10 @@ This project involves the development of a mobile app designed to facilitate rid
 ## 2. UI Mockups and Design
 
 ### Notebook Sketches
-In the initial stages of design, I also made use of hand-drawn sketches to brainstorm and visualize my app's UI. These sketches were created in my notebook and represent the first conceptualization of the app's interface, including the layout of screens, navigation flows, and key elements such as buttons, input fields, and maps.
+In the initial stages of design, I made use of hand-drawn sketches to brainstorm and visualize my app's UI. These sketches were created in my notebook and represent the first conceptualization of the app's interface, including the layout of screens, navigation flows, and key elements such as buttons, input fields, and maps.
 Here are the images[2]:
-- **Image 1**: Concept for the splash screen, login, and registration screens.
 
+#### **Splash Screen & Login/Register Screen**
 <img src="images/splashScreen_login_register.png" alt="Splash Screen, Login and Register" height="450">
 
 The sketch for the **splash screen**, login, and registration screens is designed to make a great first impression by featuring an attractive logo against a background color that reflects the community's identity. The **login/registration screen** appears immediately after the splash screen, allowing new users to create an account or existing users to log in quickly and easily.
@@ -31,7 +33,8 @@ Additionally, the design of these screens is intended to be clean and simple, ai
 
 ---
 
-- **Image 2**: Initial concept for the home screen, including options to offer or request a ride.
+
+#### **Home Screen & Ride Request Screen**
 
 <img src="images/homeScreen_.png" alt="Home Screen Concept" height="450">
 
@@ -41,7 +44,8 @@ This design prioritizes ease of navigation and functionality, ensuring that user
 
 ---
 
-- **Image 3**: Sketch of the offer ride screen and user profile screen.
+
+#### **Offer Ride Screen & User Profile Screen**
 
 <img src="images/offer_ride_screen_user_profile_screen.png" alt="Offer Ride Screen and User Profile Screen" height="450">
 
@@ -65,7 +69,7 @@ Sride is an open-source ridesharing app that focuses on community-based rideshar
 <img src="images/sride_existing_solution.png" alt="Sride Project Screenshot" height="450">
 
 ### Kotlin Uber Clone by EDMT Dev
-The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series that walks developers through the entire process of building an Uber-like ridesharing app using Android Studio and Kotlin. The series covers a wide range of topics, from setting up the project and integrating user authentication to implementing real-time location tracking and ride-matching algorithms[5]. While this tutorial provides a strong foundation for building a ridesharing app, it lacks certain customizations that are essential for a college-specific environment, such as student verification and community-focused features. For all that, the tutorial is a valuable resource for understanding the technical stack and development practices necessary for my project.
+The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series that walks developers through the entire process of building an Uber-like ridesharing app using Android Studio and Kotlin. The series covers a wide range of topics, from setting up the project and integrating user authentication to implementing real-time location tracking and ride-matching algorithms[5]. While this tutorial provides a strong foundation for building a ridesharing app, it lacks certain customizations that are essential for a college-specific environment, such as student verification and community-focused features.
 
 <img src="images/kotlin_uber_clone_existing_solution.png" alt="Kotlin Uber Clone Screenshot" height="450">
 
@@ -104,7 +108,7 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
   - Automatic Scaling: As more users join the app, Firebase Cloud Storage automatically scales to accommodate the increased demand.
   - High Performance: Firebase Cloud Storage is optimized for high performance, which in my case is important for a good user experience.
 - **Comparable Option**: AWS Amplify
-  - Firebase is built with mobile apps in mind, making it a great fit for my ridesharing app, which needs real-time data sync for things like updating available rides and handling push notifications for ride confirmations. AWS Amplify is powerful and scalable, but Firebase have a quick setup and it is easy to integrate with Android apps give it the edge, especially for a student project like mine where speed and ease of use matter[11].
+  - Firebase is built with mobile apps in mind, making it a great fit for my ridesharing app, which needs real-time data sync for things like updating available rides and handling push notifications for ride confirmations. AWS Amplify is powerful and scalable, but Firebase's quick setup and easy integration with Android apps give it the edge, especially for a student project like mine where speed and ease of use matter[11].
 
 ### Jetpack Compose UI App Development Toolkit
 - **Relation to my App**: Jetpack Compose is a toolkit for building native Android UI, offering a more declarative approach to designing user interfaces. It allows for more concise and readable code, which can speed up the development process and improve UI consistency across the app. Given that my ridesharing app will require a responsive and user-friendly interface, Jetpack Compose can be highly relevant[12].
