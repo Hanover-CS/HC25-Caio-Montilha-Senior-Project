@@ -12,8 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RideSharingHC">
 
+        <!-- Set SplashActivity as the main launcher activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.RideSharingHC">
@@ -22,6 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Declare LoginRegisterActivity -->
+        <activity android:name=".LoginRegisterActivity" />
     </application>
 
 </manifest>
