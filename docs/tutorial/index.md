@@ -11,7 +11,7 @@ Welcome to the **Jetpack Compose** tutorial for building modern UIs for Android 
 - How to use **layouts** to arrange your UI components effectively.
 - Apply **Material Design** elements such as buttons, cards, and icons.
 - Create **lists** to handle dynamic data efficiently.
-- Add **animations** to enhance the user experience.
+- Create **splash screen activity** to enhance the user experience.
 
 ---
 

@@ -123,6 +123,20 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
 
 ---
 
+## 5. Database Structure and Workflow
+
+#### **Database Structure Diagram**
+
+<img src="images/database_structure_diagram.png" alt="Database Structure Diagram" height="450">
+
+Here is how I have structured the database for my RideSharingHC app[14]. At the center is the Users table, where I store all the key details about drivers and passengers, like their user IDs, emails, and profiles. I have linked the Vehicles table to the users, so drivers can register their cars. The Rides table tracks each trip, with information like the start and end locations, the driver, and the ride’s status. RiderRequests handles requests from passengers, including pickup and drop-off points. The Bookings table connects these ride requests with the actual rides. Lastly, I included a Feedback table where users can rate and leave comments about their rides to help improve future experiences. This setup ensures everything flows, from ride requests to bookings and feedback.
+
+The following image illustrates the **workflow** components of the my app:
+
+<img src="images/workflow_components.png" alt="Database Structure Diagram" height="450">
+
+---
+
 ## 6. References
 Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical references:
 - [1] Google, "Google Maps SDK for Android," Google. https://developers.google.com/maps/documentation/android-sdk/overview (accessed Sept. 2, 2024).
@@ -150,3 +164,5 @@ Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical re
 - [12] Google, "Jetpack Compose," Android Developers. https://developer.android.com/compose (accessed Sept. 5, 2024).
 
 - [13] Google, "Flutter UI Overview," Flutter. https://docs.flutter.dev/ui (accessed Sept. 18, 2024).
+
+- [14] Mermaid, "Mermaid: Generation of diagrams and flowcharts," Mermaid. https://mermaid.js.org/ (accessed Sept. 24, 2024).
