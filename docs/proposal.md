@@ -127,13 +127,13 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
 
 #### **Database Structure Diagram**
 
-<img src="images/database_structure_diagram.png" alt="Database Structure Diagram" height="450">
+<img src="images/database_structure_diagram.png" alt="Database Structure Diagram" height="600">
 
 Here is how I have structured the database for my RideSharingHC app[14]. At the center is the Users table, where I store all the key details about drivers and passengers, like their user IDs, emails, and profiles. I have linked the Vehicles table to the users, so drivers can register their cars. The Rides table tracks each trip, with information like the start and end locations, the driver, and the ride’s status. RiderRequests handles requests from passengers, including pickup and drop-off points. The Bookings table connects these ride requests with the actual rides. Lastly, I included a Feedback table where users can rate and leave comments about their rides to help improve future experiences. This setup ensures everything flows, from ride requests to bookings and feedback.
 
 The following image illustrates the **workflow** components of the my app:
 
-<img src="images/workflow_components.png" alt="Database Structure Diagram" height="450">
+<img src="images/workflow_components.png" alt="Workflow Structure" height="450">
 
 ---
 
