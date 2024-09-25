@@ -129,6 +129,82 @@ The "Kotlin Uber Clone" by EDMT Dev is a comprehensive YouTube tutorial series t
 
 <img src="images/database_structure_diagram.png" alt="Database Structure Diagram" height="600">
 
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+</script>
+
+```mermaid
+erDiagram
+    USERS {
+        int UserID PK
+        string Email
+        string PasswordHash
+        string FullName
+        string PhoneNumber
+        boolean IsDriver
+        boolean IsVerified
+        float Rating
+        string ProfilePicture
+    }
+
+    VEHICLES {
+        int VehicleID PK
+        int OwnerUserID FK
+        string Make
+        string Model
+        string Color
+        string LicensePlate
+        string InsuranceInfo
+    }
+
+    RIDES {
+        int RideID PK
+        int DriverUserID FK
+        int VehicleID FK
+        string StartLocation
+        string EndLocation
+        datetime StartTime
+        datetime EndTime
+        string Status
+    }
+
+    BOOKINGS {
+        int BookingID PK
+        int RideID FK
+        int PassengerUserID FK
+        string PickupLocation
+        string DropoffLocation
+        datetime BookingTime
+        string Status
+    }
+
+    FEEDBACK {
+        int FeedbackID PK
+        int RideID FK
+        int UserID FK
+        string Comment
+        float Rating
+        datetime Timestamp
+    }
+
+    RIDERREQUESTS {
+        int RequestID PK
+        int PassengerUserID FK
+        string RequestedPickupLocation
+        string RequestedDropoffLocation
+        datetime RequestedTime
+        string Status
+    }
+
+    USERS ||--o{ VEHICLES : "owns"
+    USERS ||--o{ RIDES : "drives"
+    USERS ||--o{ FEEDBACK : "provides"
+    USERS ||--o{ RIDERREQUESTS : "requests"
+    RIDES ||--o{ BOOKINGS : "has"
+```
+
 Here is how I have structured the database for my RideSharingHC app[14]. At the center is the Users table, where I store all the key details about drivers and passengers, like their user IDs, emails, and profiles. I have linked the Vehicles table to the users, so drivers can register their cars. The Rides table tracks each trip, with information like the start and end locations, the driver, and the ride’s status. RiderRequests handles requests from passengers, including pickup and drop-off points. The Bookings table connects these ride requests with the actual rides. Lastly, I included a Feedback table where users can rate and leave comments about their rides to help improve future experiences. This setup ensures everything flows, from ride requests to bookings and feedback.
 
 The following image illustrates the **workflow** components of the my app:
