@@ -7,15 +7,9 @@ gist:
 kramdown:
   math_engine: mathjax
   syntax_highlighter: rouge
-  input: GFM
-  syntax_highlighter_opts:
-    block:
-      mermaid: true
-
 plugins:
   - jekyll-remote-theme
 remote_theme: abhinavs/moonwalk
-
 theme_config:
   appearance: "dark" # can be "light", "dark" or "auto"
   appearance_toggle: true # if appearance can be switched by user
@@ -32,3 +26,5 @@ theme_config:
   show_misc_list: true # show generic vertical list for misc details, add _data/home.yml
   show_reading_time: true # show number of words and reading time in the blog posts
   show_tags: true # show tags in a blog posts
+
+
