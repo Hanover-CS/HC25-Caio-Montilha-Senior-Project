@@ -1,13 +1,15 @@
 package com.example.ridesharinghc
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,13 +22,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
-import com.example.ridesharinghc.ui.theme.LightBlue
-import com.example.ridesharinghc.ui.theme.LogoBlack
-import com.example.ridesharinghc.ui.theme.LogoWhite
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.ridesharinghc.ui.theme.LogoBlue
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginRegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +50,13 @@ class LoginRegisterActivity : ComponentActivity() {
 
 @Composable
 fun LoginRegisterScreen(navController: NavController?) {
+    // State variables to hold user input
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -55,7 +65,6 @@ fun LoginRegisterScreen(navController: NavController?) {
             .border(8.dp, LogoBlue)
             .padding(16.dp)
     ) {
-        // I am using a Column to arrange the content vertically inside the Box
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -72,38 +81,54 @@ fun LoginRegisterScreen(navController: NavController?) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text = "Create Account",
-                fontSize = 24.sp
+            Text(text = "Create Account", fontSize = 24.sp)
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Email input field
+            TextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") },
+                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Email placeholder
-            Text(
-                text = "Email Input Placeholder",
-                fontSize = 16.sp
+            // Password input field
+            TextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Password") },
+                modifier = Modifier.fillMaxWidth(),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Password placeholder
-            Text(
-                text = "Password Input Placeholder",
-                fontSize = 16.sp
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Confirm Password placeholder
-            Text(
-                text = "Confirm Password Input Placeholder",
-                fontSize = 16.sp
+            // Confirm Password input field
+            TextField(
+                value = confirmPassword,
+                onValueChange = { confirmPassword = it },
+                label = { Text("Confirm Password") },
+                modifier = Modifier.fillMaxWidth(),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Button(onClick = { /* Placeholder for sign-up action */ }) {
+            // Sign Up button
+            Button(
+                onClick = {
+                    if (password == confirmPassword) {
+                        // Function to save the data to Firebase
+                        saveUserToFirebase(email, password)
+                    } else {
+                        // Handle mismatching passwords
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text("Sign Up")
             }
 
@@ -113,13 +138,38 @@ fun LoginRegisterScreen(navController: NavController?) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(onClick = { /* Placeholder for login action */ }) {
+            // Login button using context from LocalContext
+            Button(onClick = {
+                val intent = Intent(context, LoginActivity::class.java)
+                context.startActivity(intent)
+            }) {
                 Text("Login")
             }
         }
     }
 }
 
+// Function to save the user details to Firebase
+fun saveUserToFirebase(email: String, password: String) {
+    val database = FirebaseDatabase.getInstance()
+    val usersRef = database.getReference("users")
+
+    val userId = usersRef.push().key  // Generate a unique ID for the user
+    val userData = mapOf(
+        "email" to email,
+        "password" to password
+    )
+
+    if (userId != null) {
+        usersRef.child(userId).setValue(userData)
+            .addOnSuccessListener {
+                // Data successfully saved
+            }
+            .addOnFailureListener {
+                // Failed to save data
+            }
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
