@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -61,13 +62,16 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
 
     // Use an explicit version for Material3
-    implementation("androidx.compose.material3:material3:1.1.0-alpha06")
+    implementation("androidx.compose.material3:material3:1.3.0")
 
     // Correct Navigation dependency for Compose
-    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.navigation:navigation-compose:2.8.1")
 
     // AppCompat for compatibility with older Android versions
     implementation("androidx.appcompat:appcompat:1.7.0")
+
+    // Firebase Realtime Database
+    implementation("com.google.firebase:firebase-database-ktx:20.1.0")
 
     // Testing dependencies
     testImplementation("junit:junit:4.13.2")
