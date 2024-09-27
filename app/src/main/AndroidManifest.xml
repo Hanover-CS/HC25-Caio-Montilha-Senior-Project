@@ -14,7 +14,7 @@
 
         <!-- Set SplashActivity as the main launcher activity -->
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.SplashActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.RideSharingHC">
@@ -25,13 +25,13 @@
         </activity>
 
         <!-- Declare LoginRegisterActivity -->
-        <activity android:name=".LoginRegisterActivity" />
+        <activity android:name=".activities.LoginRegisterActivity" />
 
         <!-- Declare LoginActivity -->
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".activities.LoginActivity" />
 
         <!-- Declare HomeScreenActivity -->
-        <activity android:name=".HomeScreenActivity" />
+        <activity android:name=".activities.HomeScreenActivity" />
 
     </application>
 

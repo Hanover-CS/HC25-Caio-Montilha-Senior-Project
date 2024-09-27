@@ -1,4 +1,4 @@
-package com.example.ridesharinghc
+package com.example.ridesharinghc.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.ridesharinghc.R
 
 class HomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

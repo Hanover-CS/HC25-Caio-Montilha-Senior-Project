@@ -1,4 +1,4 @@
-package com.example.ridesharinghc
+package com.example.ridesharinghc.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,12 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.ridesharinghc.ui.theme.LogoBlack
+import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.LogoBlue
-import com.example.ridesharinghc.ui.theme.LogoGray
-import com.example.ridesharinghc.ui.theme.LogoRed
-import com.example.ridesharinghc.ui.theme.LogoTeal
-import com.example.ridesharinghc.ui.theme.LogoWhite
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import kotlinx.coroutines.delay
 
