@@ -56,7 +56,7 @@ fun LoginRegisterScreen(navController: NavController?) {
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
-    // Snackbar host state
+    // bar host state
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -139,7 +139,7 @@ fun LoginRegisterScreen(navController: NavController?) {
                             }
                         }
                     } else {
-                        // Handle mismatching passwords
+                        // Handle mismatching passwords Still not working
                         scope.launch {
                             snackbarHostState.showSnackbar(
                                 "Passwords do not match, please try again."
@@ -167,7 +167,7 @@ fun LoginRegisterScreen(navController: NavController?) {
             }
         }
 
-        // Snackbar host to show messages
+        // bar host to show messages
         SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier.align(Alignment.BottomCenter)

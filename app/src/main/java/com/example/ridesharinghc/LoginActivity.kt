@@ -37,7 +37,7 @@ class LoginActivity : ComponentActivity() {
 
     // Function to navigate back to LoginRegisterActivity
     private fun navigateBackToLoginRegisterActivity() {
-        finish()  // Fecha a atividade atual e volta para a anterior
+        finish()
     }
 }
 
@@ -46,7 +46,6 @@ fun LoginScreen(onBackClick: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // Obtendo o contexto para navegação entre atividades
     val context = LocalContext.current
 
     Box(
@@ -54,7 +53,6 @@ fun LoginScreen(onBackClick: () -> Unit) {
             .fillMaxSize()
             .background(SoftBlue)
     ) {
-        // Ícone de voltar no canto superior esquerdo
         IconButton(
             onClick = onBackClick,
             modifier = Modifier
@@ -67,7 +65,6 @@ fun LoginScreen(onBackClick: () -> Unit) {
                 modifier = Modifier.size(30.dp)
             )
         }
-
         Box(
             modifier = Modifier
                 .width(400.dp)
@@ -100,7 +97,6 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Campo de entrada de email
                 TextField(
                     value = email,
                     onValueChange = { email = it },
@@ -110,7 +106,6 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Campo de entrada de senha
                 TextField(
                     value = password,
                     onValueChange = { password = it },
@@ -121,10 +116,8 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Botão de login
-                Button(
+                Button( // I still need to create so it check if the user have an existing account
                     onClick = {
-                        // Validação simulada de login e navegação para HomeScreenActivity
                         val intent = Intent(context, HomeScreenActivity::class.java)
                         context.startActivity(intent)
                     },
