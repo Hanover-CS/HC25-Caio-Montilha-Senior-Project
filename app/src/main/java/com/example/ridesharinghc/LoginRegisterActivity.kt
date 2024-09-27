@@ -30,6 +30,7 @@ import com.example.ridesharinghc.ui.theme.SoftBlue
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.launch
 
 class LoginRegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +55,10 @@ fun LoginRegisterScreen(navController: NavController?) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+
+    // Snackbar host state
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     val context = LocalContext.current
 
@@ -122,9 +127,24 @@ fun LoginRegisterScreen(navController: NavController?) {
                 onClick = {
                     if (password == confirmPassword) {
                         // Function to save the data to Firebase
-                        saveUserToFirebase(email, password)
+                        saveUserToFirebase(email, password) {
+                            // Show snackbar when account is created
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    "Congratulations! You have created your account. Let’s move to the Login page."
+                                )
+                                // Navigate to login page after the Snackbar is dismissed
+                                val intent = Intent(context, LoginActivity::class.java)
+                                context.startActivity(intent)
+                            }
+                        }
                     } else {
                         // Handle mismatching passwords
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                "Passwords do not match, please try again."
+                            )
+                        }
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -146,15 +166,21 @@ fun LoginRegisterScreen(navController: NavController?) {
                 Text("Login")
             }
         }
+
+        // Snackbar host to show messages
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
 
 // Function to save the user details to Firebase
-fun saveUserToFirebase(email: String, password: String) {
+fun saveUserToFirebase(email: String, password: String, onSuccess: () -> Unit) {
     val database = FirebaseDatabase.getInstance()
     val usersRef = database.getReference("users")
 
-    val userId = usersRef.push().key  // Generate a unique ID for the user
+    val userId = usersRef.push().key  // Generating a unique ID for the user
     val userData = mapOf(
         "email" to email,
         "password" to password
@@ -163,7 +189,8 @@ fun saveUserToFirebase(email: String, password: String) {
     if (userId != null) {
         usersRef.child(userId).setValue(userData)
             .addOnSuccessListener {
-                // Data successfully saved
+                // Data successfully saved, call onSuccess
+                onSuccess()
             }
             .addOnFailureListener {
                 // Failed to save data

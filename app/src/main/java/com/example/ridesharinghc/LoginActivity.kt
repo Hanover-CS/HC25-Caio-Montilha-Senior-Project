@@ -15,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,7 @@ class LoginActivity : ComponentActivity() {
 
     // Function to navigate back to LoginRegisterActivity
     private fun navigateBackToLoginRegisterActivity() {
-        finish()  // Go back to the previous activity (LoginRegisterActivity)
+        finish()  // Fecha a atividade atual e volta para a anterior
     }
 }
 
@@ -45,30 +46,33 @@ fun LoginScreen(onBackClick: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+    // Obtendo o contexto para navegação entre atividades
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(SoftBlue)
     ) {
-        // Back arrow positioned outside the box, top left of the screen
+        // Ícone de voltar no canto superior esquerdo
         IconButton(
-            onClick = onBackClick,  // Navigate back to the previous activity
+            onClick = onBackClick,
             modifier = Modifier
-                .padding(8.dp)  // Set padding from the top left edge of the screen
-                .size(48.dp)  // Adjust size of the icon
+                .padding(8.dp)
+                .size(48.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.arrow),
                 contentDescription = "Back",
-                modifier = Modifier.size(30.dp)  // Adjust size of the arrow
+                modifier = Modifier.size(30.dp)
             )
         }
 
         Box(
             modifier = Modifier
-                .width(400.dp) // Ajusta a largura
-                .height(950.dp) // Ajusta a altura
-                .padding(top = 56.dp)  // Padding no topo
+                .width(400.dp)
+                .height(950.dp)
+                .padding(top = 56.dp)
                 .padding(bottom = 15.dp)
                 .padding(start = 26.dp)
                 .background(SoftBlue)
@@ -96,7 +100,7 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Email input field
+                // Campo de entrada de email
                 TextField(
                     value = email,
                     onValueChange = { email = it },
@@ -106,7 +110,7 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Password input field
+                // Campo de entrada de senha
                 TextField(
                     value = password,
                     onValueChange = { password = it },
@@ -117,10 +121,12 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Login button
+                // Botão de login
                 Button(
                     onClick = {
-                        // Handle login functionality here
+                        // Validação simulada de login e navegação para HomeScreenActivity
+                        val intent = Intent(context, HomeScreenActivity::class.java)
+                        context.startActivity(intent)
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {

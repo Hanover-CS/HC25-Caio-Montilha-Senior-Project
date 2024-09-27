@@ -30,6 +30,9 @@
         <!-- Declare LoginActivity -->
         <activity android:name=".LoginActivity" />
 
+        <!-- Declare HomeScreenActivity -->
+        <activity android:name=".HomeScreenActivity" />
+
     </application>
 
 </manifest>
