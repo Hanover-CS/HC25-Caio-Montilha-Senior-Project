@@ -27,17 +27,11 @@ import com.example.ridesharinghc.ui.theme.LogoBlue
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             RideSharingHCTheme {
-                LoginScreen(onBackClick = { navigateBackToLoginRegisterActivity() })
+                LoginScreen(onBackClick = { finish() })
             }
         }
-    }
-
-    // Function to navigate back to LoginRegisterActivity
-    private fun navigateBackToLoginRegisterActivity() {
-        finish()
     }
 }
 
@@ -48,83 +42,86 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
     val context = LocalContext.current
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(SoftBlue)
+            .padding(16.dp)
+            .border(8.dp, LogoBlue)
+            .padding(16.dp)
     ) {
-        IconButton(
-            onClick = onBackClick,
+        // Row for the back arrow
+        Row(
             modifier = Modifier
-                .padding(8.dp)
-                .size(48.dp)
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.arrow),
-                contentDescription = "Back",
-                modifier = Modifier.size(30.dp)
-            )
-        }
-        Box(
-            modifier = Modifier
-                .width(400.dp)
-                .height(950.dp)
-                .padding(top = 56.dp)
-                .padding(bottom = 15.dp)
-                .padding(start = 26.dp)
-                .background(SoftBlue)
-                .border(8.dp, LogoBlue)
-                .padding(16.dp)
-        ) {
-            Column(
+            IconButton(
+                onClick = onBackClick,
                 modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                    .size(48.dp)
+                    .padding(start = 8.dp)
             ) {
-                Spacer(modifier = Modifier.height(50.dp))
-                // Logo
-                Image(
-                    painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "App Logo",
-                    modifier = Modifier.size(150.dp)
+                Icon(
+                    painter = painterResource(id = R.drawable.arrow),
+                    contentDescription = "Back",
+                    modifier = Modifier.size(30.dp)
                 )
+            }
+        }
 
-                Spacer(modifier = Modifier.height(24.dp))
+        // Rest of the content
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(top = 16.dp), // Adding some padding for the content
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            Spacer(modifier = Modifier.height(24.dp))
 
-                Text(text = "Login", fontSize = 24.sp)
+            // Logo
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "App Logo",
+                modifier = Modifier.size(150.dp)
+            )
 
-                Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-                TextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    label = { Text("Email") },
-                    modifier = Modifier.fillMaxWidth()
-                )
+            Text(text = "Login", fontSize = 24.sp)
 
-                Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                TextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text("Password") },
-                    modifier = Modifier.fillMaxWidth(),
-                    visualTransformation = PasswordVisualTransformation()
-                )
+            TextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") },
+                modifier = Modifier.fillMaxWidth()
+            )
 
-                Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                Button( // I still need to create so it check if the user have an existing account
-                    onClick = {
-                        val intent = Intent(context, HomeScreenActivity::class.java)
-                        context.startActivity(intent)
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Login")
-                }
+            TextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Password") },
+                modifier = Modifier.fillMaxWidth(),
+                visualTransformation = PasswordVisualTransformation()
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(
+                onClick = {
+                    val intent = Intent(context, HomeScreenActivity::class.java)
+                    context.startActivity(intent)
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Login")
             }
         }
     }
