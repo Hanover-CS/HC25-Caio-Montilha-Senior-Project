@@ -33,6 +33,9 @@
         <!-- Declare HomeScreenActivity -->
         <activity android:name=".activities.HomeScreenActivity" />
 
+        <!-- Declare RideRequestScreen -->
+        <activity android:name=".activities.RideRequestScreen" />
+
     </application>
 
 </manifest>

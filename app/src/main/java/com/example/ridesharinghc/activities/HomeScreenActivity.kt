@@ -1,11 +1,13 @@
 package com.example.ridesharinghc.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -14,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,6 +38,8 @@ class HomeScreenActivity : ComponentActivity() {
 
 @Composable
 fun HomeScreen() {
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -84,12 +89,19 @@ fun HomeScreen() {
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 ActionBox(
-                    painterResource(id = R.drawable.ic_get_ride),
-                    text = "Get a Ride"
+                    icon = painterResource(id = R.drawable.ic_get_ride),
+                    text = "Get a Ride",
+                    onClick = {
+                        val intent = Intent(context, RideRequestScreen::class.java)
+                        context.startActivity(intent)
+                    }
                 )
                 ActionBox(
-                    painterResource(id = R.drawable.ic_offer_ride),
-                    text = "Offer a Ride"
+                    icon = painterResource(id = R.drawable.ic_offer_ride),
+                    text = "Offer a Ride",
+                    onClick = {
+                        // Handle "Offer a Ride in the future still need to program the screen" click
+                    }
                 )
             }
 
@@ -111,7 +123,7 @@ fun HomeScreen() {
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
-                    RequestItem("Walmart", "2:00 PM") // just static for now
+                    RequestItem("Walmart", "2:00 PM")
                     RequestItem("TJ Maxx", "5:30 PM")
                 }
             }
@@ -120,12 +132,17 @@ fun HomeScreen() {
 }
 
 @Composable
-fun ActionBox(icon: Painter, text: String) {
+fun ActionBox(
+    icon: Painter,
+    text: String,
+    onClick: () -> Unit // Add onClick parameter
+) {
     Column(
         modifier = Modifier
             .size(150.dp)
             .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
-            .padding(16.dp),
+            .padding(16.dp)
+            .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -146,7 +163,8 @@ fun RequestItem(location: String, time: String) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Row {
-            Image(painter = painterResource(id = R.drawable.ic_person),
+            Image(
+                painter = painterResource(id = R.drawable.ic_person),
                 contentDescription = "Person",
                 modifier = Modifier.size(24.dp)
             )
@@ -156,5 +174,3 @@ fun RequestItem(location: String, time: String) {
         Text(text = time, fontSize = 16.sp)
     }
 }
-
-
