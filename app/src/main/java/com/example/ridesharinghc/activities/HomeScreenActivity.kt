@@ -18,12 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
-import androidx.compose.ui.text.font.FontWeight
-import com.example.ridesharinghc.R
 
 class HomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,7 +100,8 @@ fun HomeScreen() {
                     icon = painterResource(id = R.drawable.ic_offer_ride),
                     text = "Offer a Ride",
                     onClick = {
-                        // Handle "Offer a Ride in the future still need to program the screen" click
+                        val intent = Intent(context, OfferRideScreen::class.java)
+                        context.startActivity(intent)
                     }
                 )
             }
@@ -156,21 +157,3 @@ fun ActionBox(
     }
 }
 
-@Composable
-fun RequestItem(location: String, time: String) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row {
-            Image(
-                painter = painterResource(id = R.drawable.ic_person),
-                contentDescription = "Person",
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = location, fontSize = 16.sp)
-        }
-        Text(text = time, fontSize = 16.sp)
-    }
-}

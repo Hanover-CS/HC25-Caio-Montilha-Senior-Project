@@ -36,6 +36,9 @@
         <!-- Declare RideRequestScreen -->
         <activity android:name=".activities.RideRequestScreen" />
 
+        <!-- Declare OfferRideScreen -->
+        <activity android:name=".activities.OfferRideScreen" />
+
     </application>
 
 </manifest>
