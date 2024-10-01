@@ -165,4 +165,4 @@ Using [IEEE style](https://libguides.murdoch.edu.au/IEEE) for bibliographical re
 
 - [13] Google, "Flutter UI Overview," Flutter. https://docs.flutter.dev/ui (accessed Sept. 18, 2024).
 
-- [14] Mermaid, "Mermaid: Generation of diagrams and flowcharts," Mermaid. https://mermaid.js.org/ (accessed Sept. 24, 2024).
+- [14] Mermaid, "Mermaid: Generation of diagrams and flowcharts," Mermaid. https://mermaid.live/ (accessed Sept. 24, 2024).
