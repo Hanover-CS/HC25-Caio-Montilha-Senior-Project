@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "4897308279",
+    "firebase_url": "https://ridesharinghc-328b6-default-rtdb.firebaseio.com",
+    "project_id": "ridesharinghc-328b6",
+    "storage_bucket": "ridesharinghc-328b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4897308279:android:320cde8c94e952a943d072",
+        "android_client_info": {
+          "package_name": "com.example.ridesharinghc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdXYDFcox53EwrwvuYYhJMMqQXop2z8t8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

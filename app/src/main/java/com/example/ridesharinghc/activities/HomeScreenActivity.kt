@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -94,7 +95,8 @@ fun HomeScreen() {
                     onClick = {
                         val intent = Intent(context, RideRequestScreen::class.java)
                         context.startActivity(intent)
-                    }
+                    },
+                    tag = "getARideButton"
                 )
                 ActionBox(
                     icon = painterResource(id = R.drawable.ic_offer_ride),
@@ -102,7 +104,8 @@ fun HomeScreen() {
                     onClick = {
                         val intent = Intent(context, OfferRideScreen::class.java)
                         context.startActivity(intent)
-                    }
+                    },
+                    tag = "offerARideButton"
                 )
             }
 
@@ -136,14 +139,16 @@ fun HomeScreen() {
 fun ActionBox(
     icon: Painter,
     text: String,
-    onClick: () -> Unit // Add onClick parameter
+    onClick: () -> Unit,
+    tag: String
 ) {
     Column(
         modifier = Modifier
             .size(150.dp)
             .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
             .padding(16.dp)
-            .clickable(onClick = onClick),
+            .clickable(onClick = onClick)
+            .testTag(tag),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -156,4 +161,3 @@ fun ActionBox(
         Text(text = text, fontSize = 16.sp)
     }
 }
-

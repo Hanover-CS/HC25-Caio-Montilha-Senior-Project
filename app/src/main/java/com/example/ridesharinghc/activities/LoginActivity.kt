@@ -23,6 +23,7 @@ import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.example.ridesharinghc.ui.theme.LogoBlue
+import androidx.compose.ui.platform.testTag
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,13 +66,13 @@ fun LoginScreen(onBackClick: () -> Unit) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
-                    contentDescription = "Back",
+                    contentDescription = "Voltar / Back",
                     modifier = Modifier.size(30.dp)
                 )
             }
         }
 
-        // Rest of the content
+        // Main content of the login screen
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -91,10 +92,12 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Login Text
             Text(text = "Login", fontSize = 24.sp)
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            //  TextField for Email
             TextField(
                 value = email,
                 onValueChange = { email = it },
@@ -104,6 +107,7 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // TextField for Password
             TextField(
                 value = password,
                 onValueChange = { password = it },
@@ -116,13 +120,17 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
             Button(
                 onClick = {
+                    // Navigate to HomeScreenActivity
                     val intent = Intent(context, HomeScreenActivity::class.java)
                     context.startActivity(intent)
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("loginButton")
             ) {
                 Text("Login")
             }
         }
     }
 }
+
