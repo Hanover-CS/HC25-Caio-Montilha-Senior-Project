@@ -63,7 +63,7 @@ jobs:
 
       # Create APK Release
       - name: Build APK Release Project
-        run: ./gradlew assemble
+        run: ./gradlew assembleRelease
 
       # Create AAB (App Bundle) Release
       - name: Build AAB (App Bundle) Release
@@ -74,18 +74,18 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Debug Generated
-          path: ${{ env.main_project_module }}/build/outputs/apk/debug/
+          path: ${{ env.main_project_module }}/build/outputs/apk/debug/app-debug.apk
 
       # Upload Release APK as an artifact
       - name: Upload APK Release
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Release Generated
-          path: ${{ env.main_project_module }}/build/outputs/apk/release/
+          path: ${{ env.main_project_module }}/build/outputs/apk/release/app-release.apk
 
       # Upload AAB as an artifact
       - name: Upload AAB (App Bundle) Release
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - App Bundle AAB Release Generated
-          path: ${{ env.main_project_module }}/build/outputs/bundle/release/
+          path: ${{ env.main_project_module }}/build/outputs/bundle/release/app-release.aab

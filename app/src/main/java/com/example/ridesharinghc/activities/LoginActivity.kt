@@ -2,6 +2,7 @@ package com.example.ridesharinghc.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -24,20 +25,24 @@ import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import androidx.compose.ui.platform.testTag
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : ComponentActivity() {
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val auth: FirebaseAuth = FirebaseAuth.getInstance() // Firebase Authentication
         setContent {
             RideSharingHCTheme {
-                LoginScreen(onBackClick = { finish() })
+                LoginScreen(auth = auth, onBackClick = { finish() })
             }
         }
     }
 }
 
 @Composable
-fun LoginScreen(onBackClick: () -> Unit) {
+fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -120,9 +125,31 @@ fun LoginScreen(onBackClick: () -> Unit) {
 
             Button(
                 onClick = {
-                    // Navigate to HomeScreenActivity
-                    val intent = Intent(context, HomeScreenActivity::class.java)
-                    context.startActivity(intent)
+                    if (email.isNotEmpty() && password.isNotEmpty()) {
+                        // Try to log in using Firebase Authentication
+                        auth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    // Login successful
+                                    val intent = Intent(context, HomeScreenActivity::class.java)
+                                    context.startActivity(intent)
+                                } else {
+                                    // Login fail, show exact error message
+                                    Toast.makeText(
+                                        context,
+                                        task.exception?.message ?: "Login failed. Please check your credentials.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                    } else {
+                        // Show an error message if fields are empty
+                        Toast.makeText(
+                            context,
+                            "Please fill in all fields.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -133,4 +160,3 @@ fun LoginScreen(onBackClick: () -> Unit) {
         }
     }
 }
-
