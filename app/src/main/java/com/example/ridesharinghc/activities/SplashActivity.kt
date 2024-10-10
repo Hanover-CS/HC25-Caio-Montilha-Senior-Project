@@ -20,6 +20,12 @@ import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import kotlinx.coroutines.delay
 
+/**
+ * SplashActivity displays a splash screen with the app logo and
+ * navigates to the Login/Register screen after a 3-second delay.
+ * Uses a coroutine to handle the delay in the composable.
+ * Handles navigation using an intent with error logging.
+ */
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -26,6 +26,11 @@ import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 
+/**
+ * HomeScreenActivity displays the main dashboard where users can choose to request or offer a ride.
+ * The screen includes navigation to RideRequestScreen and OfferRideScreen and shows current ride requests.
+ * It utilizes Jetpack Compose for the UI.
+ */
 class HomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

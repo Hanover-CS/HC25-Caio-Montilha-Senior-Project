@@ -26,6 +26,12 @@ import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 
+/**
+ * OfferRideScreen displays the UI for drivers to offer rides.
+ * The screen includes fields for entering driver details, time, location, and available seats.
+ * Displays existing ride requests and a placeholder for map.
+ * Provides a button to submit the offered ride.
+ */
 class OfferRideScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

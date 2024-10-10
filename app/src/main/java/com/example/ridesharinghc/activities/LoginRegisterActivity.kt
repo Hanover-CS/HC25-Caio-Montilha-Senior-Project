@@ -33,6 +33,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.launch
 
+/**
+ * LoginRegisterActivity handles the user registration and navigation.
+ * Displays a form to create an account, saving the data to Firebase.
+ * Includes logic for password confirmation and transitions to the login screen.
+ * Uses Firebase Authentication for user account creation and stores user data in Realtime Database.
+ */
 class LoginRegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +62,8 @@ fun LoginRegisterScreen(navController: NavController?) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-
-    // bar host state
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-
     val context = LocalContext.current
 
     // Initialize FirebaseAuth
@@ -162,7 +165,7 @@ fun LoginRegisterScreen(navController: NavController?) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Login button using context from LocalContext
+            // Login button
             Button(onClick = {
                 val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
@@ -209,7 +212,7 @@ fun saveUserToFirebase(userId: String, email: String, password: String, onSucces
 
     usersRef.child(userId).setValue(userData)
         .addOnSuccessListener {
-            // Data successfully saved, call onSuccess
+            // Data successfully saved
             onSuccess()
         }
         .addOnFailureListener {

@@ -27,6 +27,12 @@ import com.example.ridesharinghc.ui.theme.LogoBlue
 import androidx.compose.ui.platform.testTag
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * LoginActivity handles the login functionality of the RideSharingHC app.
+ * It uses Firebase Authentication to verify user credentials.
+ * On successful login, it navigates the user to the HomeScreenActivity.
+ * The UI is built using Jetpack Compose.
+ */
 class LoginActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
 
@@ -82,7 +88,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(top = 16.dp), // Adding some padding for the content
+                .padding(top = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -112,7 +118,6 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // TextField for Password
             TextField(
                 value = password,
                 onValueChange = { password = it },
@@ -134,7 +139,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
                                     val intent = Intent(context, HomeScreenActivity::class.java)
                                     context.startActivity(intent)
                                 } else {
-                                    // Login fail, show exact error message
+                                    // Login fail
                                     Toast.makeText(
                                         context,
                                         task.exception?.message ?: "Login failed. Please check your credentials.",

@@ -25,6 +25,11 @@ import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 
+/**
+ * RideRequestScreen allows users to input ride details like drop-off location,
+ * date, time, and additional notes. It includes a map placeholder for future
+ * Google Maps integration and a request button to submit the ride request.
+ */
 class RideRequestScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
