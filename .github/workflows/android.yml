@@ -30,7 +30,7 @@ jobs:
 
       # Set Repository Name As Env Variable
       - name: Set repository name as env variable
-        # run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+        run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
 
       # Set up JDK 17
       - name: Set Up JDK
@@ -73,19 +73,19 @@ jobs:
       - name: Upload APK Debug
         uses: actions/upload-artifact@v3
         with:
-          #name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Debug Generated
+          name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Debug Generated
           path: ${{ env.main_project_module }}/build/outputs/apk/debug/app-debug.apk
 
       # Upload Release APK as an artifact
       - name: Upload APK Release
         uses: actions/upload-artifact@v3
         with:
-          #name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Release Generated
-          #path: ${{ env.main_project_module }}/build/outputs/apk/release/app-release.apk
+          name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Release Generated
+          path: ${{ env.main_project_module }}/build/outputs/apk/release/app-release.apk
 
       # Upload AAB as an artifact
       - name: Upload AAB (App Bundle) Release
         uses: actions/upload-artifact@v3
         with:
-          #name: ${{ env.date_today }} - ${{ env.repository_name }} - App Bundle AAB Release Generated
-          #path: ${{ env.main_project_module }}/build/outputs/bundle/release/app-release.aab
+          name: ${{ env.date_today }} - ${{ env.repository_name }} - App Bundle AAB Release Generated
+          path: ${{ env.main_project_module }}/build/outputs/bundle/release/app-release.aab
