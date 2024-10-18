@@ -1,7 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services") // Firebase Google services plugin to enable Firebase in the app
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -30,6 +31,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -51,44 +53,48 @@ android {
 }
 
 dependencies {
+    // Core AndroidX libraries
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
-    implementation("androidx.activity:activity-compose:1.9.2")
+    implementation("androidx.activity:activity-compose:1.9.3")
 
-    // Jetpack Compose dependencies
+    // Jetpack Compose libraries
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
 
-    // Material 3
+    // Material Design 3 for Compose
     implementation("androidx.compose.material3:material3:1.3.0")
+    implementation("androidx.navigation:navigation-compose:2.8.3")
 
-    // Navigation for Compose
-    implementation("androidx.navigation:navigation-compose:2.8.2")
-
-    // AppCompat for compatibility with older Android versions
+    // AppCompat for backward compatibility
     implementation("androidx.appcompat:appcompat:1.7.0")
 
-    // Firebase Realtime Database
+    // Firebase libraries
     implementation("com.google.firebase:firebase-database-ktx:21.0.0")
-
-    // Firebase Authentication
     implementation("com.google.firebase:firebase-auth-ktx:23.0.0")
+    implementation("com.google.firebase:firebase-firestore:25.1.0") // Cloud Firestore
 
-    // Testing dependencies
+    // Google Maps and Location Services
+    implementation("com.google.maps.android:maps-compose:2.8.0") // Compose support for Google Maps
+    implementation("com.google.android.gms:play-services-maps:19.0.0") // Google Maps API for Android
+    implementation("com.google.android.gms:play-services-location:21.3.0") // Google Play services location API
+    implementation("com.google.android.libraries.places:places:4.0.0") // Google Places API
+
+
+    // Testing libraries
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
-    // Compose testing dependencies
+    // Jetpack Compose testing libraries
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    // Mockito for unit testing
+    // Mockito for testing
     testImplementation("org.mockito:mockito-core:4.6.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 }
-

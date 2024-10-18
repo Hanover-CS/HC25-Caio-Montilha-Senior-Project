@@ -1,6 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ridesharinghc">
+
+    <!-- Permissions for Google Maps and location services -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -12,7 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RideSharingHC">
 
-        <!-- Set SplashActivity as the main launcher activity -->
+        <!-- Add the Google Maps API Key using meta-data -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_KEY}" /> <!-- IMPORTANT: just for now, i need to hide my key later -->
+
+        <!-- Declare activities -->
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true"
@@ -24,19 +33,10 @@
             </intent-filter>
         </activity>
 
-        <!-- Declare LoginRegisterActivity -->
         <activity android:name=".activities.LoginRegisterActivity" />
-
-        <!-- Declare LoginActivity -->
         <activity android:name=".activities.LoginActivity" />
-
-        <!-- Declare HomeScreenActivity -->
         <activity android:name=".activities.HomeScreenActivity" />
-
-        <!-- Declare RideRequestScreen -->
         <activity android:name=".activities.RideRequestScreen" />
-
-        <!-- Declare OfferRideScreen -->
         <activity android:name=".activities.OfferRideScreen" />
 
     </application>

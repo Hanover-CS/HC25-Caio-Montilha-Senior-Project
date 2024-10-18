@@ -11,7 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,12 +25,10 @@ import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
-/**
- * HomeScreenActivity displays the main dashboard where users can choose to request or offer a ride.
- * The screen includes navigation to RideRequestScreen and OfferRideScreen and shows current ride requests.
- * It utilizes Jetpack Compose for the UI.
- */
+
 class HomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +43,28 @@ class HomeScreenActivity : ComponentActivity() {
 @Composable
 fun HomeScreen() {
     val context = LocalContext.current
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    var requests by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
+
+    LaunchedEffect(Unit) {
+        val userId = currentUser?.uid ?: ""
+        val requestRef = FirebaseDatabase.getInstance().getReference("rideRequests").child(userId)
+
+        requestRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val requestList = mutableListOf<Pair<String, Map<String, String>>>()
+                snapshot.children.forEach { childSnapshot ->
+                    val request = childSnapshot.getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                    request?.let { requestList.add(childSnapshot.key!! to request) }
+                }
+                requests = requestList
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+            }
+        })
+    }
 
     Box(
         modifier = Modifier
@@ -132,12 +152,40 @@ fun HomeScreen() {
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
-                    RequestItem("Walmart", "2:00 PM")
-                    RequestItem("TJ Maxx", "5:30 PM")
+
+                    requests.forEach { (key, request) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "${request["dropOffLocation"]} - ${request["time"]}",
+                                fontSize = 16.sp
+                            )
+                            IconButton(onClick = {
+                                deleteRequest(key)
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_delete),
+                                    contentDescription = "Delete",
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+fun deleteRequest(requestId: String) {
+    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+    val requestRef = FirebaseDatabase.getInstance().getReference("rideRequests").child(userId).child(requestId)
+    requestRef.removeValue()
 }
 
 @Composable
