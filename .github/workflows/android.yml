@@ -42,13 +42,13 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y lib32stdc++6 lib32z1
-          mkdir -p $ANDROID_SDK_ROOT/cmdline-tools/latest
-          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O android_tools.zip
-          unzip android_tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools/latest
-          export ANDROID_SDK_ROOT=$HOME/sdk
+          mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
+          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O commandline-tools.zip
+          unzip commandline-tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools
+          mv $ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
-          yes | sdkmanager --licenses
-          sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
+          $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
       # Grant execute permission for gradlew
       - name: Change wrapper permissions
@@ -103,4 +103,3 @@ jobs:
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - App Bundle AAB Release Generated
           path: ${{ env.main_project_module }}/build/outputs/bundle/release/
-
