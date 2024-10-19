@@ -2,6 +2,7 @@ name: Android CI with APK and AAB Artifact Upload
 
 env:
   main_project_module: app
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
 
 on:
   push:
@@ -10,7 +11,6 @@ on:
   pull_request:
     branches:
       - main
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -42,8 +42,8 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y lib32stdc++6 lib32z1
+          mkdir -p $ANDROID_SDK_ROOT/cmdline-tools/latest
           wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O android_tools.zip
-          mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
           unzip android_tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools/latest
           export ANDROID_SDK_ROOT=$HOME/sdk
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
@@ -103,3 +103,4 @@ jobs:
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - App Bundle AAB Release Generated
           path: ${{ env.main_project_module }}/build/outputs/bundle/release/
+
