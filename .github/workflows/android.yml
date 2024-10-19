@@ -1,110 +1,110 @@
-name: Android CI with APK and AAB Artifact Upload
+# name: Android CI with APK and AAB Artifact Upload
 
-env:
-  main_project_module: app
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
+# env:
+#   main_project_module: app
+#   FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+#   workflow_dispatch:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      # Checkout the code from the repository
-      - uses: actions/checkout@v3
+#     steps:
+#       # Checkout the code from the repository
+#       - uses: actions/checkout@v3
 
-      # Set Current Date As Env Variable
-      - name: Set current date as env variable
-        run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+#       # Set Current Date As Env Variable
+#       - name: Set current date as env variable
+#         run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
-      # Set Repository Name As Env Variable
-      - name: Set repository name as env variable
-        run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+#       # Set Repository Name As Env Variable
+#       - name: Set repository name as env variable
+#         run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
 
-      # Set up JDK 17
-      - name: Set Up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-          cache: 'gradle'
+#       # Set up JDK 17
+#       - name: Set Up JDK
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: 'zulu'
+#           java-version: '17'
+#           cache: 'gradle'
 
-      # Install Android SDK via command line
-      - name: Install Android SDK
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y lib32stdc++6 lib32z1
-          mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
-          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O commandline-tools.zip
-          unzip commandline-tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools
-          mv $ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
-          export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
-          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
-          $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+#       # Install Android SDK via command line
+#       - name: Install Android SDK
+#         run: |
+#           sudo apt-get update -qq
+#           sudo apt-get install -y lib32stdc++6 lib32z1
+#           mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
+#           wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O commandline-tools.zip
+#           unzip commandline-tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools
+#           mv $ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
+#           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
+#           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
+#           $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
-      # Create local.properties for Android SDK
-      - name: Create local.properties
-        run: |
-          echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+#       # Create local.properties for Android SDK
+#       - name: Create local.properties
+#         run: |
+#           echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
 
-      # Grant execute permission for gradlew
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
+#       # Grant execute permission for gradlew
+#       - name: Change wrapper permissions
+#         run: chmod +x ./gradlew
 
-      # Set environment variables for API keys
-      - name: Set MAPS_KEY as environment variable
-        run: echo "MAPS_KEY=${{ secrets.MAPS_KEY }}" >> $GITHUB_ENV
+#       # Set environment variables for API keys
+#       - name: Set MAPS_KEY as environment variable
+#         run: echo "MAPS_KEY=${{ secrets.MAPS_KEY }}" >> $GITHUB_ENV
 
-      # Create google-services.json file if required
-      - name: Create google-services.json
-        if: env.GOOGLE_SERVICES_JSON_BASE64 != ''
-        run: echo ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }} | base64 --decode > app/google-services.json
+#       # Create google-services.json file if required
+#       - name: Create google-services.json
+#         if: env.GOOGLE_SERVICES_JSON_BASE64 != ''
+#         run: echo ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }} | base64 --decode > app/google-services.json
 
-      # Run Gradle Tests
-      - name: Run gradle tests
-        run: ./gradlew test
+#       # Run Gradle Tests
+#       - name: Run gradle tests
+#         run: ./gradlew test
 
-      # Build Gradle Project
-      - name: Build gradle project
-        run: ./gradlew build
+#       # Build Gradle Project
+#       - name: Build gradle project
+#         run: ./gradlew build
 
-      # Create APK Debug
-      - name: Build APK Debug Project
-        run: ./gradlew assembleDebug
+#       # Create APK Debug
+#       - name: Build APK Debug Project
+#         run: ./gradlew assembleDebug
 
-      # Create APK Release
-      - name: Build APK Release Project
-        run: ./gradlew assembleRelease
+#       # Create APK Release
+#       - name: Build APK Release Project
+#         run: ./gradlew assembleRelease
 
-      # Create AAB (App Bundle) Release
-      - name: Build AAB (App Bundle) Release
-        run: ./gradlew ${{ env.main_project_module }}:bundleRelease
+#       # Create AAB (App Bundle) Release
+#       - name: Build AAB (App Bundle) Release
+#         run: ./gradlew ${{ env.main_project_module }}:bundleRelease
 
-      # Upload APK Debug as an artifact
-      - name: Upload APK Debug - ${{ env.repository_name }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Debug Generated
-          path: ${{ env.main_project_module }}/build/outputs/apk/debug/
+#       # Upload APK Debug as an artifact
+#       - name: Upload APK Debug - ${{ env.repository_name }}
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Debug Generated
+#           path: ${{ env.main_project_module }}/build/outputs/apk/debug/
 
-      # Upload APK Release as an artifact
-      - name: Upload APK Release - ${{ env.repository_name }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Release Generated
-          path: ${{ env.main_project_module }}/build/outputs/apk/release/
+#       # Upload APK Release as an artifact
+#       - name: Upload APK Release - ${{ env.repository_name }}
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Release Generated
+#           path: ${{ env.main_project_module }}/build/outputs/apk/release/
 
-      # Upload AAB as an artifact
-      - name: Upload AAB (App Bundle) Release - ${{ env.repository_name }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.date_today }} - ${{ env.repository_name }} - App Bundle AAB Release Generated
-          path: ${{ env.main_project_module }}/build/outputs/bundle/release/
+#       # Upload AAB as an artifact
+#       - name: Upload AAB (App Bundle) Release - ${{ env.repository_name }}
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: ${{ env.date_today }} - ${{ env.repository_name }} - App Bundle AAB Release Generated
+#           path: ${{ env.main_project_module }}/build/outputs/bundle/release/
