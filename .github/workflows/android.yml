@@ -10,7 +10,7 @@ on:
   pull_request:
     branches:
       - main
-
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -19,8 +19,7 @@ jobs:
 
     steps:
       # Checkout the code from the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       # Set Current Date As Env Variable
       - name: Set current date as env variable
@@ -39,19 +38,20 @@ jobs:
           cache: 'gradle'
 
       # Install Android SDK via command line
-      - name: Set up Android SDK
+      - name: Install Android SDK
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y lib32stdc++6 lib32z1
-          wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -O android_tools.zip
-          unzip android_tools.zip -d android-sdk
-          mkdir -p $ANDROID_HOME/cmdline-tools
-          mv android-sdk/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O android_tools.zip
+          mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
+          unzip android_tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools/latest
+          export ANDROID_SDK_ROOT=$HOME/sdk
+          export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
+          yes | sdkmanager --licenses
+          sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
       # Grant execute permission for gradlew
-      - name: Grant execute permission for gradlew
+      - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
       # Set environment variables for API keys
@@ -64,11 +64,11 @@ jobs:
         run: echo ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }} | base64 --decode > app/google-services.json
 
       # Run Gradle Tests
-      - name: Run Gradle Tests
+      - name: Run gradle tests
         run: ./gradlew test
 
       # Build Gradle Project
-      - name: Build Gradle Project
+      - name: Build gradle project
         run: ./gradlew build
 
       # Create APK Debug
@@ -83,23 +83,23 @@ jobs:
       - name: Build AAB (App Bundle) Release
         run: ./gradlew ${{ env.main_project_module }}:bundleRelease
 
-      # Upload Debug APK as an artifact
-      - name: Upload APK Debug
+      # Upload APK Debug as an artifact
+      - name: Upload APK Debug - ${{ env.repository_name }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Debug Generated
-          path: ${{ env.main_project_module }}/build/outputs/apk/debug/app-debug.apk
+          path: ${{ env.main_project_module }}/build/outputs/apk/debug/
 
-      # Upload Release APK as an artifact
-      - name: Upload APK Release
+      # Upload APK Release as an artifact
+      - name: Upload APK Release - ${{ env.repository_name }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Release Generated
-          path: ${{ env.main_project_module }}/build/outputs/apk/release/app-release.apk
+          path: ${{ env.main_project_module }}/build/outputs/apk/release/
 
       # Upload AAB as an artifact
-      - name: Upload AAB (App Bundle) Release
+      - name: Upload AAB (App Bundle) Release - ${{ env.repository_name }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - App Bundle AAB Release Generated
-          path: ${{ env.main_project_module }}/build/outputs/bundle/release/app-release.aab
+          path: ${{ env.main_project_module }}/build/outputs/bundle/release/
