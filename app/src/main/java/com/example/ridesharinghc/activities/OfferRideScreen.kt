@@ -1,40 +1,61 @@
 package com.example.ridesharinghc.activities
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.database.FirebaseDatabase
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.firebase.auth.FirebaseAuth
 
-/**
- * OfferRideScreen displays the UI for drivers to offer rides.
- * The screen includes fields for entering driver details, time, location, and available seats.
- * Displays existing ride requests and a placeholder for map.
- * Provides a button to submit the offered ride.
- */
 class OfferRideScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (!Places.isInitialized()) {
+            val applicationInfo = applicationContext.packageManager.getApplicationInfo(
+                applicationContext.packageName,
+                PackageManager.GET_META_DATA
+            )
+            applicationInfo.metaData.getString("com.google.android.geo.API_KEY")
+                ?.let { Places.initialize(applicationContext, it) }
+        }
+
         setContent {
             RideSharingHCTheme {
                 OfferRideScreenContent(onBackClick = { finish() })
@@ -45,7 +66,40 @@ class OfferRideScreen : ComponentActivity() {
 
 @Composable
 fun OfferRideScreenContent(onBackClick: () -> Unit) {
+    val driverName = remember { mutableStateOf("") }
+    val pickupLocation = remember { mutableStateOf("") }
+    val date = remember { mutableStateOf("") }
+    val time = remember { mutableStateOf("") }
+    val seatsAvailable = remember { mutableStateOf("") }
     val context = LocalContext.current
+
+    val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+    val markerState = remember { mutableStateOf(MarkerState(LatLng(-33.852, 151.211))) }
+    val cameraPositionState = rememberCameraPositionState()
+
+    LaunchedEffect(key1 = Unit) {
+        if (ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                context as ComponentActivity,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1
+            )
+        } else {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                location?.let {
+                    val currentLocation = LatLng(it.latitude, it.longitude)
+                    markerState.value = MarkerState(currentLocation)
+                    cameraPositionState.position = com.google.android.gms.maps.model.CameraPosition.fromLatLngZoom(currentLocation, 10f)
+                } ?: run {
+                    Toast.makeText(context, "Unable to get location", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -54,132 +108,110 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        // Top Row for Back Arrow and Profile Icon
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             IconButton(onClick = onBackClick) {
-                Icon(
-                    painter = painterResource(id = R.drawable.arrow),
-                    contentDescription = "Back",
-                    modifier = Modifier.size(32.dp)
-                )
-            }
-
-            IconButton(onClick = { /* TODO: Handle profile click */ }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_person),
-                    contentDescription = "Profile",
-                    modifier = Modifier.size(32.dp)
-                )
+                Icon(painterResource(id = R.drawable.arrow), contentDescription = "Back", modifier = Modifier.size(32.dp))
             }
         }
 
-        // Placeholder for the map (currently empty)
+        SearchLocationBar { latLng ->
+            markerState.value = MarkerState(latLng)
+            cameraPositionState.position = com.google.android.gms.maps.model.CameraPosition.fromLatLngZoom(latLng, 12f)
+        }
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(400.dp)
                 .border(2.dp, Color.Blue, RoundedCornerShape(8.dp))
-                .padding(8.dp)
         ) {
-            // Empty Box to hold future Google Maps implementation
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // List of Existing Requests
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .border(1.dp, Color.Black, RoundedCornerShape(8.dp)),
-            shape = RoundedCornerShape(8.dp),
-            elevation = CardDefaults.elevatedCardElevation()
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "List of Existing Requests:",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 8.dp)
+            GoogleMap(
+                modifier = Modifier.fillMaxSize(),
+                cameraPositionState = cameraPositionState
+            ) {
+                Marker(
+                    state = markerState.value,
+                    title = "Selected Location"
                 )
-                RequestItem("Walmart", "2:00 PM")
-                RequestItem("TJ Maxx", "5:30 PM")
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Fields to Offer a Ride
-        Text(
-            text = "Set available time and location to offer the ride:",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-        val driverName = remember { mutableStateOf(TextFieldValue()) }
-        val pickupLocation = remember { mutableStateOf(TextFieldValue()) }
-        val date = remember { mutableStateOf(TextFieldValue()) }
-        val time = remember { mutableStateOf(TextFieldValue()) }
-        val seatsAvailable = remember { mutableStateOf(TextFieldValue()) }
+        Spacer(modifier = Modifier.height(32.dp))
 
         TextField(
             value = driverName.value,
             onValueChange = { driverName.value = it },
             label = { Text("Driver's name") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
         )
 
         TextField(
             value = pickupLocation.value,
             onValueChange = { pickupLocation.value = it },
             label = { Text("Pickup and Drop-off Location") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
         )
 
         TextField(
             value = date.value,
-            onValueChange = { date.value = it },
-            label = { Text("Date") },
+            onValueChange = {
+                if (it.length <= 10) {
+                    val formatted = it
+                        .replace(Regex("[^0-9]"), "")
+                        .chunked(2)
+                        .joinToString("/")
+                    date.value = formatted
+                }
+            },
+            label = { Text("Date (MM/DD/YYYY)") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp)
+                .padding(vertical = 8.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
         TextField(
             value = time.value,
             onValueChange = { time.value = it },
             label = { Text("Time") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
         )
 
         TextField(
             value = seatsAvailable.value,
             onValueChange = { seatsAvailable.value = it },
             label = { Text("Seats available") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Button to Submit Offer
         Button(
             onClick = {
-                // TODO: Handle offer ride submission logic here
+                val offer = hashMapOf(
+                    "driverName" to driverName.value,
+                    "pickupLocation" to pickupLocation.value,
+                    "date" to date.value,
+                    "time" to time.value,
+                    "seatsAvailable" to seatsAvailable.value
+                )
+
+                val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+                FirebaseDatabase.getInstance().reference.child("rideOffers").child(userId)
+                    .push()
+                    .setValue(offer)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Ride offered successfully", Toast.LENGTH_SHORT).show()
+                        onBackClick()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(context, "Failed to offer ride", Toast.LENGTH_SHORT).show()
+                    }
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)

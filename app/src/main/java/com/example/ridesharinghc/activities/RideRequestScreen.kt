@@ -57,7 +57,8 @@ class RideRequestScreen : ComponentActivity() {
                 applicationContext.packageName,
                 PackageManager.GET_META_DATA
             )
-            Places.initialize(applicationContext, applicationInfo.metaData.getString("com.google.android.geo.API_KEY"))
+            applicationInfo.metaData.getString("com.google.android.geo.API_KEY")
+                ?.let { Places.initialize(applicationContext, it) }
         }
 
         setContent {
@@ -165,7 +166,6 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
         TextField(
             value = date.value,
             onValueChange = {
-                // Allow only numbers and auto-add slashes for MM/DD/YYYY format
                 if (it.length <= 10) {
                     val formatted = it
                         .replace(Regex("[^0-9]"), "")

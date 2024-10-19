@@ -28,7 +28,6 @@ import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-
 class HomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +44,7 @@ fun HomeScreen() {
     val context = LocalContext.current
     val currentUser = FirebaseAuth.getInstance().currentUser
     var requests by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
+    var offers by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
 
     LaunchedEffect(Unit) {
         val userId = currentUser?.uid ?: ""
@@ -61,7 +61,26 @@ fun HomeScreen() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle error
+
+            }
+        })
+    }
+
+    LaunchedEffect(Unit) {
+        val userId = currentUser?.uid ?: ""
+        val offerRef = FirebaseDatabase.getInstance().getReference("rideOffers").child(userId)
+
+        offerRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val offerList = mutableListOf<Pair<String, Map<String, String>>>()
+                snapshot.children.forEach { childSnapshot ->
+                    val offer = childSnapshot.getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                    offer?.let { offerList.add(childSnapshot.key!! to offer) }
+                }
+                offers = offerList
+            }
+
+            override fun onCancelled(error: DatabaseError) {
             }
         })
     }
@@ -178,6 +197,51 @@ fun HomeScreen() {
                     }
                 }
             }
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .border(1.dp, Color.Black, RoundedCornerShape(8.dp)),
+                shape = RoundedCornerShape(8.dp),
+                elevation = CardDefaults.elevatedCardElevation()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Current Rides Offered:",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+
+                    offers.forEach { (key, offer) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "${offer["pickupLocation"]} - ${offer["time"]}",
+                                fontSize = 16.sp
+                            )
+                            IconButton(onClick = {
+                                deleteOffer(key)
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_delete),
+                                    contentDescription = "Delete",
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -186,6 +250,12 @@ fun deleteRequest(requestId: String) {
     val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
     val requestRef = FirebaseDatabase.getInstance().getReference("rideRequests").child(userId).child(requestId)
     requestRef.removeValue()
+}
+
+fun deleteOffer(offerId: String) {
+    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+    val offerRef = FirebaseDatabase.getInstance().getReference("rideOffers").child(userId).child(offerId)
+    offerRef.removeValue()
 }
 
 @Composable
