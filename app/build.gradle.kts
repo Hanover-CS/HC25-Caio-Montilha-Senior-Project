@@ -20,6 +20,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // Inject Google Maps API Key from the environment variable
+        buildConfigField("String", "MAPS_API_KEY", "\"${System.getenv("MAPS_KEY") ?: ""}\"")
     }
 
     buildTypes {
@@ -39,12 +42,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    // Enable BuildConfig generation
     buildFeatures {
         compose = true
+        buildConfig = true // Add this line to enable BuildConfig fields
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -81,7 +89,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:19.0.0") // Google Maps API for Android
     implementation("com.google.android.gms:play-services-location:21.3.0") // Google Play services location API
     implementation("com.google.android.libraries.places:places:4.0.0") // Google Places API
-
 
     // Testing libraries
     testImplementation("junit:junit:4.13.2")

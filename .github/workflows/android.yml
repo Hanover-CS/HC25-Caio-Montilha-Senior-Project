@@ -40,9 +40,21 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
+      # Install Android SDK
+      - name: Install Android SDK
+        uses: android-actions/setup-android-sdk@v2
+        with:
+          api-levels: 30
+          build-tools: 30.0.3
+          ndk: true
+
       # Grant execute permission for gradlew
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
+
+      # Set environment variables for API keys
+      - name: Set MAPS_KEY as environment variable
+        run: echo "MAPS_KEY=${{ secrets.MAPS_KEY }}" >> $GITHUB_ENV
 
       # Create google-services.json file if required
       - name: Create google-services.json
