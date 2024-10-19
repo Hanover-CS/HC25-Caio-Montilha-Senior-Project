@@ -1,7 +1,6 @@
 name: Android CI with APK and AAB Artifact Upload
 
 env:
-  # The name of the main module repository
   main_project_module: app
 
 on:
@@ -12,7 +11,6 @@ on:
     branches:
       - main
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -40,17 +38,17 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      # Install Android SDK using sdkmanager
-      - name: Install Android SDK
+      # Install Android SDK via command line
+      - name: Set up Android SDK
         run: |
-          sudo apt-get update
-          sudo apt-get install -y wget tar unzip
-          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
-          unzip commandlinetools-linux-8512546_latest.zip -d $HOME/sdk/cmdline-tools
-          export ANDROID_HOME=$HOME/sdk
-          export PATH=$ANDROID_HOME/cmdline-tools/tools/bin:$PATH
-          yes | sdkmanager --sdk_root=$ANDROID_HOME --licenses
-          sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+          sudo apt-get update -qq
+          sudo apt-get install -y lib32stdc++6 lib32z1
+          wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -O android_tools.zip
+          unzip android_tools.zip -d android-sdk
+          mkdir -p $ANDROID_HOME/cmdline-tools
+          mv android-sdk/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
       # Grant execute permission for gradlew
       - name: Grant execute permission for gradlew
