@@ -1,4 +1,3 @@
-
 name: Android CI with APK and AAB Artifact Upload
 
 env:
@@ -51,10 +50,11 @@ jobs:
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
           $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
-      # Create local.properties for Android SDK
+      # Create local.properties for Android SDK and add MAPS_KEY
       - name: Create local.properties
         run: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+          echo "MAPS_KEY=${{ secrets.MAPS_KEY }}" >> local.properties
 
       # Grant execute permission for gradlew
       - name: Change wrapper permissions
