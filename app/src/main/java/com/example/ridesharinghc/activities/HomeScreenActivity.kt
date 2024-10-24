@@ -97,7 +97,10 @@ fun HomeScreen() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { /* TODO: handle menu click */ }) {
+            IconButton(onClick = {
+                val intent = Intent(context, MenuScreen::class.java)
+                context.startActivity(intent)
+            }) {
                 Icon(
                     painter = painterResource(id = R.drawable.menu_three_lines),
                     contentDescription = "Menu",
@@ -105,7 +108,10 @@ fun HomeScreen() {
                 )
             }
 
-            IconButton(onClick = { /* TODO: handle profile click */ }) {
+            IconButton(onClick = {
+                val intent = Intent(context, UserProfileScreen::class.java)
+                context.startActivity(intent)
+            }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_person),
                     contentDescription = "Profile",
