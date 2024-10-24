@@ -20,17 +20,4 @@ class HomeScreenActivityTest {
         composeTestRule.onNodeWithTag("offerARideButton").assertIsDisplayed()
     }
 
-    /*
-    @Test
-    fun testNavigationToRideRequestScreen() {
-        // Perform click on the "Get a Ride" button
-        composeTestRule.onNodeWithTag("getARideButton").performClick()
-
-        // Wait for idle to ensure the UI is fully rendered
-        composeTestRule.waitForIdle()
-
-        // Ensure that the RideRequestScreen is displayed by checking the visibility of elements in the target screen
-        composeTestRule.onNodeWithTag("rideRequestScreen").assertIsDisplayed()
-    }
-    */
 }
