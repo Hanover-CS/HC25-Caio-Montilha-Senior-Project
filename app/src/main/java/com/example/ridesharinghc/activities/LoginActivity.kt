@@ -26,6 +26,7 @@ import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import androidx.compose.ui.platform.testTag
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 /**
  * LoginActivity handles the login functionality of the RideSharingHC app.
@@ -38,7 +39,7 @@ class LoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val auth: FirebaseAuth = FirebaseAuth.getInstance() // Firebase Authentication
+        auth = FirebaseAuth.getInstance() // Firebase Authentication
         setContent {
             RideSharingHCTheme {
                 LoginScreen(auth = auth, onBackClick = { finish() })
@@ -135,11 +136,19 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
                         auth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
-                                    // Login successful
-                                    val intent = Intent(context, HomeScreenActivity::class.java)
-                                    context.startActivity(intent)
+                                    // Login successful, now retrieve user data from Firestore if needed
+                                    val userId = auth.currentUser?.uid
+                                    if (userId != null) {
+                                        checkUserInFirestore(userId, context)
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "User ID not found. Login failed.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 } else {
-                                    // Login fail
+                                    // Login failed
                                     Toast.makeText(
                                         context,
                                         task.exception?.message ?: "Login failed. Please check your credentials.",
@@ -164,4 +173,34 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             }
         }
     }
+}
+
+// Function to check user data in Firestore
+fun checkUserInFirestore(userId: String, context: android.content.Context) {
+    val firestore = FirebaseFirestore.getInstance()
+    val usersRef = firestore.collection("users")
+
+    usersRef.document(userId).get()
+        .addOnSuccessListener { document ->
+            if (document.exists()) {
+                // User data exists in Firestore, proceed to home screen
+                val intent = Intent(context, HomeScreenActivity::class.java)
+                context.startActivity(intent)
+            } else {
+                // User data not found in Firestore
+                Toast.makeText(
+                    context,
+                    "User data not found. Please register first.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        .addOnFailureListener { exception ->
+            // Handle any errors
+            Toast.makeText(
+                context,
+                "Failed to retrieve user data: ${exception.message}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 }

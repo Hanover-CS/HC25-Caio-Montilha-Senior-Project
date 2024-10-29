@@ -30,14 +30,14 @@ import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 /**
  * LoginRegisterActivity handles the user registration and navigation.
  * Displays a form to create an account, saving the data to Firebase.
  * Includes logic for password confirmation and transitions to the login screen.
- * Uses Firebase Authentication for user account creation and stores user data in Realtime Database.
+ * Uses Firebase Authentication for user account creation and stores user data in Firestore.
  */
 class LoginRegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -199,18 +199,17 @@ fun signUpUser(auth: FirebaseAuth, email: String, password: String, context: and
         }
 }
 
-
-// Function to save the user details to Firebase Realtime Database
+// Function to save the user details to Firebase Firestore
 fun saveUserToFirebase(userId: String, email: String, password: String, onSuccess: () -> Unit) {
-    val database = FirebaseDatabase.getInstance()
-    val usersRef = database.getReference("users")
+    val firestore = FirebaseFirestore.getInstance()
+    val usersRef = firestore.collection("users")
 
     val userData = mapOf(
         "email" to email,
         "password" to password
     )
 
-    usersRef.child(userId).setValue(userData)
+    usersRef.document(userId).set(userData)
         .addOnSuccessListener {
             // Data successfully saved
             onSuccess()

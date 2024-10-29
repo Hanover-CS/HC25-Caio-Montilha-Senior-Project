@@ -46,7 +46,7 @@ android {
     // Enable BuildConfig generation
     buildFeatures {
         compose = true
-        buildConfig = true // Add this line to enable BuildConfig fields
+        buildConfig = true
     }
 
     composeOptions {
@@ -81,8 +81,8 @@ dependencies {
 
     // Firebase libraries
     implementation("com.google.firebase:firebase-database-ktx:21.0.0")
-    implementation("com.google.firebase:firebase-auth-ktx:23.0.0")
-    implementation("com.google.firebase:firebase-firestore:25.1.0") // Cloud Firestore
+    implementation("com.google.firebase:firebase-auth-ktx:23.1.0")
+    implementation("com.google.firebase:firebase-firestore:25.1.1") // Cloud Firestore
 
     // Google Maps and Location Services
     implementation("com.google.maps.android:maps-compose:2.8.0") // Compose support for Google Maps
