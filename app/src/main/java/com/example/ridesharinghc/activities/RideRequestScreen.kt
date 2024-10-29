@@ -31,7 +31,7 @@ import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
@@ -41,10 +41,8 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import android.app.Activity
-import android.content.pm.PackageItemInfo
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
-import com.google.api.Context
 import com.google.firebase.auth.FirebaseAuth
 
 class RideRequestScreen : ComponentActivity() {
@@ -202,18 +200,19 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
         // Request Ride Button
         Button(
             onClick = {
+                val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
                 val request = hashMapOf(
                     "dropOffLocation" to dropOffLocation.value,
                     "date" to date.value,
                     "time" to time.value,
-                    "notes" to notes.value
+                    "notes" to notes.value,
+                    "userId" to userId // Adiciona o userId para controle de exclusão
                 )
 
-                // Submit the request to Firebase Realtime Database
-                val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-                FirebaseDatabase.getInstance().reference.child("rideRequests").child(userId)
-                    .push()
-                    .setValue(request)
+                // Submit the request to Firebase Firestore
+                val firestore = FirebaseFirestore.getInstance()
+                firestore.collection("rideRequests")
+                    .add(request) // Salva diretamente na coleção "rideRequests"
                     .addOnSuccessListener {
                         Toast.makeText(context, "Request submitted", Toast.LENGTH_SHORT).show()
                         onBackClick()
