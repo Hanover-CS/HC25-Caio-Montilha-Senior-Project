@@ -33,7 +33,8 @@ import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
@@ -42,7 +43,6 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import com.google.firebase.auth.FirebaseAuth
 
 class OfferRideScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -193,18 +193,19 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
 
         Button(
             onClick = {
+                val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
                 val offer = hashMapOf(
                     "driverName" to driverName.value,
                     "pickupLocation" to pickupLocation.value,
                     "date" to date.value,
                     "time" to time.value,
-                    "seatsAvailable" to seatsAvailable.value
+                    "seatsAvailable" to seatsAvailable.value,
+                    "userId" to userId // Adiciona o userId para controle de exclusão
                 )
 
-                val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-                FirebaseDatabase.getInstance().reference.child("rideOffers").child(userId)
-                    .push()
-                    .setValue(offer)
+                val firestore = FirebaseFirestore.getInstance()
+                firestore.collection("rideOffers")
+                    .add(offer) // Salva diretamente na coleção "rideOffers"
                     .addOnSuccessListener {
                         Toast.makeText(context, "Ride offered successfully", Toast.LENGTH_SHORT).show()
                         onBackClick()
