@@ -1,5 +1,6 @@
 package com.example.ridesharinghc.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -43,12 +44,12 @@ class HomeScreenActivity : ComponentActivity() {
 fun HomeScreen() {
     val context = LocalContext.current
     val currentUser = FirebaseAuth.getInstance().currentUser
+    val currentUserId = currentUser?.uid
     var requests by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
     var offers by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
 
     LaunchedEffect(Unit) {
         val requestRef = FirebaseFirestore.getInstance().collection("rideRequests")
-
         requestRef.addSnapshotListener { snapshot, _ ->
             val requestList = mutableListOf<Pair<String, Map<String, String>>>()
             snapshot?.documents?.forEach { document ->
@@ -61,7 +62,6 @@ fun HomeScreen() {
 
     LaunchedEffect(Unit) {
         val offerRef = FirebaseFirestore.getInstance().collection("rideOffers")
-
         offerRef.addSnapshotListener { snapshot, _ ->
             val offerList = mutableListOf<Pair<String, Map<String, String>>>()
             snapshot?.documents?.forEach { document ->
@@ -177,15 +177,29 @@ fun HomeScreen() {
                                 text = "${request["dropOffLocation"]} - ${request["time"]}",
                                 fontSize = 16.sp
                             )
-                            if (request["userId"] == currentUser?.uid) {
-                                IconButton(onClick = {
-                                    deleteRequest(key)
-                                }) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.ic_delete),
-                                        contentDescription = "Delete",
-                                        modifier = Modifier.size(24.dp)
-                                    )
+                            Row {
+                                if (request["userId"] == currentUserId) {
+                                    // Show Delete button if the request was created by the current user
+                                    IconButton(onClick = {
+                                        deleteRequest(key)
+                                    }) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.ic_delete),
+                                            contentDescription = "Delete",
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
+                                } else {
+                                    // Show Accept button for other users
+                                    IconButton(onClick = {
+                                        handleAcceptRequest(context, request)
+                                    }) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.ic_check),
+                                            contentDescription = "Accept",
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -224,7 +238,7 @@ fun HomeScreen() {
                                 text = "${offer["pickupLocation"]} - ${offer["time"]}",
                                 fontSize = 16.sp
                             )
-                            if (offer["userId"] == currentUser?.uid) {
+                            if (offer["userId"] == currentUserId) {
                                 IconButton(onClick = {
                                     deleteOffer(key)
                                 }) {
@@ -241,6 +255,15 @@ fun HomeScreen() {
             }
         }
     }
+}
+
+fun handleAcceptRequest(context: Context, request: Map<String, String>) {
+    val intent = Intent(context, ContactUserScreen::class.java).apply {
+        putExtra("name", request["userName"])
+        putExtra("phone", request["userPhone"])
+        putExtra("email", request["userEmail"])
+    }
+    context.startActivity(intent)
 }
 
 fun deleteRequest(requestId: String) {
@@ -279,4 +302,3 @@ fun ActionBox(
         Text(text = text, fontSize = 16.sp)
     }
 }
-

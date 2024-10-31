@@ -40,6 +40,7 @@
         <activity android:name=".activities.OfferRideScreen" />
         <activity android:name=".activities.UserProfileScreen" />
         <activity android:name=".activities.MenuScreen" />
+        <activity android:name=".activities.ContactUserScreen" />
 
     </application>
 
