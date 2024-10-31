@@ -259,9 +259,7 @@ fun HomeScreen() {
 
 fun handleAcceptRequest(context: Context, request: Map<String, String>) {
     val intent = Intent(context, ContactUserScreen::class.java).apply {
-        putExtra("name", request["userName"])
-        putExtra("phone", request["userPhone"])
-        putExtra("email", request["userEmail"])
+        putExtra("userId", request["userId"]) // Passa o ID do usuário solicitante
     }
     context.startActivity(intent)
 }

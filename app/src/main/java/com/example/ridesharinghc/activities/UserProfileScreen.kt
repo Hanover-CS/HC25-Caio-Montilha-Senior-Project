@@ -1,6 +1,7 @@
 package com.example.ridesharinghc.activities
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
@@ -13,17 +14,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class UserProfileScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +40,29 @@ class UserProfileScreen : ComponentActivity() {
 
 @Composable
 fun UserProfileScreenContent(onBackClick: () -> Unit) {
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    val db = FirebaseFirestore.getInstance()
+    val context = LocalContext.current // Captura o contexto para uso posterior
+
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
+
+    // Carrega os dados do usuário do Firebase
+    LaunchedEffect(currentUser) {
+        currentUser?.uid?.let { uid ->
+            db.collection("users").document(uid).get()
+                .addOnSuccessListener { document ->
+                    name = document.getString("name") ?: ""
+                    email = document.getString("email") ?: ""
+                    phoneNumber = document.getString("phone") ?: ""
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Failed to load profile", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -68,10 +89,10 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
                 .size(100.dp)
                 .clip(CircleShape)
                 .border(2.dp, Color.Black, CircleShape)
-                .clickable { /* TODO: Open image picker */ }
+                .clickable { /* TODO: Abrir seletor de imagem */ }
         )
 
-        TextButton(onClick = { /* TODO: Edit profile picture */ }) {
+        TextButton(onClick = { /* TODO: Editar foto de perfil */ }) {
             Text(text = "Edit Profile Picture", fontSize = 14.sp, color = Color.Black)
         }
 
@@ -88,7 +109,7 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        TextButton(onClick = { /* TODO: Change password logic */ }) {
+        TextButton(onClick = { /* TODO: Lógica de mudança de senha */ }) {
             Text(text = "Change password", fontSize = 16.sp, color = Color.Black)
         }
 
@@ -100,8 +121,35 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
             label = "Phone Number",
             keyboardType = KeyboardType.Phone
         )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Botão para salvar alterações no perfil
+        Button(
+            onClick = {
+                val updatedData = hashMapOf(
+                    "name" to name,
+                    "email" to email,
+                    "phone" to phoneNumber
+                )
+                currentUser?.uid?.let { uid ->
+                    db.collection("users").document(uid).set(updatedData)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(context, "Failed to update profile", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+        ) {
+            Text(text = "Save", color = Color.White, fontSize = 16.sp)
+        }
     }
 }
+
 @Composable
 fun UserProfileTextField(
     value: String,
