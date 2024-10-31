@@ -42,14 +42,13 @@ class UserProfileScreen : ComponentActivity() {
 fun UserProfileScreenContent(onBackClick: () -> Unit) {
     val currentUser = FirebaseAuth.getInstance().currentUser
     val db = FirebaseFirestore.getInstance()
-    val context = LocalContext.current // Captura o contexto para uso posterior
+    val context = LocalContext.current
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
 
-    // Carrega os dados do usuário do Firebase
     LaunchedEffect(currentUser) {
         currentUser?.uid?.let { uid ->
             db.collection("users").document(uid).get()
