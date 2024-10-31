@@ -32,6 +32,7 @@ import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,14 +40,14 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.example.ridesharinghc.components.SearchLocationBar
 import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 
 class OfferRideScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize the Places API
         if (!Places.isInitialized()) {
             val applicationInfo = applicationContext.packageManager.getApplicationInfo(
                 applicationContext.packageName,
@@ -93,7 +94,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
                 location?.let {
                     val currentLocation = LatLng(it.latitude, it.longitude)
                     markerState.value = MarkerState(currentLocation)
-                    cameraPositionState.position = com.google.android.gms.maps.model.CameraPosition.fromLatLngZoom(currentLocation, 10f)
+                    cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(currentLocation, 10f))
                 } ?: run {
                     Toast.makeText(context, "Unable to get location", Toast.LENGTH_SHORT).show()
                 }
@@ -119,9 +120,11 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
             }
         }
 
-        SearchLocationBar { latLng ->
+        // Search bar for selecting pickup location
+        SearchLocationBar { latLng, address ->
             markerState.value = MarkerState(latLng)
-            cameraPositionState.position = com.google.android.gms.maps.model.CameraPosition.fromLatLngZoom(latLng, 12f)
+            cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(latLng, 12f)) // Set camera zoom level
+            pickupLocation.value = address // Automatically set the pickup location with the selected address
         }
 
         Box(
@@ -200,12 +203,12 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
                     "date" to date.value,
                     "time" to time.value,
                     "seatsAvailable" to seatsAvailable.value,
-                    "userId" to userId // Adiciona o userId para controle de exclusão
+                    "userId" to userId // Adds userId for deletion control
                 )
 
                 val firestore = FirebaseFirestore.getInstance()
                 firestore.collection("rideOffers")
-                    .add(offer) // Salva diretamente na coleção "rideOffers"
+                    .add(offer) // Save directly to "rideOffers" collection
                     .addOnSuccessListener {
                         Toast.makeText(context, "Ride offered successfully", Toast.LENGTH_SHORT).show()
                         onBackClick()

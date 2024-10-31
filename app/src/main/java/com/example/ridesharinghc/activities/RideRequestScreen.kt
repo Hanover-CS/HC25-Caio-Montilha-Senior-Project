@@ -13,6 +13,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
@@ -30,20 +32,16 @@ import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.example.ridesharinghc.components.SearchLocationBar
 import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import android.app.Activity
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.ui.text.input.KeyboardType
-import com.google.firebase.auth.FirebaseAuth
 
 class RideRequestScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,8 +124,8 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
         }
 
         // Search bar for selecting drop-off location
-        SearchLocationBar { latLng ->
-            // Update map and marker state with the new selected location
+        SearchLocationBar { latLng, address ->
+            dropOffLocation.value = address
             markerState.value = MarkerState(latLng)
             cameraPositionState.position = com.google.android.gms.maps.model.CameraPosition.fromLatLngZoom(latLng, 12f)
         }
@@ -226,29 +224,5 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
         ) {
             Text("Request Ride", color = Color.White, fontSize = 16.sp)
         }
-    }
-}
-
-@Composable
-fun SearchLocationBar(
-    onLocationSelected: (LatLng) -> Unit
-) {
-    val context = LocalContext.current
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data = result.data
-            val place = Autocomplete.getPlaceFromIntent(data!!)
-            place.latLng?.let { onLocationSelected(it) }
-        }
-    }
-
-    Button(onClick = {
-        // Set up the autocomplete intent
-        val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
-        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
-            .build(context)
-        launcher.launch(intent)
-    }, modifier = Modifier.fillMaxWidth()) {
-        Text("Search Drop-off Location")
     }
 }
