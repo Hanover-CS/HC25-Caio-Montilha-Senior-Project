@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services") // Firebase Google services plugin to enable Firebase in the app
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
 android {
@@ -83,12 +84,17 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx:21.0.0")
     implementation("com.google.firebase:firebase-auth-ktx:23.1.0")
     implementation("com.google.firebase:firebase-firestore:25.1.1") // Cloud Firestore
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("com.google.firebase:firebase-storage:21.0.1")
+
 
     // Google Maps and Location Services
     implementation("com.google.maps.android:maps-compose:2.8.0") // Compose support for Google Maps
     implementation("com.google.android.gms:play-services-maps:19.0.0") // Google Maps API for Android
     implementation("com.google.android.gms:play-services-location:21.3.0") // Google Play services location API
     implementation("com.google.android.libraries.places:places:4.0.0") // Google Places API
+
+    dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.9.20")
 
     // Testing libraries
     testImplementation("junit:junit:4.13.2")
@@ -105,3 +111,4 @@ dependencies {
     testImplementation("org.mockito:mockito-core:4.6.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 }
+
