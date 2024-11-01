@@ -39,6 +39,7 @@ import kotlinx.coroutines.launch
  * Includes logic for password confirmation and transitions to the login screen.
  * Uses Firebase Authentication for user account creation and stores user data in Firestore.
  */
+
 class LoginRegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -225,10 +226,3 @@ fun saveUserProfileToFirebase(userId: String, email: String, onSuccess: () -> Un
         .addOnFailureListener { /* Handle errors, you could log or show a toast here */ }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewLoginRegisterScreen() {
-    RideSharingHCTheme {
-        LoginRegisterScreen(navController = null)
-    }
-}
