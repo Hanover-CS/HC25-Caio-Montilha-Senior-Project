@@ -23,7 +23,7 @@ class ContactUserScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Recebe o ID do usuário do Intent
+        // Receives the userId from the Intent
         val userId = intent.getStringExtra("userId")
 
         setContent {
@@ -42,17 +42,27 @@ fun ContactUserScreenContent(userId: String, onBackClick: () -> Unit) {
     var phone by remember { mutableStateOf("Loading...") }
     var email by remember { mutableStateOf("Loading...") }
 
-    // Recupera as informações do usuário no Firestore usando o userId
+    // Retrieve user information from Firestore using the userId
     LaunchedEffect(userId) {
-        db.collection("users").document(userId).get()
-            .addOnSuccessListener { document ->
-                name = document.getString("name") ?: "N/A"
-                phone = document.getString("phone") ?: "N/A"
-                email = document.getString("email") ?: "N/A"
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Failed to load contact info", Toast.LENGTH_SHORT).show()
-            }
+        if (userId.isNotEmpty()) {
+            db.collection("userProfiles").document(userId).get()
+                .addOnSuccessListener { document ->
+                    name = document.getString("name") ?: "N/A"
+                    phone = document.getString("phone") ?: "N/A"
+                    email = document.getString("email") ?: "N/A"
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Failed to load contact info", Toast.LENGTH_SHORT).show()
+                    name = "N/A"
+                    phone = "N/A"
+                    email = "N/A"
+                }
+        } else {
+            Toast.makeText(context, "User ID not provided", Toast.LENGTH_SHORT).show()
+            name = "N/A"
+            phone = "N/A"
+            email = "N/A"
+        }
     }
 
     Column(

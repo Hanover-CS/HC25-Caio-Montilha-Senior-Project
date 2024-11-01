@@ -58,7 +58,6 @@ class LoginRegisterActivity : ComponentActivity() {
 
 @Composable
 fun LoginRegisterScreen(navController: NavController?) {
-    // State variables to hold user input
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
@@ -66,7 +65,6 @@ fun LoginRegisterScreen(navController: NavController?) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    // Initialize FirebaseAuth
     val auth = remember { FirebaseAuth.getInstance() }
 
     Box(
@@ -84,7 +82,6 @@ fun LoginRegisterScreen(navController: NavController?) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Logo
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "App Logo",
@@ -97,7 +94,6 @@ fun LoginRegisterScreen(navController: NavController?) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Email input field
             TextField(
                 value = email,
                 onValueChange = { email = it },
@@ -107,7 +103,6 @@ fun LoginRegisterScreen(navController: NavController?) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Password input field
             TextField(
                 value = password,
                 onValueChange = { password = it },
@@ -118,7 +113,6 @@ fun LoginRegisterScreen(navController: NavController?) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Confirm Password input field
             TextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
@@ -133,20 +127,16 @@ fun LoginRegisterScreen(navController: NavController?) {
                 onClick = {
                     if (email.endsWith("@hanover.edu")) {
                         if (password == confirmPassword) {
-                            // Function to save the data to Firebase
                             signUpUser(auth, email, password, context) {
-                                // Show snackbar when account is created
                                 scope.launch {
                                     snackbarHostState.showSnackbar(
                                         "Congratulations! You have created your account. Let’s move to the Login page."
                                     )
-                                    // Navigate to login page after the Snackbar is dismissed
                                     val intent = Intent(context, LoginActivity::class.java)
                                     context.startActivity(intent)
                                 }
                             }
                         } else {
-                            // Handle mismatching passwords
                             scope.launch {
                                 snackbarHostState.showSnackbar(
                                     "Passwords do not match, please try again."
@@ -154,7 +144,6 @@ fun LoginRegisterScreen(navController: NavController?) {
                             }
                         }
                     } else {
-                        // Show error if the email is not from the @hanover.edu domain
                         scope.launch {
                             snackbarHostState.showSnackbar(
                                 "Please use your @hanover.edu email address to register."
@@ -167,14 +156,12 @@ fun LoginRegisterScreen(navController: NavController?) {
                 Text("Sign Up")
             }
 
-
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(text = "Already have an account?")
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Login button
             Button(onClick = {
                 val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
@@ -183,7 +170,6 @@ fun LoginRegisterScreen(navController: NavController?) {
             }
         }
 
-        // Snackbar host to show messages
         SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier.align(Alignment.BottomCenter)
@@ -196,36 +182,47 @@ fun signUpUser(auth: FirebaseAuth, email: String, password: String, context: and
     auth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                // User signed up successfully
                 val userId = auth.currentUser?.uid
                 if (userId != null) {
-                    saveUserToFirebase(userId, email, password, onSuccess)
+                    // First, save authentication data
+                    saveAuthDataToFirebase(userId, email, password) {
+                        // Then, save profile data
+                        saveUserProfileToFirebase(userId, email) {
+                            onSuccess()
+                        }
+                    }
                 }
             } else {
-                // Show error message if sign up failed
                 Toast.makeText(context, "Sign-up failed. ${task.exception?.message}", Toast.LENGTH_SHORT).show()
             }
         }
 }
 
-// Function to save the user details to Firebase Firestore
-fun saveUserToFirebase(userId: String, email: String, password: String, onSuccess: () -> Unit) {
+// Function to save authentication data to Firebase Firestore
+fun saveAuthDataToFirebase(userId: String, email: String, password: String, onSuccess: () -> Unit) {
     val firestore = FirebaseFirestore.getInstance()
-    val usersRef = firestore.collection("users")
-
-    val userData = mapOf(
+    val authRef = firestore.collection("userAuthData")
+    val authData = mapOf(
         "email" to email,
         "password" to password
     )
+    authRef.document(userId).set(authData)
+        .addOnSuccessListener { onSuccess() }
+        .addOnFailureListener { /* Handle errors, you could log or show a toast here */ }
+}
 
-    usersRef.document(userId).set(userData)
-        .addOnSuccessListener {
-            // Data successfully saved
-            onSuccess()
-        }
-        .addOnFailureListener {
-            // Handle errors
-        }
+// Function to save profile data to Firebase Firestore
+fun saveUserProfileToFirebase(userId: String, email: String, onSuccess: () -> Unit) {
+    val firestore = FirebaseFirestore.getInstance()
+    val profileRef = firestore.collection("userProfiles")
+    val profileData = mapOf(
+        "email" to email,
+        "name" to "",
+        "phone" to ""
+    )
+    profileRef.document(userId).set(profileData)
+        .addOnSuccessListener { onSuccess() }
+        .addOnFailureListener { /* Handle errors, you could log or show a toast here */ }
 }
 
 @Preview(showBackground = true)

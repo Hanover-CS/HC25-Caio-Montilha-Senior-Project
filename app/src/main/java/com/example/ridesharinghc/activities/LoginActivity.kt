@@ -24,7 +24,6 @@ import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.example.ridesharinghc.ui.theme.LogoBlue
-import androidx.compose.ui.platform.testTag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -78,7 +77,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
-                    contentDescription = "Voltar / Back",
+                    contentDescription = "Back",
                     modifier = Modifier.size(30.dp)
                 )
             }
@@ -165,9 +164,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
                         ).show()
                     }
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag("loginButton")
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Login")
             }
@@ -178,7 +175,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
 // Function to check user data in Firestore
 fun checkUserInFirestore(userId: String, context: android.content.Context) {
     val firestore = FirebaseFirestore.getInstance()
-    val usersRef = firestore.collection("users")
+    val usersRef = firestore.collection("userProfiles") // Adjusted to match the registration collection
 
     usersRef.document(userId).get()
         .addOnSuccessListener { document ->

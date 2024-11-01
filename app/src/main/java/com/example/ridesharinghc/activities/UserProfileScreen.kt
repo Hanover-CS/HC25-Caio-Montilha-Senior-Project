@@ -17,8 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
@@ -46,12 +44,11 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
 
     LaunchedEffect(currentUser) {
         currentUser?.uid?.let { uid ->
-            db.collection("users").document(uid).get()
+            db.collection("userProfiles").document(uid).get()
                 .addOnSuccessListener { document ->
                     name = document.getString("name") ?: ""
                     email = document.getString("email") ?: ""
@@ -88,51 +85,25 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
                 .size(100.dp)
                 .clip(CircleShape)
                 .border(2.dp, Color.Black, CircleShape)
-                .clickable { /* TODO: Abrir seletor de imagem */ }
+                .clickable { /* TODO: Open image selector */ }
         )
-
-        TextButton(onClick = { /* TODO: Editar foto de perfil */ }) {
-            Text(text = "Edit Profile Picture", fontSize = 14.sp, color = Color.Black)
-        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         UserProfileTextField(value = name, onValueChange = { name = it }, label = "Name")
-        UserProfileTextField(value = email, onValueChange = { email = it }, label = "Email")
-        UserProfileTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = "Password",
-            isPassword = true
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        TextButton(onClick = { /* TODO: Lógica de mudança de senha */ }) {
-            Text(text = "Change password", fontSize = 16.sp, color = Color.Black)
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        UserProfileTextField(
-            value = phoneNumber,
-            onValueChange = { phoneNumber = it },
-            label = "Phone Number",
-            keyboardType = KeyboardType.Phone
-        )
+        UserProfileTextField(value = email, onValueChange = { email = it }, label = "Email", isEnabled = false)
+        UserProfileTextField(value = phoneNumber, onValueChange = { phoneNumber = it }, label = "Phone Number", keyboardType = KeyboardType.Phone)
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Botão para salvar alterações no perfil
         Button(
             onClick = {
-                val updatedData = hashMapOf(
+                val updatedData = mapOf(
                     "name" to name,
-                    "email" to email,
                     "phone" to phoneNumber
                 )
                 currentUser?.uid?.let { uid ->
-                    db.collection("users").document(uid).set(updatedData)
+                    db.collection("userProfiles").document(uid).update(updatedData)
                         .addOnSuccessListener {
                             Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
                         }
@@ -155,7 +126,8 @@ fun UserProfileTextField(
     onValueChange: (String) -> Unit,
     label: String,
     isPassword: Boolean = false,
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,
+    isEnabled: Boolean = true
 ) {
     OutlinedTextField(
         value = value,
@@ -165,7 +137,7 @@ fun UserProfileTextField(
             .fillMaxWidth()
             .padding(8.dp),
         singleLine = true,
-        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType)
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        enabled = isEnabled
     )
 }
