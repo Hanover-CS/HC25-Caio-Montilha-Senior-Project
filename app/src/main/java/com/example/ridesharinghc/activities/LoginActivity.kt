@@ -28,10 +28,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
- * LoginActivity handles the login functionality of the RideSharingHC app.
- * It uses Firebase Authentication to verify user credentials.
- * On successful login, it navigates the user to the HomeScreenActivity.
- * The UI is built using Jetpack Compose.
+ * [LoginActivity] handles the login functionality of the RideSharingHC app.
+ * It uses Firebase Authentication to verify user credentials. Upon successful login,
+ * it checks for the user's profile data in Firebase Firestore. If found, it navigates
+ * the user to the HomeScreenActivity. The UI is built using Jetpack Compose.
  */
 class LoginActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
@@ -47,6 +47,14 @@ class LoginActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function [LoginScreen] displays the login form.
+ * This screen allows users to input their email and password to log in.
+ * It includes validation and error handling for Firebase Authentication.
+ *
+ * @param auth Firebase Authentication instance used to authenticate users.
+ * @param onBackClick Lambda function to handle the back button action.
+ */
 @Composable
 fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
     var email by remember { mutableStateOf("") }
@@ -172,7 +180,14 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
     }
 }
 
-// Function to check user data in Firestore
+/**
+ * Checks if the user's profile data exists in Firebase Firestore.
+ * If the data exists, the user is navigated to the HomeScreenActivity.
+ * If not, a message prompts the user to register first.
+ *
+ * @param userId The unique identifier of the user in Firebase Authentication.
+ * @param context Context used to launch HomeScreenActivity and display Toast messages.
+ */
 fun checkUserInFirestore(userId: String, context: android.content.Context) {
     val firestore = FirebaseFirestore.getInstance()
     val usersRef = firestore.collection("userProfiles") // Adjusted to match the registration collection
@@ -180,7 +195,7 @@ fun checkUserInFirestore(userId: String, context: android.content.Context) {
     usersRef.document(userId).get()
         .addOnSuccessListener { document ->
             if (document.exists()) {
-                // User data exists in Firestore, proceed to home screen
+                // Navigate to the home screen if user data exists
                 val intent = Intent(context, HomeScreenActivity::class.java)
                 context.startActivity(intent)
             } else {
@@ -193,7 +208,6 @@ fun checkUserInFirestore(userId: String, context: android.content.Context) {
             }
         }
         .addOnFailureListener { exception ->
-            // Handle any errors
             Toast.makeText(
                 context,
                 "Failed to retrieve user data: ${exception.message}",
