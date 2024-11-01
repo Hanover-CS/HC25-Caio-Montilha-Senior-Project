@@ -34,10 +34,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 /**
- * LoginRegisterActivity handles the user registration and navigation.
- * Displays a form to create an account, saving the data to Firebase.
- * Includes logic for password confirmation and transitions to the login screen.
- * Uses Firebase Authentication for user account creation and stores user data in Firestore.
+ * [LoginRegisterActivity] serves as the main activity for user registration and navigation.
+ * It provides a form to allow new users to create an account using their email and password.
+ * User data is stored in Firebase, utilizing Firebase Authentication for user account creation
+ * and Firebase Firestore for additional profile data.
  */
 
 class LoginRegisterActivity : ComponentActivity() {
@@ -57,6 +57,14 @@ class LoginRegisterActivity : ComponentActivity() {
     }
 }
 
+
+/**
+ * Composable function [LoginRegisterScreen] that displays the registration form.
+ * This screen allows users to input their email, password, and confirm their password.
+ * Upon successful account creation, users are directed to the login screen.
+ *
+ * @param navController Optional [NavController] for navigating between screens.
+ */
 @Composable
 fun LoginRegisterScreen(navController: NavController?) {
     var email by remember { mutableStateOf("") }
@@ -178,16 +186,22 @@ fun LoginRegisterScreen(navController: NavController?) {
     }
 }
 
-// Function to sign up the user using FirebaseAuth
+/**
+ * Signs up the user using Firebase Authentication with the provided email and password.
+ *
+ * @param auth Firebase Authentication instance.
+ * @param email User's email address for registration.
+ * @param password User's chosen password for registration.
+ * @param context Context used for displaying Toast messages.
+ * @param onSuccess Lambda function to execute upon successful sign-up and profile data storage.
+ */
 fun signUpUser(auth: FirebaseAuth, email: String, password: String, context: android.content.Context, onSuccess: () -> Unit) {
     auth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val userId = auth.currentUser?.uid
                 if (userId != null) {
-                    // First, save authentication data
                     saveAuthDataToFirebase(userId, email, password) {
-                        // Then, save profile data
                         saveUserProfileToFirebase(userId, email) {
                             onSuccess()
                         }
@@ -199,7 +213,14 @@ fun signUpUser(auth: FirebaseAuth, email: String, password: String, context: and
         }
 }
 
-// Function to save authentication data to Firebase Firestore
+/**
+ * Saves authentication data for the user to Firebase Firestore.
+ *
+ * @param userId Unique identifier of the user in Firebase Authentication.
+ * @param email User's email address.
+ * @param password User's password.
+ * @param onSuccess Lambda function to execute upon successful data save.
+ */
 fun saveAuthDataToFirebase(userId: String, email: String, password: String, onSuccess: () -> Unit) {
     val firestore = FirebaseFirestore.getInstance()
     val authRef = firestore.collection("userAuthData")
@@ -209,10 +230,16 @@ fun saveAuthDataToFirebase(userId: String, email: String, password: String, onSu
     )
     authRef.document(userId).set(authData)
         .addOnSuccessListener { onSuccess() }
-        .addOnFailureListener { /* Handle errors, you could log or show a toast here */ }
+        .addOnFailureListener { /* Handle errors, could log or show a toast here */ }
 }
 
-// Function to save profile data to Firebase Firestore
+/**
+ * Saves additional profile data for the user to Firebase Firestore.
+ *
+ * @param userId Unique identifier of the user in Firebase Authentication.
+ * @param email User's email address.
+ * @param onSuccess Lambda function to execute upon successful profile save.
+ */
 fun saveUserProfileToFirebase(userId: String, email: String, onSuccess: () -> Unit) {
     val firestore = FirebaseFirestore.getInstance()
     val profileRef = firestore.collection("userProfiles")
@@ -223,6 +250,6 @@ fun saveUserProfileToFirebase(userId: String, email: String, onSuccess: () -> Un
     )
     profileRef.document(userId).set(profileData)
         .addOnSuccessListener { onSuccess() }
-        .addOnFailureListener { /* Handle errors, you could log or show a toast here */ }
+        .addOnFailureListener { /* Handle errors, could log or show a toast here */ }
 }
 
