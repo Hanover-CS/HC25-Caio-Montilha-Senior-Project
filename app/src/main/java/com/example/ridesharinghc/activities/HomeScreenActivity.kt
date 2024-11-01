@@ -48,6 +48,7 @@ fun HomeScreen() {
     var requests by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
     var offers by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
 
+    // Fetch ride requests
     LaunchedEffect(Unit) {
         val requestRef = FirebaseFirestore.getInstance().collection("rideRequests")
         requestRef.addSnapshotListener { snapshot, _ ->
@@ -60,6 +61,7 @@ fun HomeScreen() {
         }
     }
 
+    // Fetch ride offers
     LaunchedEffect(Unit) {
         val offerRef = FirebaseFirestore.getInstance().collection("rideOffers")
         offerRef.addSnapshotListener { snapshot, _ ->
@@ -179,7 +181,6 @@ fun HomeScreen() {
                             )
                             Row {
                                 if (request["userId"] == currentUserId) {
-                                    // Show Delete button if the request was created by the current user
                                     IconButton(onClick = {
                                         deleteRequest(key)
                                     }) {
@@ -190,7 +191,6 @@ fun HomeScreen() {
                                         )
                                     }
                                 } else {
-                                    // Show Accept button for other users
                                     IconButton(onClick = {
                                         handleAcceptRequest(context, request)
                                     }) {
@@ -238,15 +238,27 @@ fun HomeScreen() {
                                 text = "${offer["pickupLocation"]} - ${offer["time"]}",
                                 fontSize = 16.sp
                             )
-                            if (offer["userId"] == currentUserId) {
-                                IconButton(onClick = {
-                                    deleteOffer(key)
-                                }) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.ic_delete),
-                                        contentDescription = "Delete",
-                                        modifier = Modifier.size(24.dp)
-                                    )
+                            Row {
+                                if (offer["userId"] == currentUserId) {
+                                    IconButton(onClick = {
+                                        deleteOffer(key)
+                                    }) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.ic_delete),
+                                            contentDescription = "Delete",
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
+                                } else {
+                                    IconButton(onClick = {
+                                        handleAcceptOffer(context, offer)
+                                    }) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.ic_check),
+                                            contentDescription = "Accept",
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -259,7 +271,14 @@ fun HomeScreen() {
 
 fun handleAcceptRequest(context: Context, request: Map<String, String>) {
     val intent = Intent(context, ContactUserScreen::class.java).apply {
-        putExtra("userId", request["userId"]) // Passa o ID do usuário solicitante
+        putExtra("userId", request["userId"])
+    }
+    context.startActivity(intent)
+}
+
+fun handleAcceptOffer(context: Context, offer: Map<String, String>) {
+    val intent = Intent(context, ContactUserScreen::class.java).apply {
+        putExtra("userId", offer["userId"])
     }
     context.startActivity(intent)
 }
