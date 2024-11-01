@@ -129,27 +129,35 @@ fun LoginRegisterScreen(navController: NavController?) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Sign Up button
             Button(
                 onClick = {
-                    if (password == confirmPassword) {
-                        // Function to save the data to Firebase
-                        signUpUser(auth, email, password, context) {
-                            // Show snackbar when account is created
+                    if (email.endsWith("@hanover.edu")) {
+                        if (password == confirmPassword) {
+                            // Function to save the data to Firebase
+                            signUpUser(auth, email, password, context) {
+                                // Show snackbar when account is created
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        "Congratulations! You have created your account. Let’s move to the Login page."
+                                    )
+                                    // Navigate to login page after the Snackbar is dismissed
+                                    val intent = Intent(context, LoginActivity::class.java)
+                                    context.startActivity(intent)
+                                }
+                            }
+                        } else {
+                            // Handle mismatching passwords
                             scope.launch {
                                 snackbarHostState.showSnackbar(
-                                    "Congratulations! You have created your account. Let’s move to the Login page."
+                                    "Passwords do not match, please try again."
                                 )
-                                // Navigate to login page after the Snackbar is dismissed
-                                val intent = Intent(context, LoginActivity::class.java)
-                                context.startActivity(intent)
                             }
                         }
                     } else {
-                        // Handle mismatching passwords
+                        // Show error if the email is not from the @hanover.edu domain
                         scope.launch {
                             snackbarHostState.showSnackbar(
-                                "Passwords do not match, please try again."
+                                "Please use your @hanover.edu email address to register."
                             )
                         }
                     }
@@ -158,6 +166,7 @@ fun LoginRegisterScreen(navController: NavController?) {
             ) {
                 Text("Sign Up")
             }
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
