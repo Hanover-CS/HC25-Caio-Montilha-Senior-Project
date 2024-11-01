@@ -65,14 +65,18 @@ fun ContactUserScreenContent(userId: String, onBackClick: () -> Unit) {
         }
     }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(SoftBlue)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center
     ) {
-        IconButton(onClick = onBackClick) {
+        // Back arrow at the top-left corner
+        IconButton(
+            onClick = onBackClick,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(16.dp)
+        ) {
             Icon(
                 painter = painterResource(id = R.drawable.arrow),
                 contentDescription = "Back",
@@ -80,11 +84,18 @@ fun ContactUserScreenContent(userId: String, onBackClick: () -> Unit) {
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(text = "Contact Information", fontSize = 24.sp, modifier = Modifier.padding(bottom = 16.dp))
-        Text(text = "Name: $name", fontSize = 18.sp)
-        Text(text = "Phone: $phone", fontSize = 18.sp)
-        Text(text = "Email: $email", fontSize = 18.sp)
+        // Centered contact information
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Center) // Center the column vertically and horizontally within the Box
+                .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Contact Information", fontSize = 24.sp, modifier = Modifier.padding(bottom = 16.dp))
+            Text(text = "Name: $name", fontSize = 18.sp)
+            Text(text = "Phone: $phone", fontSize = 18.sp)
+            Text(text = "Email: $email", fontSize = 18.sp)
+        }
     }
 }
