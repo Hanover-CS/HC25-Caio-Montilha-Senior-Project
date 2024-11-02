@@ -13,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -42,11 +41,12 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
     var userRequests by remember { mutableStateOf(listOf<Map<String, String>>()) }
     var userOffers by remember { mutableStateOf(listOf<Map<String, String>>()) }
     var completedRides by remember { mutableStateOf(listOf<Map<String, String>>()) }
+    val db = FirebaseFirestore.getInstance()
 
     // Fetch user-specific ride requests
     LaunchedEffect(currentUserId) {
         currentUserId?.let { userId ->
-            val requestRef = FirebaseFirestore.getInstance().collection("rideRequests")
+            val requestRef = db.collection("rideRequests")
             requestRef.whereEqualTo("userId", userId).get()
                 .addOnSuccessListener { snapshot ->
                     val requestsList = snapshot.documents.mapNotNull { it.data?.mapValues { entry -> entry.value.toString() } }
@@ -58,12 +58,23 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
     // Fetch user-specific ride offers
     LaunchedEffect(currentUserId) {
         currentUserId?.let { userId ->
-            val offerRef = FirebaseFirestore.getInstance().collection("rideOffers")
+            val offerRef = db.collection("rideOffers")
             offerRef.whereEqualTo("userId", userId).get()
                 .addOnSuccessListener { snapshot ->
                     val offersList = snapshot.documents.mapNotNull { it.data?.mapValues { entry -> entry.value.toString() } }
                     userOffers = offersList
                 }
+        }
+    }
+
+    // Fetch completed rides
+    LaunchedEffect(currentUserId) {
+        currentUserId?.let { userId ->
+            val completedRef = db.collection("completedRides").whereEqualTo("userId", userId)
+            completedRef.get().addOnSuccessListener { snapshot ->
+                val completedList = snapshot.documents.mapNotNull { it.data?.mapValues { entry -> entry.value.toString() } }
+                completedRides = completedList
+            }
         }
     }
 
@@ -117,8 +128,9 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
         } else {
             userRequests.forEach { request ->
                 RideItem(request = request, onCompleteRide = {
-                    completedRides = completedRides + it
+                    markRideAsCompleted(it, db, isRequest = true)
                     userRequests = userRequests - it
+                    completedRides = completedRides + it
                 })
             }
         }
@@ -144,8 +156,9 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
         } else {
             userOffers.forEach { offer ->
                 RideItem(request = offer, onCompleteRide = {
-                    completedRides = completedRides + it
+                    markRideAsCompleted(it, db, isRequest = false)
                     userOffers = userOffers - it
+                    completedRides = completedRides + it
                 })
             }
         }
@@ -224,4 +237,19 @@ fun RideItem(request: Map<String, String>, completed: Boolean = false, onComplet
             }
         }
     }
+}
+
+fun markRideAsCompleted(request: Map<String, String>, db: FirebaseFirestore, isRequest: Boolean) {
+    val completedRef = db.collection("completedRides").document()
+    completedRef.set(request)
+        .addOnSuccessListener {
+            // Successfully added to completed rides
+            val collectionName = if (isRequest) "rideRequests" else "rideOffers"
+            request["id"]?.let { id ->
+                db.collection(collectionName).document(id).delete()
+            }
+        }
+        .addOnFailureListener {
+            // Handle failure to mark as completed
+        }
 }
