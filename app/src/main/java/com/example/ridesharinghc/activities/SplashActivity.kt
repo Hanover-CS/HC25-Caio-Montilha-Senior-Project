@@ -21,10 +21,10 @@ import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import kotlinx.coroutines.delay
 
 /**
- * SplashActivity displays a splash screen with the app logo and
+ * [SplashActivity] displays a splash screen with the app logo and
  * navigates to the Login/Register screen after a 3-second delay.
- * Uses a coroutine to handle the delay in the composable.
- * Handles navigation using an intent with error logging.
+ * The transition is handled using a coroutine for timing, with error
+ * logging in case of navigation issues.
  */
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +37,10 @@ class SplashActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Navigates to the LoginRegisterActivity. Logs the navigation action and
+     * handles any potential errors with error logging.
+     */
     private fun navigateToLoginRegister() {
         try {
             Log.d("SplashActivity", "Navigating to Login/Register screen")
@@ -49,6 +53,12 @@ class SplashActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function [SplashScreen] displays the app logo in the center of the screen.
+ * After a delay of 3 seconds, it triggers the onTimeout callback to proceed to the next screen.
+ *
+ * @param onTimeout Lambda function to be called after the splash screen timeout.
+ */
 @Composable
 fun SplashScreen(onTimeout: () -> Unit) {
     Box(
@@ -63,6 +73,7 @@ fun SplashScreen(onTimeout: () -> Unit) {
         )
     }
 
+    // Delay effect for the splash screen before calling the onTimeout function
     LaunchedEffect(key1 = true) {
         delay(3000L)
         onTimeout()
