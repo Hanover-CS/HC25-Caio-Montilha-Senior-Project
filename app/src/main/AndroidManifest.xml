@@ -43,6 +43,7 @@
         <activity android:name=".activities.ContactUserScreen" />
         <activity android:name=".activities.MessagesScreen" />
         <activity android:name=".activities.RidesScreen" />
+        <activity android:name=".activities.ChatActivity" />
 
     </application>
 

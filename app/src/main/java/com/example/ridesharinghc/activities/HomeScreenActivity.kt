@@ -3,6 +3,7 @@ package com.example.ridesharinghc.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -28,6 +29,7 @@ import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.UUID
 
 class HomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +50,7 @@ fun HomeScreen() {
     var requests by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
     var offers by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
     var showDialog by remember { mutableStateOf(false) }
-    var selectedRequest by remember { mutableStateOf<Map<String, String>?>(null) }
+    var selectedRequest by remember { mutableStateOf<Pair<String, Map<String, String>>?>(null) }
 
     // Fetch ride requests
     LaunchedEffect(Unit) {
@@ -79,7 +81,10 @@ fun HomeScreen() {
     if (showDialog) {
         ConfirmationDialog(
             onConfirm = {
-                selectedRequest?.let { handleAcceptRequest(context, it) }
+                selectedRequest?.let { (key, request) ->
+                    handleAcceptRequest(context, request)
+                    deleteRequest(key)
+                }
                 showDialog = false
             },
             onDismiss = { showDialog = false }
@@ -204,7 +209,7 @@ fun HomeScreen() {
                                     }
                                 } else {
                                     IconButton(onClick = {
-                                        selectedRequest = request
+                                        selectedRequest = key to request
                                         showDialog = true
                                     }) {
                                         Icon(
@@ -264,7 +269,7 @@ fun HomeScreen() {
                                     }
                                 } else {
                                     IconButton(onClick = {
-                                        selectedRequest = offer
+                                        selectedRequest = key to offer
                                         showDialog = true
                                     }) {
                                         Icon(
@@ -303,18 +308,37 @@ fun ConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
 }
 
 fun handleAcceptRequest(context: Context, request: Map<String, String>) {
-    val intent = Intent(context, ContactUserScreen::class.java).apply {
-        putExtra("userId", request["userId"])
+    val db = FirebaseFirestore.getInstance()
+    val chatId = UUID.randomUUID().toString()
+    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+    val requesterId = request["userId"]
+
+    if (currentUserId == null || requesterId == null) {
+        // If either ID is null, display an error message and return
+        Toast.makeText(context, "Error creating chat: Invalid user ID.", Toast.LENGTH_SHORT).show()
+        return
     }
-    context.startActivity(intent)
+
+    val participants = listOf(requesterId, currentUserId)
+    val chatData = mapOf(
+        "chatId" to chatId,
+        "user1Id" to requesterId,
+        "user2Id" to currentUserId,
+        "rideDetails" to request,
+        "participants" to participants
+    )
+
+    db.collection("chats").document(chatId).set(chatData)
+        .addOnSuccessListener {
+            // Open the messages screen after successfully creating the chat
+            val intent = ChatActivity.createIntent(context, chatId, requesterId)
+            context.startActivity(intent)
+        }
+        .addOnFailureListener { e ->
+            Toast.makeText(context, "Error creating chat: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
 }
 
-fun handleAcceptOffer(context: Context, offer: Map<String, String>) {
-    val intent = Intent(context, ContactUserScreen::class.java).apply {
-        putExtra("userId", offer["userId"])
-    }
-    context.startActivity(intent)
-}
 
 fun deleteRequest(requestId: String) {
     val requestRef = FirebaseFirestore.getInstance().collection("rideRequests").document(requestId)
