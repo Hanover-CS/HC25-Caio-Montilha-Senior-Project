@@ -43,6 +43,12 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.example.ridesharinghc.components.SearchLocationBar
 import com.google.android.libraries.places.api.Places
 
+/**
+ * [RideRequestScreen] activity allows users to create a new ride request.
+ * It displays a map for selecting a drop-off location, and provides fields for
+ * date, time, and additional notes. Once submitted, the ride request is saved
+ * to Firebase Firestore.
+ */
 class RideRequestScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +71,13 @@ class RideRequestScreen : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function [RideRequestScreenContent] displays the UI for creating a ride request.
+ * It includes a map for selecting the drop-off location, fields for date, time, and notes,
+ * and a button to submit the request. On submission, the data is saved to Firebase Firestore.
+ *
+ * @param onBackClick Lambda function to handle back button action.
+ */
 @Composable
 fun RideRequestScreenContent(onBackClick: () -> Unit) {
     val dropOffLocation = remember { mutableStateOf("") }
@@ -77,7 +90,7 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
     val markerState = remember { mutableStateOf(MarkerState(LatLng(-33.852, 151.211))) }
     val cameraPositionState = rememberCameraPositionState()
 
-    // Request location permission if not granted
+    // Check and request location permissions
     LaunchedEffect(key1 = Unit) {
         if (ContextCompat.checkSelfPermission(
                 context,
@@ -90,7 +103,7 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
                 1
             )
         } else {
-            // Get the user's current location
+            // Get the user's current location and update the map
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 location?.let {
                     val currentLocation = LatLng(it.latitude, it.longitude)
@@ -103,6 +116,7 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
         }
     }
 
+    // Main UI layout with map and form fields for ride request details
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -110,7 +124,7 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        // Back button and profile icon
+        // Back button
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -130,13 +144,13 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
             cameraPositionState.position = com.google.android.gms.maps.model.CameraPosition.fromLatLngZoom(latLng, 12f)
         }
 
+        // Google Map showing the selected drop-off location
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(400.dp)
                 .border(2.dp, Color.Blue, RoundedCornerShape(8.dp))
         ) {
-            // Google Map
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
                 cameraPositionState = cameraPositionState
@@ -150,7 +164,7 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(32.dp))  // space between map and form
 
-        // Drop-off Location Field
+        // Input fields for drop-off location, date, time, and additional notes
         TextField(
             value = dropOffLocation.value,
             onValueChange = { dropOffLocation.value = it },
@@ -158,7 +172,6 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
         )
 
-        // Date Field (formatted MM/DD/YYYY)
         TextField(
             value = date.value,
             onValueChange = {
@@ -177,7 +190,6 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
-        // Time Field
         TextField(
             value = time.value,
             onValueChange = { time.value = it },
@@ -185,7 +197,6 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
         )
 
-        // Notes Field
         TextField(
             value = notes.value,
             onValueChange = { notes.value = it },
@@ -195,7 +206,7 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Request Ride Button
+        // Button to submit the ride request to Firebase Firestore
         Button(
             onClick = {
                 val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
