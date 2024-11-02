@@ -69,10 +69,4 @@ fun SplashScreen(onTimeout: () -> Unit) {
     }
 }
 
-@Preview
-@Composable
-fun SplashScreenPreview() {
-    RideSharingHCTheme {
-        SplashScreen(onTimeout = {})
-    }
-}
+
