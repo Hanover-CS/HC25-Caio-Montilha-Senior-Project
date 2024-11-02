@@ -31,6 +31,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
+/**
+ * [UserProfileScreen] activity displays and allows editing of the user profile.
+ * Users can update their name and phone number, view and change their profile picture,
+ * and save these changes to Firebase Firestore. The profile image is stored in Firebase Storage.
+ */
 class UserProfileScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,14 @@ class UserProfileScreen : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function [UserProfileScreenContent] displays the user profile UI.
+ * It shows fields for the user's name, email, phone number, and profile picture.
+ * Users can update their name and phone number, and change their profile picture by
+ * selecting a new image. The changes are saved to Firebase Firestore and Storage.
+ *
+ * @param onBackClick Lambda function to handle the back button action.
+ */
 @Composable
 fun UserProfileScreenContent(onBackClick: () -> Unit) {
     val currentUser = FirebaseAuth.getInstance().currentUser
@@ -54,7 +67,7 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
     var phoneNumber by remember { mutableStateOf("") }
     var profileImageUrl by remember { mutableStateOf<String?>(null) }
 
-    // Image picker launcher
+    // Image picker launcher for selecting a profile picture
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
             uploadProfilePicture(uri, currentUser?.uid, storage, context) { imageUrl ->
@@ -69,6 +82,7 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
         }
     }
 
+    // Load existing profile data from Firestore
     LaunchedEffect(currentUser) {
         currentUser?.uid?.let { uid ->
             db.collection("userProfiles").document(uid).get()
@@ -84,6 +98,7 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
         }
     }
 
+    // UI layout for displaying and editing user profile information
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -102,6 +117,7 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Profile picture with click-to-change functionality
         Image(
             painter = rememberAsyncImagePainter(model = profileImageUrl ?: R.drawable.ic_person),
             contentDescription = "Profile Picture",
@@ -117,12 +133,14 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Editable text fields for user profile data
         UserProfileTextField(value = name, onValueChange = { name = it }, label = "Name")
         UserProfileTextField(value = email, onValueChange = { email = it }, label = "Email", isEnabled = false)
         UserProfileTextField(value = phoneNumber, onValueChange = { phoneNumber = it }, label = "Phone Number", keyboardType = KeyboardType.Phone)
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Save button to update profile information in Firestore
         Button(
             onClick = {
                 val updatedData = mapOf(
@@ -147,6 +165,18 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
     }
 }
 
+/**
+ * Composable function [UserProfileTextField] provides a customizable text field
+ * for displaying and editing profile data. Supports various keyboard types and
+ * can be enabled or disabled.
+ *
+ * @param value The current text value of the field.
+ * @param onValueChange Lambda function to update the field's value.
+ * @param label The label to display as a hint inside the text field.
+ * @param isPassword Boolean to determine if the field is for password input (default is false).
+ * @param keyboardType The type of keyboard to show (default is [KeyboardType.Text]).
+ * @param isEnabled Boolean to determine if the field is editable (default is true).
+ */
 @Composable
 fun UserProfileTextField(
     value: String,
@@ -169,7 +199,15 @@ fun UserProfileTextField(
     )
 }
 
-// Function to upload profile picture to Firebase Storage
+/**
+ * Uploads a profile picture to Firebase Storage for the specified user.
+ *
+ * @param uri URI of the selected image file.
+ * @param userId ID of the user, used for naming the storage reference.
+ * @param storage Firebase Storage instance.
+ * @param context Context used for displaying Toast messages.
+ * @param onSuccess Lambda function to execute with the URL of the uploaded image on success.
+ */
 fun uploadProfilePicture(uri: Uri, userId: String?, storage: FirebaseStorage, context: Context, onSuccess: (String) -> Unit) {
     if (userId == null) {
         Toast.makeText(context, "User ID is null", Toast.LENGTH_SHORT).show()
@@ -177,7 +215,7 @@ fun uploadProfilePicture(uri: Uri, userId: String?, storage: FirebaseStorage, co
     }
     val storageRef = storage.reference.child("profilePictures/$userId.jpg")
 
-    // Log the start of the upload
+    // Start upload and display a message
     Toast.makeText(context, "Uploading image...", Toast.LENGTH_SHORT).show()
 
     storageRef.putFile(uri)
