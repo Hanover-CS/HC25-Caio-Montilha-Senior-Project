@@ -43,6 +43,12 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.example.ridesharinghc.components.SearchLocationBar
 import com.google.android.libraries.places.api.Places
 
+/**
+ * [OfferRideScreen] activity allows users to offer a ride within the RideSharingHC app.
+ * It displays a map for selecting a pickup location, and provides fields for
+ * the driver's name, pickup/drop-off location, date, time, and available seats.
+ * Once submitted, the ride offer is saved to Firebase Firestore.
+ */
 class OfferRideScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +71,14 @@ class OfferRideScreen : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function [OfferRideScreenContent] displays the UI for offering a ride.
+ * It includes a map for selecting the pickup location, fields for the driver's name,
+ * pickup location, date, time, and seats available, and a button to submit the offer.
+ * On submission, the data is saved to Firebase Firestore.
+ *
+ * @param onBackClick Lambda function to handle the back button action.
+ */
 @Composable
 fun OfferRideScreenContent(onBackClick: () -> Unit) {
     val driverName = remember { mutableStateOf("") }
@@ -78,6 +92,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
     val markerState = remember { mutableStateOf(MarkerState(LatLng(-33.852, 151.211))) }
     val cameraPositionState = rememberCameraPositionState()
 
+    // Check and request location permissions
     LaunchedEffect(key1 = Unit) {
         if (ContextCompat.checkSelfPermission(
                 context,
@@ -90,6 +105,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
                 1
             )
         } else {
+            // Get the user's current location and update the map
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 location?.let {
                     val currentLocation = LatLng(it.latitude, it.longitude)
@@ -102,6 +118,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
         }
     }
 
+    // Main UI layout with map and form fields for ride offer details
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -109,6 +126,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
+        // Back button
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -127,6 +145,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
             pickupLocation.value = address // Automatically set the pickup location with the selected address
         }
 
+        // Google Map showing the selected pickup location
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -146,6 +165,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // Input fields for driver's name, pickup location, date, time, and available seats
         TextField(
             value = driverName.value,
             onValueChange = { driverName.value = it },
@@ -194,6 +214,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Button to submit the ride offer to Firebase Firestore
         Button(
             onClick = {
                 val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
@@ -206,9 +227,10 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
                     "userId" to userId // Adds userId for deletion control
                 )
 
+                // Submit the offer to Firebase Firestore
                 val firestore = FirebaseFirestore.getInstance()
                 firestore.collection("rideOffers")
-                    .add(offer) // Save directly to "rideOffers" collection
+                    .add(offer)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Ride offered successfully", Toast.LENGTH_SHORT).show()
                         onBackClick()
