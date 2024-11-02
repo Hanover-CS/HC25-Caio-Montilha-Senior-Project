@@ -31,6 +31,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.UUID
 
+/**
+ * [HomeScreenActivity] serves as the main screen of the RideSharingHC app.
+ * It displays available ride requests and offers, and allows users to create
+ * or delete ride offers and requests. Users can also access the menu and profile
+ * screens from this activity. The UI is built using Jetpack Compose.
+ */
 class HomeScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +48,11 @@ class HomeScreenActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function [HomeScreen] that displays the main content of the home screen.
+ * It shows current ride requests and offers and allows users to accept or delete them.
+ * It also includes navigation options to the Menu and Profile screens.
+ */
 @Composable
 fun HomeScreen() {
     val context = LocalContext.current
@@ -78,6 +89,7 @@ fun HomeScreen() {
         }
     }
 
+    // Display confirmation dialog for accepting a request
     if (showDialog) {
         ConfirmationDialog(
             onConfirm = {
@@ -91,11 +103,13 @@ fun HomeScreen() {
         )
     }
 
+    // UI elements for the home screen, including navigation and action buttons
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(SoftBlue)
     ) {
+        // Top row with navigation buttons for Menu and Profile
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -126,6 +140,7 @@ fun HomeScreen() {
             }
         }
 
+        // Main content with ride request and offer cards
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -165,6 +180,7 @@ fun HomeScreen() {
                 )
             }
 
+            // Card displaying current ride requests
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -225,6 +241,7 @@ fun HomeScreen() {
                 }
             }
 
+            // Card displaying current rides offered
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -288,6 +305,12 @@ fun HomeScreen() {
     }
 }
 
+/**
+ * Displays a confirmation dialog for accepting a ride request or offer.
+ *
+ * @param onConfirm Lambda function called when the user confirms the action.
+ * @param onDismiss Lambda function called when the user dismisses the dialog.
+ */
 @Composable
 fun ConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
@@ -307,6 +330,12 @@ fun ConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     )
 }
 
+/**
+ * Handles accepting a ride request by creating a chat between the requester and the current user.
+ *
+ * @param context Context used to start the ChatActivity.
+ * @param request The ride request data to be accepted.
+ */
 fun handleAcceptRequest(context: Context, request: Map<String, String>) {
     val db = FirebaseFirestore.getInstance()
     val chatId = UUID.randomUUID().toString()
@@ -340,16 +369,35 @@ fun handleAcceptRequest(context: Context, request: Map<String, String>) {
 }
 
 
+/**
+ * Deletes a ride request from Firebase Firestore.
+ *
+ * @param requestId The ID of the request to delete.
+ */
 fun deleteRequest(requestId: String) {
     val requestRef = FirebaseFirestore.getInstance().collection("rideRequests").document(requestId)
     requestRef.delete()
 }
 
+/**
+ * Deletes a ride offer from Firebase Firestore.
+ *
+ * @param offerId The ID of the offer to delete.
+ */
 fun deleteOffer(offerId: String) {
     val offerRef = FirebaseFirestore.getInstance().collection("rideOffers").document(offerId)
     offerRef.delete()
 }
 
+/**
+ * Composable function [ActionBox] that displays an action box with an icon and text.
+ * Used for actions like "Get a Ride" and "Offer a Ride" on the home screen.
+ *
+ * @param icon Painter representing the icon to display.
+ * @param text Text label for the action.
+ * @param onClick Lambda function executed when the box is clicked.
+ * @param tag Tag used for testing.
+ */
 @Composable
 fun ActionBox(
     icon: Painter,
