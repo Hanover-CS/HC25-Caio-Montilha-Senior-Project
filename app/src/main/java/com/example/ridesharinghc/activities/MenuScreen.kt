@@ -52,9 +52,9 @@ fun MenuScreenContent(onBackClick: () -> Unit) {
         // Back arrow to return to HomeScreenActivity
         IconButton(onClick = onBackClick) {
             Icon(
-                painter = painterResource(id = R.drawable.arrow),
+                painter = painterResource(id = R.drawable.arrow2),
                 contentDescription = "Back",
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(100.dp)
             )
         }
 
@@ -81,6 +81,25 @@ fun MenuScreenContent(onBackClick: () -> Unit) {
                 context.startActivity(intent)
             }
         )
+
+        MenuOption(
+            icon = painterResource(id = R.drawable.ic_rides),
+            text = "Rides",
+            onClick = {
+                val intent = Intent(context, RidesScreen::class.java)
+                context.startActivity(intent)
+            }
+        )
+
+        MenuOption(
+            icon = painterResource(id = R.drawable.ic_messages),
+            text = "Messages",
+            onClick = {
+                val intent = Intent(context, MessagesScreen::class.java)
+                context.startActivity(intent)
+            }
+        )
+
         MenuOption(
             icon = painterResource(id = R.drawable.ic_logout),
             text = "Logout",
@@ -96,6 +115,7 @@ fun MenuScreenContent(onBackClick: () -> Unit) {
         )
     }
 }
+
 @Composable
 fun MenuOption(icon: Painter, text: String, onClick: () -> Unit) {
     Row(

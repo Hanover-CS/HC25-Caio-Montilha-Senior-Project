@@ -41,6 +41,8 @@
         <activity android:name=".activities.UserProfileScreen" />
         <activity android:name=".activities.MenuScreen" />
         <activity android:name=".activities.ContactUserScreen" />
+        <activity android:name=".activities.MessagesScreen" />
+        <activity android:name=".activities.RidesScreen" />
 
     </application>
 
