@@ -47,6 +47,8 @@ fun HomeScreen() {
     val currentUserId = currentUser?.uid
     var requests by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
     var offers by remember { mutableStateOf(listOf<Pair<String, Map<String, String>>>()) }
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedRequest by remember { mutableStateOf<Map<String, String>?>(null) }
 
     // Fetch ride requests
     LaunchedEffect(Unit) {
@@ -72,6 +74,16 @@ fun HomeScreen() {
             }
             offers = offerList
         }
+    }
+
+    if (showDialog) {
+        ConfirmationDialog(
+            onConfirm = {
+                selectedRequest?.let { handleAcceptRequest(context, it) }
+                showDialog = false
+            },
+            onDismiss = { showDialog = false }
+        )
     }
 
     Box(
@@ -192,7 +204,8 @@ fun HomeScreen() {
                                     }
                                 } else {
                                     IconButton(onClick = {
-                                        handleAcceptRequest(context, request)
+                                        selectedRequest = request
+                                        showDialog = true
                                     }) {
                                         Icon(
                                             painter = painterResource(id = R.drawable.ic_check),
@@ -251,7 +264,8 @@ fun HomeScreen() {
                                     }
                                 } else {
                                     IconButton(onClick = {
-                                        handleAcceptOffer(context, offer)
+                                        selectedRequest = offer
+                                        showDialog = true
                                     }) {
                                         Icon(
                                             painter = painterResource(id = R.drawable.ic_check),
@@ -267,6 +281,25 @@ fun HomeScreen() {
             }
         }
     }
+}
+
+@Composable
+fun ConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = "Confirmation") },
+        text = { Text("Are you sure you want to accept this request?") },
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
+                Text("Yes")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("No")
+            }
+        }
+    )
 }
 
 fun handleAcceptRequest(context: Context, request: Map<String, String>) {
