@@ -23,6 +23,11 @@ import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * [RidesScreen] activity displays a list of the user's ride requests, ride offers,
+ * and completed rides. Users can view and mark rides as completed, and these
+ * completed rides are saved to Firebase Firestore.
+ */
 class RidesScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,13 @@ class RidesScreen : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function [RidesScreenContent] displays the user's ride requests, offers,
+ * and completed rides in separate sections. Each section allows users to view their rides,
+ * and requests or offers can be marked as completed.
+ *
+ * @param onBackClick Lambda function to handle the back button action.
+ */
 @Composable
 fun RidesScreenContent(onBackClick: () -> Unit) {
     val currentUser = FirebaseAuth.getInstance().currentUser
@@ -78,6 +90,7 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
         }
     }
 
+    // Main layout with sections for ride requests, offers, and completed rides
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -189,6 +202,15 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
     }
 }
 
+/**
+ * Composable function [RideItem] displays a single ride item.
+ * Allows marking the ride as completed and displays a confirmation dialog
+ * when attempting to mark it as completed.
+ *
+ * @param request Map containing ride details.
+ * @param completed Boolean indicating if the ride is completed (default is false).
+ * @param onCompleteRide Lambda function to mark the ride as completed.
+ */
 @Composable
 fun RideItem(request: Map<String, String>, completed: Boolean = false, onCompleteRide: ((Map<String, String>) -> Unit)? = null) {
     var showDialog by remember { mutableStateOf(false) }
@@ -239,6 +261,14 @@ fun RideItem(request: Map<String, String>, completed: Boolean = false, onComplet
     }
 }
 
+/**
+ * Marks the specified ride as completed and removes it from the active requests or offers
+ * collection in Firestore. Moves the ride data to the "completedRides" collection.
+ *
+ * @param request Map containing the ride data.
+ * @param db Firebase Firestore instance.
+ * @param isRequest Boolean indicating if the ride is a request (true) or an offer (false).
+ */
 fun markRideAsCompleted(request: Map<String, String>, db: FirebaseFirestore, isRequest: Boolean) {
     val completedRef = db.collection("completedRides").document()
     completedRef.set(request)
