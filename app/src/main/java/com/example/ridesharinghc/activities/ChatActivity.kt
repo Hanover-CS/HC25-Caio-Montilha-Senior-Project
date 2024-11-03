@@ -26,6 +26,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
+/**
+ * [ChatActivity] represents a screen where users can send and receive messages in a specific chat.
+ * It handles chat setup, loading messages in real-time, and sending new messages. The activity also
+ * allows ending the chat, which removes it from Firestore.
+ */
 class ChatActivity : ComponentActivity() {
     private lateinit var chatId: String
     private lateinit var otherUserId: String
@@ -44,6 +49,14 @@ class ChatActivity : ComponentActivity() {
         private const val EXTRA_CHAT_ID = "chat_id"
         private const val EXTRA_OTHER_USER_ID = "other_user_id"
 
+        /**
+         * Creates an intent to launch [ChatActivity] with the specified chat and user IDs.
+         *
+         * @param context Context from which the intent is created.
+         * @param chatId ID of the chat.
+         * @param otherUserId ID of the other user in the chat.
+         * @return Intent to start [ChatActivity].
+         */
         fun createIntent(context: Context, chatId: String, otherUserId: String): Intent {
             return Intent(context, ChatActivity::class.java).apply {
                 putExtra(EXTRA_CHAT_ID, chatId)
@@ -52,6 +65,15 @@ class ChatActivity : ComponentActivity() {
         }
     }
 }
+
+/**
+ * Composable function [ChatScreen] displays the UI for the chat, including messages, a text input
+ * for sending new messages, and options to go back or end the chat.
+ *
+ * @param chatId ID of the chat.
+ * @param otherUserId ID of the other user in the chat.
+ * @param onBackClick Lambda function to handle the back button action.
+ */
 @Composable
 fun ChatScreen(chatId: String, otherUserId: String, onBackClick: () -> Unit) {
     var messageText by remember { mutableStateOf("") }
@@ -83,7 +105,7 @@ fun ChatScreen(chatId: String, otherUserId: String, onBackClick: () -> Unit) {
             .padding(16.dp)
             .background(Color.White)
     ) {
-        // Back button and user email display
+        // Back button and other user's email display
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -100,6 +122,7 @@ fun ChatScreen(chatId: String, otherUserId: String, onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Display messages
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -152,6 +175,13 @@ fun ChatScreen(chatId: String, otherUserId: String, onBackClick: () -> Unit) {
     }
 }
 
+/**
+ * Sends a message to the specified chat in Firestore.
+ *
+ * @param db Firebase Firestore instance.
+ * @param chatId ID of the chat to send the message to.
+ * @param messageText The message content to be sent.
+ */
 fun sendMessage(db: FirebaseFirestore, chatId: String, messageText: String) {
     val message = mapOf(
         "text" to messageText,
@@ -161,6 +191,13 @@ fun sendMessage(db: FirebaseFirestore, chatId: String, messageText: String) {
     db.collection("chats").document(chatId).collection("messages").add(message)
 }
 
+/**
+ * Ends the chat by deleting the chat document from Firestore.
+ *
+ * @param db Firebase Firestore instance.
+ * @param chatId ID of the chat to be deleted.
+ * @param onBackClick Lambda function to navigate back after deletion.
+ */
 fun endChat(db: FirebaseFirestore, chatId: String, onBackClick: () -> Unit) {
     db.collection("chats").document(chatId).delete().addOnSuccessListener {
         onBackClick() // Navigate back after chat deletion
