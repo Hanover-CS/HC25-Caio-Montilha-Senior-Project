@@ -26,6 +26,11 @@ import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * [MenuScreen] activity displays the main menu of the RideSharingHC app.
+ * It provides navigation options to various screens, including Profile, Rides,
+ * Messages, and Logout. The Logout option signs the user out of Firebase Authentication.
+ */
 class MenuScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,13 @@ class MenuScreen : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function [MenuScreenContent] displays the UI for the menu screen.
+ * It includes options for navigating to the Profile, Rides, and Messages screens,
+ * as well as an option to log out. Each option is represented as a clickable row.
+ *
+ * @param onBackClick Lambda function to handle the back button action.
+ */
 @Composable
 fun MenuScreenContent(onBackClick: () -> Unit) {
     val context = LocalContext.current
@@ -116,6 +128,14 @@ fun MenuScreenContent(onBackClick: () -> Unit) {
     }
 }
 
+/**
+ * Composable function [MenuOption] displays an individual menu option with an icon and label.
+ * Each option is a clickable row that navigates to a different screen or performs an action.
+ *
+ * @param icon Icon representing the menu option.
+ * @param text Label for the menu option.
+ * @param onClick Lambda function executed when the option is clicked.
+ */
 @Composable
 fun MenuOption(icon: Painter, text: String, onClick: () -> Unit) {
     Row(
