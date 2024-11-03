@@ -23,6 +23,10 @@ import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * [MessagesScreen] activity displays a list of chat conversations for the current user.
+ * Users can view their active chats and navigate to specific chat screens for each conversation.
+ */
 class MessagesScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,12 @@ class MessagesScreen : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function [MessagesScreenContent] displays the list of chats the user is
+ * involved in. Each chat item allows navigation to a detailed chat screen.
+ *
+ * @param onBackClick Lambda function to handle the back button action.
+ */
 @Composable
 fun MessagesScreenContent(onBackClick: () -> Unit) {
     val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
@@ -60,6 +70,7 @@ fun MessagesScreenContent(onBackClick: () -> Unit) {
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Back button to return to the previous screen
         IconButton(onClick = onBackClick) {
             Icon(
                 painter = painterResource(id = R.drawable.arrow),
@@ -70,6 +81,7 @@ fun MessagesScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Screen title
         Text(
             text = "Messages",
             fontSize = 24.sp,
@@ -81,6 +93,7 @@ fun MessagesScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // Display message if no chats are available
         if (chats.isEmpty()) {
             Text(
                 text = "No messages yet",
@@ -89,6 +102,7 @@ fun MessagesScreenContent(onBackClick: () -> Unit) {
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         } else {
+            // Display each chat item
             chats.forEach { chat ->
                 ChatItem(chat, currentUserId)
             }
@@ -96,6 +110,14 @@ fun MessagesScreenContent(onBackClick: () -> Unit) {
     }
 }
 
+/**
+ * Composable function [ChatItem] displays information about a single chat,
+ * including the other user's contact details and the ride details. Tapping
+ * on the chat item navigates the user to the chat screen.
+ *
+ * @param chat Map containing chat details.
+ * @param currentUserId ID of the current user to identify the other participant.
+ */
 @Composable
 fun ChatItem(chat: Map<String, Any>, currentUserId: String?) {
     val otherUserId = if (currentUserId == chat["user1Id"] as? String) chat["user2Id"] as? String else chat["user1Id"] as? String
@@ -115,6 +137,7 @@ fun ChatItem(chat: Map<String, Any>, currentUserId: String?) {
         }
     }
 
+    // Display chat item with details and navigate to chat screen on click
     Card(
         modifier = Modifier
             .fillMaxWidth()
