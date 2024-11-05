@@ -29,10 +29,9 @@ import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
-import com.example.ridesharinghc.composables.screens.LoginRegisterScreen.saveUserProfileToFirebase
-import com.example.ridesharinghc.composables.screens.saveAuthDataToFirebase
+import com.example.ridesharinghc.composables.screens.LoginRegisterScreen.signUpUser
+
 
 /**
  * [LoginRegisterActivity] serves as the main activity for user registration and navigation.
@@ -185,31 +184,4 @@ fun LoginRegisterScreen(navController: NavController?) {
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
-}
-
-/**
- * Signs up the user using Firebase Authentication with the provided email and password.
- *
- * @param auth Firebase Authentication instance.
- * @param email User's email address for registration.
- * @param password User's chosen password for registration.
- * @param context Context used for displaying Toast messages.
- * @param onSuccess Lambda function to execute upon successful sign-up and profile data storage.
- */
-fun signUpUser(auth: FirebaseAuth, email: String, password: String, context: android.content.Context, onSuccess: () -> Unit) {
-    auth.createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val userId = auth.currentUser?.uid
-                if (userId != null) {
-                    saveAuthDataToFirebase(userId, email, password) {
-                        saveUserProfileToFirebase(userId, email) {
-                            onSuccess()
-                        }
-                    }
-                }
-            } else {
-                Toast.makeText(context, "Sign-up failed. ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
 }
