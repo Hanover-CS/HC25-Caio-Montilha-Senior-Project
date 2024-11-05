@@ -1,6 +1,5 @@
 package com.example.ridesharinghc.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -24,8 +23,8 @@ import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.example.ridesharinghc.ui.theme.LogoBlue
+import com.example.ridesharinghc.composables.screens.LoginScreen.checkUserInFirestore
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 /**
  * [LoginActivity] handles the login functionality of the RideSharingHC app.
@@ -38,7 +37,7 @@ class LoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = FirebaseAuth.getInstance() // Firebase Authentication
+        auth = FirebaseAuth.getInstance() // Initialize Firebase Authentication
         setContent {
             RideSharingHCTheme {
                 LoginScreen(auth = auth, onBackClick = { finish() })
@@ -59,7 +58,6 @@ class LoginActivity : ComponentActivity() {
 fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
     val context = LocalContext.current
 
     Column(
@@ -70,7 +68,6 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             .border(8.dp, LogoBlue)
             .padding(16.dp)
     ) {
-        // Row for the back arrow
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -79,9 +76,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
         ) {
             IconButton(
                 onClick = onBackClick,
-                modifier = Modifier
-                    .size(48.dp)
-                    .padding(start = 8.dp)
+                modifier = Modifier.size(48.dp).padding(start = 8.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
@@ -91,7 +86,6 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             }
         }
 
-        // Main content of the login screen
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -102,7 +96,6 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
         ) {
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Logo
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "App Logo",
@@ -110,13 +103,9 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             )
 
             Spacer(modifier = Modifier.height(24.dp))
-
-            // Login Text
             Text(text = "Login", fontSize = 24.sp)
 
             Spacer(modifier = Modifier.height(16.dp))
-
-            //  TextField for Email
             TextField(
                 value = email,
                 onValueChange = { email = it },
@@ -125,7 +114,6 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-
             TextField(
                 value = password,
                 onValueChange = { password = it },
@@ -135,41 +123,23 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             )
 
             Spacer(modifier = Modifier.height(24.dp))
-
             Button(
                 onClick = {
                     if (email.isNotEmpty() && password.isNotEmpty()) {
-                        // Try to log in using Firebase Authentication
                         auth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
-                                    // Login successful, now retrieve user data from Firestore if needed
-                                    val userId = auth.currentUser?.uid
-                                    if (userId != null) {
+                                    auth.currentUser?.uid?.let { userId ->
                                         checkUserInFirestore(userId, context)
-                                    } else {
-                                        Toast.makeText(
-                                            context,
-                                            "User ID not found. Login failed.",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                    } ?: run {
+                                        Toast.makeText(context, "User ID not found. Login failed.", Toast.LENGTH_SHORT).show()
                                     }
                                 } else {
-                                    // Login failed
-                                    Toast.makeText(
-                                        context,
-                                        task.exception?.message ?: "Login failed. Please check your credentials.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(context, task.exception?.message ?: "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show()
                                 }
                             }
                     } else {
-                        // Show an error message if fields are empty
-                        Toast.makeText(
-                            context,
-                            "Please fill in all fields.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(context, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -178,40 +148,4 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             }
         }
     }
-}
-
-/**
- * Checks if the user's profile data exists in Firebase Firestore.
- * If the data exists, the user is navigated to the HomeScreenActivity.
- * If not, a message prompts the user to register first.
- *
- * @param userId The unique identifier of the user in Firebase Authentication.
- * @param context Context used to launch HomeScreenActivity and display Toast messages.
- */
-fun checkUserInFirestore(userId: String, context: android.content.Context) {
-    val firestore = FirebaseFirestore.getInstance()
-    val usersRef = firestore.collection("userProfiles") // Adjusted to match the registration collection
-
-    usersRef.document(userId).get()
-        .addOnSuccessListener { document ->
-            if (document.exists()) {
-                // Navigate to the home screen if user data exists
-                val intent = Intent(context, HomeScreenActivity::class.java)
-                context.startActivity(intent)
-            } else {
-                // User data not found in Firestore
-                Toast.makeText(
-                    context,
-                    "User data not found. Please register first.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-        .addOnFailureListener { exception ->
-            Toast.makeText(
-                context,
-                "Failed to retrieve user data: ${exception.message}",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
 }
