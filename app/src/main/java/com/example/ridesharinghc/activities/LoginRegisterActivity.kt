@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -32,6 +31,7 @@ import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
+import com.example.ridesharinghc.composables.screens.LoginRegisterScreen.saveUserProfileToFirebase
 
 /**
  * [LoginRegisterActivity] serves as the main activity for user registration and navigation.
@@ -232,24 +232,3 @@ fun saveAuthDataToFirebase(userId: String, email: String, password: String, onSu
         .addOnSuccessListener { onSuccess() }
         .addOnFailureListener { /* Handle errors, could log or show a toast here */ }
 }
-
-/**
- * Saves additional profile data for the user to Firebase Firestore.
- *
- * @param userId Unique identifier of the user in Firebase Authentication.
- * @param email User's email address.
- * @param onSuccess Lambda function to execute upon successful profile save.
- */
-fun saveUserProfileToFirebase(userId: String, email: String, onSuccess: () -> Unit) {
-    val firestore = FirebaseFirestore.getInstance()
-    val profileRef = firestore.collection("userProfiles")
-    val profileData = mapOf(
-        "email" to email,
-        "name" to "",
-        "phone" to ""
-    )
-    profileRef.document(userId).set(profileData)
-        .addOnSuccessListener { onSuccess() }
-        .addOnFailureListener { /* Handle errors, could log or show a toast here */ }
-}
-
