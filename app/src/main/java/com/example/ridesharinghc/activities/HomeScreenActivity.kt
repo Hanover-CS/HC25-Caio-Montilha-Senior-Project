@@ -30,6 +30,7 @@ import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.UUID
+import com.example.ridesharinghc.composables.screens.HomeScreen.ActionBox
 
 /**
  * [HomeScreenActivity] serves as the main screen of the RideSharingHC app.
@@ -389,38 +390,4 @@ fun deleteOffer(offerId: String) {
     offerRef.delete()
 }
 
-/**
- * Composable function [ActionBox] that displays an action box with an icon and text.
- * Used for actions like "Get a Ride" and "Offer a Ride" on the home screen.
- *
- * @param icon Painter representing the icon to display.
- * @param text Text label for the action.
- * @param onClick Lambda function executed when the box is clicked.
- * @param tag Tag used for testing.
- */
-@Composable
-fun ActionBox(
-    icon: Painter,
-    text: String,
-    onClick: () -> Unit,
-    tag: String
-) {
-    Column(
-        modifier = Modifier
-            .size(150.dp)
-            .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
-            .padding(16.dp)
-            .clickable(onClick = onClick)
-            .testTag(tag),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Image(
-            painter = icon,
-            contentDescription = text,
-            modifier = Modifier.size(64.dp)
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = text, fontSize = 16.sp)
-    }
-}
+
