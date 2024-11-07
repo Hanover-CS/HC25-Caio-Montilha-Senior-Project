@@ -51,6 +51,7 @@ class HomeScreenActivity : ComponentActivity() {
     }
 }
 
+
 /**
  * Composable function [HomeScreen] that displays the main content of the home screen.
  * It shows current ride requests and offers and allows users to accept or delete them.
@@ -370,6 +371,8 @@ fun handleAcceptRequest(context: Context, request: Map<String, String>) {
             Toast.makeText(context, "Error creating chat: ${e.message}", Toast.LENGTH_SHORT).show()
         }
 }
+
+
 
 
 
