@@ -31,6 +31,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.UUID
 import com.example.ridesharinghc.composables.screens.HomeScreen.ActionBox
+import com.example.ridesharinghc.utils.deleteRequest
+import com.example.ridesharinghc.utils.deleteOffer
 
 /**
  * [HomeScreenActivity] serves as the main screen of the RideSharingHC app.
@@ -370,24 +372,5 @@ fun handleAcceptRequest(context: Context, request: Map<String, String>) {
 }
 
 
-/**
- * Deletes a ride request from Firebase Firestore.
- *
- * @param requestId The ID of the request to delete.
- */
-fun deleteRequest(requestId: String) {
-    val requestRef = FirebaseFirestore.getInstance().collection("rideRequests").document(requestId)
-    requestRef.delete()
-}
-
-/**
- * Deletes a ride offer from Firebase Firestore.
- *
- * @param offerId The ID of the offer to delete.
- */
-fun deleteOffer(offerId: String) {
-    val offerRef = FirebaseFirestore.getInstance().collection("rideOffers").document(offerId)
-    offerRef.delete()
-}
 
 
