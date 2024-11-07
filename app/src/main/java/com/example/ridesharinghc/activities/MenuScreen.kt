@@ -25,6 +25,7 @@ import com.example.ridesharinghc.R
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
+import com.example.ridesharinghc.composables.screens.MenuScreen.MenuOption
 
 /**
  * [MenuScreen] activity displays the main menu of the RideSharingHC app.
@@ -124,39 +125,6 @@ fun MenuScreenContent(onBackClick: () -> Unit) {
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 context.startActivity(intent)
             }
-        )
-    }
-}
-
-/**
- * Composable function [MenuOption] displays an individual menu option with an icon and label.
- * Each option is a clickable row that navigates to a different screen or performs an action.
- *
- * @param icon Icon representing the menu option.
- * @param text Label for the menu option.
- * @param onClick Lambda function executed when the option is clicked.
- */
-@Composable
-fun MenuOption(icon: Painter, text: String, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp)
-            .clickable(onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = icon,
-            contentDescription = text,
-            modifier = Modifier.size(32.dp)
-        )
-
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Text(
-            text = text,
-            fontSize = 18.sp,
-            color = Color.Black
         )
     }
 }
