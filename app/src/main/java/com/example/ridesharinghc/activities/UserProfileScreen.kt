@@ -25,13 +25,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.ridesharinghc.R
+import com.example.ridesharinghc.composables.screens.UserProfileScreen.UserProfileTextField
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.example.ridesharinghc.firebase.uploadProfilePicture
-
 
 /**
  * [UserProfileScreen] activity displays and allows editing of the user profile.
@@ -165,39 +165,5 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
             Text(text = "Save", color = Color.White, fontSize = 16.sp)
         }
     }
-}
-
-/**
- * Composable function [UserProfileTextField] provides a customizable text field
- * for displaying and editing profile data. Supports various keyboard types and
- * can be enabled or disabled.
- *
- * @param value The current text value of the field.
- * @param onValueChange Lambda function to update the field's value.
- * @param label The label to display as a hint inside the text field.
- * @param isPassword Boolean to determine if the field is for password input (default is false).
- * @param keyboardType The type of keyboard to show (default is [KeyboardType.Text]).
- * @param isEnabled Boolean to determine if the field is editable (default is true).
- */
-@Composable
-fun UserProfileTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    isPassword: Boolean = false,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    isEnabled: Boolean = true
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(text = label) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-        enabled = isEnabled
-    )
 }
 
