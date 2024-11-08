@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.ridesharinghc.R
-import com.example.ridesharinghc.firebase.uploadProfilePicture
+import com.example.ridesharinghc.composables.screens.UserProfileScreen.uploadProfilePicture
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

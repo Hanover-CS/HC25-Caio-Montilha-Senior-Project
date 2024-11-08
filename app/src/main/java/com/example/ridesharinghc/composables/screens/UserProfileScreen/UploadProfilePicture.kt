@@ -1,4 +1,4 @@
-package com.example.ridesharinghc.firebase
+package com.example.ridesharinghc.composables.screens.UserProfileScreen
 
 import android.content.Context
 import android.net.Uri

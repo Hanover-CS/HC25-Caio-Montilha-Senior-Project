@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.composables.screens.UserProfileScreenContent
+import com.example.ridesharinghc.composables.screens.UserProfileScreen.uploadProfilePicture
 
 /**
  * [UserProfileScreen] activity displays and allows editing of the user profile.
