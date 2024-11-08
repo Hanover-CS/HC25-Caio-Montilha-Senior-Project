@@ -1,4 +1,4 @@
-package com.example.ridesharinghc.composables.screens
+package com.example.ridesharinghc.composables.screens.SplashScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

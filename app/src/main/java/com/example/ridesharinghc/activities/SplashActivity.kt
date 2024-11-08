@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
-import com.example.ridesharinghc.composables.screens.SplashScreen
+import com.example.ridesharinghc.composables.screens.SplashScreen.SplashScreen
 
 /**
  * [SplashActivity] displays a splash screen with the app logo and
