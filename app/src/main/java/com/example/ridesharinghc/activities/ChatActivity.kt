@@ -25,6 +25,7 @@ import com.example.ridesharinghc.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.example.ridesharinghc.composables.screens.ChatScreen.endChat
 
 /**
  * [ChatActivity] represents a screen where users can send and receive messages in a specific chat.
@@ -119,7 +120,6 @@ fun ChatScreen(chatId: String, otherUserId: String, onBackClick: () -> Unit) {
             Spacer(modifier = Modifier.width(8.dp))
             Text("Chat with: $otherUserEmail", fontSize = 20.sp, color = Color.Black)
         }
-
         Spacer(modifier = Modifier.height(16.dp))
 
         // Display messages
@@ -136,7 +136,6 @@ fun ChatScreen(chatId: String, otherUserId: String, onBackClick: () -> Unit) {
                 )
             }
         }
-
         Spacer(modifier = Modifier.height(16.dp))
 
         // Message input and send button
@@ -157,7 +156,6 @@ fun ChatScreen(chatId: String, otherUserId: String, onBackClick: () -> Unit) {
                 Text("Send")
             }
         }
-
         Spacer(modifier = Modifier.height(16.dp))
 
         // End Chat button
@@ -191,15 +189,3 @@ fun sendMessage(db: FirebaseFirestore, chatId: String, messageText: String) {
     db.collection("chats").document(chatId).collection("messages").add(message)
 }
 
-/**
- * Ends the chat by deleting the chat document from Firestore.
- *
- * @param db Firebase Firestore instance.
- * @param chatId ID of the chat to be deleted.
- * @param onBackClick Lambda function to navigate back after deletion.
- */
-fun endChat(db: FirebaseFirestore, chatId: String, onBackClick: () -> Unit) {
-    db.collection("chats").document(chatId).delete().addOnSuccessListener {
-        onBackClick() // Navigate back after chat deletion
-    }
-}
