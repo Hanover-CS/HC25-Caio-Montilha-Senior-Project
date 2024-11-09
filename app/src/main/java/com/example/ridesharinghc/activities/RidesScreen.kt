@@ -22,6 +22,7 @@ import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.ridesharinghc.composables.screens.RidesScreen.addToRideHistory
+import com.example.ridesharinghc.composables.screens.RidesScreen.RideItem
 
 /**
  * [RidesScreen] activity displays the user's ride requests, ride offers, and ride history.
@@ -227,39 +228,6 @@ fun RideHistorySection(rideHistory: List<Map<String, String>>) {
     } else {
         rideHistory.forEach { ride ->
             RideItem(request = ride, completed = true)
-        }
-    }
-}
-
-/**
- * Composable function [RideItem] displays a single ride item.
- * The ride item includes location and time details, with an optional completed status.
- *
- * @param request Map containing ride details.
- * @param completed Boolean indicating if the ride is completed (default is false).
- */
-@Composable
-fun RideItem(request: Map<String, String>, completed: Boolean = false) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .background(Color.White),
-        elevation = CardDefaults.elevatedCardElevation()
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(text = "Location: ${request["dropOffLocation"] ?: request["pickupLocation"]}", fontSize = 16.sp)
-            Text(text = "Time: ${request["time"]}", fontSize = 16.sp)
-            if (completed) {
-                Text(
-                    text = "Status: Completed",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Green
-                )
-            }
         }
     }
 }
