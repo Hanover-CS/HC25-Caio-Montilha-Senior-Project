@@ -21,6 +21,7 @@ import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.ridesharinghc.composables.screens.RidesScreen.addToRideHistory
 
 /**
  * [RidesScreen] activity displays the user's ride requests, ride offers, and ride history.
@@ -261,14 +262,4 @@ fun RideItem(request: Map<String, String>, completed: Boolean = false) {
             }
         }
     }
-}
-
-/**
- * Adds a ride request or offer to the ride history collection in Firestore.
- *
- * @param ride Map containing the ride data.
- * @param db Firebase Firestore instance.
- */
-fun addToRideHistory(ride: Map<String, String>, db: FirebaseFirestore) {
-    db.collection("rideHistory").add(ride)
 }
