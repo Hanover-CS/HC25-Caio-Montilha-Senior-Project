@@ -38,6 +38,7 @@ import com.example.ridesharinghc.components.SearchLocationBar
 import com.google.android.libraries.places.api.Places
 import com.example.ridesharinghc.composables.screens.RideRequestScreen.SubmitButton
 import com.example.ridesharinghc.composables.screens.RideRequestScreen.InputFieldsSection
+import com.example.ridesharinghc.composables.screens.RideRequestScreen.MapSection
 
 class RideRequestScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,31 +131,3 @@ fun LocationSearchBar(
         cameraPositionState.position = com.google.android.gms.maps.model.CameraPosition.fromLatLngZoom(latLng, 12f)
     }
 }
-
-/**
- * Composable function [MapSection] displays a Google Map with a marker for the selected drop-off location.
- * The marker position is updated based on the user-selected location.
- */
-@Composable
-fun MapSection() {
-    val markerState = remember { mutableStateOf(MarkerState(LatLng(-33.852, 151.211))) }
-    val cameraPositionState = rememberCameraPositionState()
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(400.dp)
-            .border(2.dp, Color.Blue, RoundedCornerShape(8.dp))
-    ) {
-        GoogleMap(
-            modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState
-        ) {
-            Marker(
-                state = markerState.value,
-                title = "Selected Location"
-            )
-        }
-    }
-}
-
