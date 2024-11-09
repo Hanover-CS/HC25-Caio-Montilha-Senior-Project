@@ -36,6 +36,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.example.ridesharinghc.components.SearchLocationBar
 import com.google.android.libraries.places.api.Places
+import com.example.ridesharinghc.composables.screens.RideRequestScreen.SubmitButton
 
 class RideRequestScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +57,11 @@ class RideRequestScreen : ComponentActivity() {
  */
 @Composable
 fun RideRequestScreenContent(onBackClick: () -> Unit) {
+    val dropOffLocation = remember { mutableStateOf("") }
+    val date = remember { mutableStateOf("") }
+    val time = remember { mutableStateOf("") }
+    val notes = remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,10 +70,21 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
             .verticalScroll(rememberScrollState())
     ) {
         BackButton(onBackClick)
-        LocationSearchBar()
+        LocationSearchBar(dropOffLocation, date, time, notes)
         MapSection()
-        InputFieldsSection()
-        SubmitButton(onBackClick)
+        InputFieldsSection(
+            dropOffLocation = dropOffLocation,
+            date = date,
+            time = time,
+            notes = notes
+        )
+        SubmitButton(
+            onBackClick = onBackClick,
+            dropOffLocation = dropOffLocation.value,
+            date = date.value,
+            time = time.value,
+            notes = notes.value
+        )
     }
 }
 
@@ -96,9 +113,13 @@ fun BackButton(onBackClick: () -> Unit) {
  * It updates the selected location on the map upon user input.
  */
 @Composable
-fun LocationSearchBar() {
+fun LocationSearchBar(
+    dropOffLocation: MutableState<String>,
+    date: MutableState<String>,
+    time: MutableState<String>,
+    notes: MutableState<String>
+) {
     val context = LocalContext.current
-    val dropOffLocation = remember { mutableStateOf("") }
     val cameraPositionState = rememberCameraPositionState()
     val markerState = remember { mutableStateOf(MarkerState(LatLng(-33.852, 151.211))) }
 
@@ -141,12 +162,12 @@ fun MapSection() {
  * date, time, and additional notes. It allows users to input details for their ride request.
  */
 @Composable
-fun InputFieldsSection() {
-    val dropOffLocation = remember { mutableStateOf("") }
-    val date = remember { mutableStateOf("") }
-    val time = remember { mutableStateOf("") }
-    val notes = remember { mutableStateOf("") }
-
+fun InputFieldsSection(
+    dropOffLocation: MutableState<String>,
+    date: MutableState<String>,
+    time: MutableState<String>,
+    notes: MutableState<String>
+) {
     TextField(
         value = dropOffLocation.value,
         onValueChange = { dropOffLocation.value = it },
@@ -182,47 +203,4 @@ fun InputFieldsSection() {
         label = { Text("Add notes") },
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
     )
-}
-
-/**
- * Composable function [SubmitButton] provides a button to submit the ride request.
- * On clicking, it saves the request details to Firebase Firestore and navigates back upon success.
- *
- * @param onBackClick Lambda function to handle back navigation after submission.
- */
-@Composable
-fun SubmitButton(onBackClick: () -> Unit) {
-    val context = LocalContext.current
-    val dropOffLocation = remember { mutableStateOf("") }
-    val date = remember { mutableStateOf("") }
-    val time = remember { mutableStateOf("") }
-    val notes = remember { mutableStateOf("") }
-
-    Button(
-        onClick = {
-            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-            val request = hashMapOf(
-                "dropOffLocation" to dropOffLocation.value,
-                "date" to date.value,
-                "time" to time.value,
-                "notes" to notes.value,
-                "userId" to userId
-            )
-
-            val firestore = FirebaseFirestore.getInstance()
-            firestore.collection("rideRequests")
-                .add(request)
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Request submitted", Toast.LENGTH_SHORT).show()
-                    onBackClick()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Failed to submit request", Toast.LENGTH_SHORT).show()
-                }
-        },
-        modifier = Modifier.fillMaxWidth().height(48.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
-    ) {
-        Text("Request Ride", color = Color.White, fontSize = 16.sp)
-    }
 }
