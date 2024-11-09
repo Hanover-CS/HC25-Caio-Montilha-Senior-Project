@@ -39,6 +39,7 @@ import com.google.android.libraries.places.api.Places
 import com.example.ridesharinghc.composables.screens.RideRequestScreen.SubmitButton
 import com.example.ridesharinghc.composables.screens.RideRequestScreen.InputFieldsSection
 import com.example.ridesharinghc.composables.screens.RideRequestScreen.MapSection
+import com.example.ridesharinghc.composables.screens.RideRequestScreen.LocationSearchBar
 
 class RideRequestScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,27 +108,5 @@ fun BackButton(onBackClick: () -> Unit) {
         IconButton(onClick = onBackClick) {
             Icon(painterResource(id = R.drawable.arrow), contentDescription = "Back", modifier = Modifier.size(32.dp))
         }
-    }
-}
-
-/**
- * Composable function [LocationSearchBar] displays a search bar allowing users to select a drop-off location.
- * It updates the selected location on the map upon user input.
- */
-@Composable
-fun LocationSearchBar(
-    dropOffLocation: MutableState<String>,
-    date: MutableState<String>,
-    time: MutableState<String>,
-    notes: MutableState<String>
-) {
-    val context = LocalContext.current
-    val cameraPositionState = rememberCameraPositionState()
-    val markerState = remember { mutableStateOf(MarkerState(LatLng(-33.852, 151.211))) }
-
-    SearchLocationBar { latLng, address ->
-        dropOffLocation.value = address
-        markerState.value = MarkerState(latLng)
-        cameraPositionState.position = com.google.android.gms.maps.model.CameraPosition.fromLatLngZoom(latLng, 12f)
     }
 }
