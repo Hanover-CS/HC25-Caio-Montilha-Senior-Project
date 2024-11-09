@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.example.ridesharinghc.composables.screens.RidesScreen.addToRideHistory
 import com.example.ridesharinghc.composables.screens.RidesScreen.RideItem
 import com.example.ridesharinghc.composables.screens.RidesScreen.RideHistorySection
+import com.example.ridesharinghc.composables.screens.RidesScreen.RideOffersSection
 
 /**
  * [RidesScreen] activity displays the user's ride requests, ride offers, and ride history.
@@ -165,38 +166,6 @@ fun RideRequestsSection(userRequests: List<Map<String, String>>) {
     } else {
         userRequests.forEach { request ->
             RideItem(request = request)
-        }
-    }
-
-    Spacer(modifier = Modifier.height(32.dp))
-}
-
-/**
- * Composable function [RideOffersSection] displays a list of the user's ride offers.
- * Each offer is displayed as an individual [RideItem].
- *
- * @param userOffers List of maps containing ride offer details.
- */
-@Composable
-fun RideOffersSection(userOffers: List<Map<String, String>>) {
-    Text(
-        text = "Your Ride Offers:",
-        fontSize = 20.sp,
-        color = Color.Black,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier.fillMaxWidth()
-    )
-
-    if (userOffers.isEmpty()) {
-        Text(
-            text = "No ride offers found.",
-            fontSize = 16.sp,
-            color = Color.Gray,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-    } else {
-        userOffers.forEach { offer ->
-            RideItem(request = offer)
         }
     }
 
