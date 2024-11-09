@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -24,9 +23,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
- * [RidesScreen] activity displays a list of the user's ride requests, ride offers,
- * and completed rides. Users can view and mark rides as completed, and these
- * completed rides are saved to Firebase Firestore.
+ * [RidesScreen] activity displays the user's ride requests, ride offers, and ride history.
+ * Users can view each type of ride in separate sections, organized by requests, offers, and history.
+ * Each ride item can be viewed individually, and historical rides are permanently stored.
  */
 class RidesScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +39,8 @@ class RidesScreen : ComponentActivity() {
 }
 
 /**
- * Composable function [RidesScreenContent] displays the user's ride requests, offers,
- * and completed rides in separate sections. Each section allows users to view their rides,
- * and requests or offers can be marked as completed.
+ * Composable function [RidesScreenContent] displays the main layout of the RidesScreen,
+ * including sections for ride requests, ride offers, and ride history.
  *
  * @param onBackClick Lambda function to handle the back button action.
  */
@@ -52,7 +50,7 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
     val currentUserId = currentUser?.uid
     var userRequests by remember { mutableStateOf(listOf<Map<String, String>>()) }
     var userOffers by remember { mutableStateOf(listOf<Map<String, String>>()) }
-    var completedRides by remember { mutableStateOf(listOf<Map<String, String>>()) }
+    var rideHistory by remember { mutableStateOf(listOf<Map<String, String>>()) }
     val db = FirebaseFirestore.getInstance()
 
     // Fetch user-specific ride requests
@@ -63,6 +61,11 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
                 .addOnSuccessListener { snapshot ->
                     val requestsList = snapshot.documents.mapNotNull { it.data?.mapValues { entry -> entry.value.toString() } }
                     userRequests = requestsList
+
+                    // Add requests to ride history
+                    requestsList.forEach { request ->
+                        addToRideHistory(request, db)
+                    }
                 }
         }
     }
@@ -75,22 +78,26 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
                 .addOnSuccessListener { snapshot ->
                     val offersList = snapshot.documents.mapNotNull { it.data?.mapValues { entry -> entry.value.toString() } }
                     userOffers = offersList
+
+                    // Add offers to ride history
+                    offersList.forEach { offer ->
+                        addToRideHistory(offer, db)
+                    }
                 }
         }
     }
 
-    // Fetch completed rides
+    // Fetch ride history
     LaunchedEffect(currentUserId) {
         currentUserId?.let { userId ->
-            val completedRef = db.collection("completedRides").whereEqualTo("userId", userId)
-            completedRef.get().addOnSuccessListener { snapshot ->
-                val completedList = snapshot.documents.mapNotNull { it.data?.mapValues { entry -> entry.value.toString() } }
-                completedRides = completedList
+            val historyRef = db.collection("rideHistory").whereEqualTo("userId", userId)
+            historyRef.get().addOnSuccessListener { snapshot ->
+                val historyList = snapshot.documents.mapNotNull { it.data?.mapValues { entry -> entry.value.toString() } }
+                rideHistory = historyList
             }
         }
     }
 
-    // Main layout with sections for ride requests, offers, and completed rides
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -122,126 +129,121 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Display User's Ride Requests
-        Text(
-            text = "Your Ride Requests:",
-            fontSize = 20.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.Start)
-        )
+        // Separate sections for ride requests, offers, and history
+        RideRequestsSection(userRequests)
+        RideOffersSection(userOffers)
+        RideHistorySection(rideHistory)
+    }
+}
 
-        if (userRequests.isEmpty()) {
-            Text(
-                text = "No ride requests found.",
-                fontSize = 16.sp,
-                color = Color.Gray,
-                modifier = Modifier.align(Alignment.Start).padding(vertical = 8.dp)
-            )
-        } else {
-            userRequests.forEach { request ->
-                RideItem(request = request, onCompleteRide = {
-                    markRideAsCompleted(it, db, isRequest = true)
-                    userRequests = userRequests - it
-                    completedRides = completedRides + it
-                })
-            }
+/**
+ * Composable function [RideRequestsSection] displays a list of the user's ride requests.
+ * Each request is displayed as an individual [RideItem].
+ *
+ * @param userRequests List of maps containing ride request details.
+ */
+@Composable
+fun RideRequestsSection(userRequests: List<Map<String, String>>) {
+    Text(
+        text = "Your Ride Requests:",
+        fontSize = 20.sp,
+        color = Color.Black,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.fillMaxWidth()
+    )
+
+    if (userRequests.isEmpty()) {
+        Text(
+            text = "No ride requests found.",
+            fontSize = 16.sp,
+            color = Color.Gray,
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
+    } else {
+        userRequests.forEach { request ->
+            RideItem(request = request)
         }
+    }
 
-        Spacer(modifier = Modifier.height(32.dp))
+    Spacer(modifier = Modifier.height(32.dp))
+}
 
-        // Display User's Ride Offers
+/**
+ * Composable function [RideOffersSection] displays a list of the user's ride offers.
+ * Each offer is displayed as an individual [RideItem].
+ *
+ * @param userOffers List of maps containing ride offer details.
+ */
+@Composable
+fun RideOffersSection(userOffers: List<Map<String, String>>) {
+    Text(
+        text = "Your Ride Offers:",
+        fontSize = 20.sp,
+        color = Color.Black,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.fillMaxWidth()
+    )
+
+    if (userOffers.isEmpty()) {
         Text(
-            text = "Your Ride Offers:",
-            fontSize = 20.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.Start)
+            text = "No ride offers found.",
+            fontSize = 16.sp,
+            color = Color.Gray,
+            modifier = Modifier.padding(vertical = 8.dp)
         )
-
-        if (userOffers.isEmpty()) {
-            Text(
-                text = "No ride offers found.",
-                fontSize = 16.sp,
-                color = Color.Gray,
-                modifier = Modifier.align(Alignment.Start).padding(vertical = 8.dp)
-            )
-        } else {
-            userOffers.forEach { offer ->
-                RideItem(request = offer, onCompleteRide = {
-                    markRideAsCompleted(it, db, isRequest = false)
-                    userOffers = userOffers - it
-                    completedRides = completedRides + it
-                })
-            }
+    } else {
+        userOffers.forEach { offer ->
+            RideItem(request = offer)
         }
+    }
 
-        Spacer(modifier = Modifier.height(32.dp))
+    Spacer(modifier = Modifier.height(32.dp))
+}
 
-        // Display Completed Rides
+/**
+ * Composable function [RideHistorySection] displays a list of all past rides (requests and offers)
+ * made by the user. These rides are stored permanently and are displayed as historical records.
+ *
+ * @param rideHistory List of maps containing all historical ride details.
+ */
+@Composable
+fun RideHistorySection(rideHistory: List<Map<String, String>>) {
+    Text(
+        text = "Ride History:",
+        fontSize = 20.sp,
+        color = Color.Black,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.fillMaxWidth()
+    )
+
+    if (rideHistory.isEmpty()) {
         Text(
-            text = "Completed Rides:",
-            fontSize = 20.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.Start)
+            text = "No rides in history.",
+            fontSize = 16.sp,
+            color = Color.Gray,
+            modifier = Modifier.padding(vertical = 8.dp)
         )
-
-        if (completedRides.isEmpty()) {
-            Text(
-                text = "No completed rides.",
-                fontSize = 16.sp,
-                color = Color.Gray,
-                modifier = Modifier.align(Alignment.Start).padding(vertical = 8.dp)
-            )
-        } else {
-            completedRides.forEach { ride ->
-                RideItem(request = ride, completed = true)
-            }
+    } else {
+        rideHistory.forEach { ride ->
+            RideItem(request = ride, completed = true)
         }
     }
 }
 
 /**
  * Composable function [RideItem] displays a single ride item.
- * Allows marking the ride as completed and displays a confirmation dialog
- * when attempting to mark it as completed.
+ * The ride item includes location and time details, with an optional completed status.
  *
  * @param request Map containing ride details.
  * @param completed Boolean indicating if the ride is completed (default is false).
- * @param onCompleteRide Lambda function to mark the ride as completed.
  */
 @Composable
-fun RideItem(request: Map<String, String>, completed: Boolean = false, onCompleteRide: ((Map<String, String>) -> Unit)? = null) {
-    var showDialog by remember { mutableStateOf(false) }
-
-    if (showDialog && !completed) {
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            title = { Text(text = "Complete Ride") },
-            text = { Text("Are you sure you want to mark this ride as completed?") },
-            confirmButton = {
-                TextButton(onClick = {
-                    onCompleteRide?.invoke(request)
-                    showDialog = false
-                }) {
-                    Text("Yes")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDialog = false }) {
-                    Text("No")
-                }
-            }
-        )
-    }
-
+fun RideItem(request: Map<String, String>, completed: Boolean = false) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .background(Color.White)
-            .clickable(enabled = !completed) { showDialog = true },
+            .background(Color.White),
         elevation = CardDefaults.elevatedCardElevation()
     ) {
         Column(
@@ -262,24 +264,11 @@ fun RideItem(request: Map<String, String>, completed: Boolean = false, onComplet
 }
 
 /**
- * Marks the specified ride as completed and removes it from the active requests or offers
- * collection in Firestore. Moves the ride data to the "completedRides" collection.
+ * Adds a ride request or offer to the ride history collection in Firestore.
  *
- * @param request Map containing the ride data.
+ * @param ride Map containing the ride data.
  * @param db Firebase Firestore instance.
- * @param isRequest Boolean indicating if the ride is a request (true) or an offer (false).
  */
-fun markRideAsCompleted(request: Map<String, String>, db: FirebaseFirestore, isRequest: Boolean) {
-    val completedRef = db.collection("completedRides").document()
-    completedRef.set(request)
-        .addOnSuccessListener {
-            // Successfully added to completed rides
-            val collectionName = if (isRequest) "rideRequests" else "rideOffers"
-            request["id"]?.let { id ->
-                db.collection(collectionName).document(id).delete()
-            }
-        }
-        .addOnFailureListener {
-            // Handle failure to mark as completed
-        }
+fun addToRideHistory(ride: Map<String, String>, db: FirebaseFirestore) {
+    db.collection("rideHistory").add(ride)
 }
