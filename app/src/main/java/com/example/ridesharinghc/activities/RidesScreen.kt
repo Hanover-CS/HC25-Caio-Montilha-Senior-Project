@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.ridesharinghc.composables.screens.RidesScreen.addToRideHistory
 import com.example.ridesharinghc.composables.screens.RidesScreen.RideItem
+import com.example.ridesharinghc.composables.screens.RidesScreen.RideHistorySection
 
 /**
  * [RidesScreen] activity displays the user's ride requests, ride offers, and ride history.
@@ -200,34 +201,4 @@ fun RideOffersSection(userOffers: List<Map<String, String>>) {
     }
 
     Spacer(modifier = Modifier.height(32.dp))
-}
-
-/**
- * Composable function [RideHistorySection] displays a list of all past rides (requests and offers)
- * made by the user. These rides are stored permanently and are displayed as historical records.
- *
- * @param rideHistory List of maps containing all historical ride details.
- */
-@Composable
-fun RideHistorySection(rideHistory: List<Map<String, String>>) {
-    Text(
-        text = "Ride History:",
-        fontSize = 20.sp,
-        color = Color.Black,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier.fillMaxWidth()
-    )
-
-    if (rideHistory.isEmpty()) {
-        Text(
-            text = "No rides in history.",
-            fontSize = 16.sp,
-            color = Color.Gray,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-    } else {
-        rideHistory.forEach { ride ->
-            RideItem(request = ride, completed = true)
-        }
-    }
 }
