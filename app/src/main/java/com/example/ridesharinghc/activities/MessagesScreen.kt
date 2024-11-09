@@ -22,6 +22,7 @@ import com.example.ridesharinghc.ui.theme.RideSharingHCTheme
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.ridesharinghc.composables.screens.MessagesScreen.ChatItem
 
 /**
  * [MessagesScreen] activity displays a list of chat conversations for the current user.
@@ -106,54 +107,6 @@ fun MessagesScreenContent(onBackClick: () -> Unit) {
             chats.forEach { chat ->
                 ChatItem(chat, currentUserId)
             }
-        }
-    }
-}
-
-/**
- * Composable function [ChatItem] displays information about a single chat,
- * including the other user's contact details and the ride details. Tapping
- * on the chat item navigates the user to the chat screen.
- *
- * @param chat Map containing chat details.
- * @param currentUserId ID of the current user to identify the other participant.
- */
-@Composable
-fun ChatItem(chat: Map<String, Any>, currentUserId: String?) {
-    val otherUserId = if (currentUserId == chat["user1Id"] as? String) chat["user2Id"] as? String else chat["user1Id"] as? String
-    var otherUserEmail by remember { mutableStateOf("Unknown User") }
-    var otherUserPhone by remember { mutableStateOf("N/A") }
-    val rideDetails = chat["rideDetails"] as? Map<String, String>
-    val context = LocalContext.current
-    val db = FirebaseFirestore.getInstance()
-
-    // Fetch other user's email and phone from userProfiles
-    LaunchedEffect(otherUserId) {
-        otherUserId?.let { userId ->
-            db.collection("userProfiles").document(userId).get().addOnSuccessListener { document ->
-                otherUserEmail = document.getString("email") ?: "Unknown User"
-                otherUserPhone = document.getString("phone") ?: "N/A"
-            }
-        }
-    }
-
-    // Display chat item with details and navigate to chat screen on click
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clickable {
-                // Navigate to chat screen to show messages between the users
-                val intent = ChatActivity.createIntent(context, chat["chatId"] as String, otherUserId ?: "")
-                context.startActivity(intent)
-            },
-        elevation = CardDefaults.elevatedCardElevation()
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text("Chat with: $otherUserEmail", fontSize = 16.sp, color = Color.Black)
-            Text("Phone: $otherUserPhone", fontSize = 14.sp, color = Color.DarkGray)
-            Text("Location: ${rideDetails?.get("dropOffLocation") ?: rideDetails?.get("pickupLocation")}", fontSize = 14.sp, color = Color.DarkGray)
-            Text("Time: ${rideDetails?.get("time")}", fontSize = 14.sp, color = Color.DarkGray)
         }
     }
 }
