@@ -25,6 +25,7 @@ import com.example.ridesharinghc.composables.screens.RidesScreen.addToRideHistor
 import com.example.ridesharinghc.composables.screens.RidesScreen.RideItem
 import com.example.ridesharinghc.composables.screens.RidesScreen.RideHistorySection
 import com.example.ridesharinghc.composables.screens.RidesScreen.RideOffersSection
+import com.example.ridesharinghc.composables.screens.RidesScreen.RideRequestsSection
 
 /**
  * [RidesScreen] activity displays the user's ride requests, ride offers, and ride history.
@@ -138,36 +139,4 @@ fun RidesScreenContent(onBackClick: () -> Unit) {
         RideOffersSection(userOffers)
         RideHistorySection(rideHistory)
     }
-}
-
-/**
- * Composable function [RideRequestsSection] displays a list of the user's ride requests.
- * Each request is displayed as an individual [RideItem].
- *
- * @param userRequests List of maps containing ride request details.
- */
-@Composable
-fun RideRequestsSection(userRequests: List<Map<String, String>>) {
-    Text(
-        text = "Your Ride Requests:",
-        fontSize = 20.sp,
-        color = Color.Black,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier.fillMaxWidth()
-    )
-
-    if (userRequests.isEmpty()) {
-        Text(
-            text = "No ride requests found.",
-            fontSize = 16.sp,
-            color = Color.Gray,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-    } else {
-        userRequests.forEach { request ->
-            RideItem(request = request)
-        }
-    }
-
-    Spacer(modifier = Modifier.height(32.dp))
 }
