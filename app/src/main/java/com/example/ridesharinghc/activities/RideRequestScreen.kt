@@ -40,6 +40,7 @@ import com.example.ridesharinghc.composables.screens.RideRequestScreen.SubmitBut
 import com.example.ridesharinghc.composables.screens.RideRequestScreen.InputFieldsSection
 import com.example.ridesharinghc.composables.screens.RideRequestScreen.MapSection
 import com.example.ridesharinghc.composables.screens.RideRequestScreen.LocationSearchBar
+import com.example.ridesharinghc.composables.screens.RideRequestScreen.BackButton
 
 class RideRequestScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,25 +89,5 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
             time = time.value,
             notes = notes.value
         )
-    }
-}
-
-/**
- * Composable function [BackButton] displays a button to navigate back to the previous screen.
- *
- * @param onBackClick Lambda function to handle the back button action.
- */
-@Composable
-fun BackButton(onBackClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = onBackClick) {
-            Icon(painterResource(id = R.drawable.arrow), contentDescription = "Back", modifier = Modifier.size(32.dp))
-        }
     }
 }
