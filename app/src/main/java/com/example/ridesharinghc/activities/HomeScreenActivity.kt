@@ -34,6 +34,7 @@ import com.example.ridesharinghc.composables.screens.HomeScreen.ActionBox
 import com.example.ridesharinghc.utils.deleteRequest
 import com.example.ridesharinghc.utils.deleteOffer
 import com.example.ridesharinghc.composables.screens.HomeScreen.handleAcceptRequest
+import com.example.ridesharinghc.composables.screens.HomeScreen.ConfirmationDialog
 
 /**
  * [HomeScreenActivity] serves as the main screen of the RideSharingHC app.
@@ -308,29 +309,4 @@ fun HomeScreen() {
             }
         }
     }
-}
-
-/**
- * Displays a confirmation dialog for accepting a ride request or offer.
- *
- * @param onConfirm Lambda function called when the user confirms the action.
- * @param onDismiss Lambda function called when the user dismisses the dialog.
- */
-@Composable
-fun ConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(text = "Confirmation") },
-        text = { Text("Are you sure you want to accept this request?") },
-        confirmButton = {
-            TextButton(onClick = onConfirm) {
-                Text("Yes")
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("No")
-            }
-        }
-    )
 }
