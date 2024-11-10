@@ -38,6 +38,7 @@ import com.example.ridesharinghc.composables.screens.HomeScreen.ConfirmationDial
 import com.example.ridesharinghc.composables.screens.HomeScreen.RideOfferCard
 import com.example.ridesharinghc.composables.screens.HomeScreen.RideRequestCard
 import com.example.ridesharinghc.composables.screens.HomeScreen.HomeScreenActionRow
+import com.example.ridesharinghc.composables.screens.HomeScreen.HomeScreenContent
 
 /**
  * [HomeScreenActivity] serves as the main screen of the RideSharingHC app.
@@ -164,51 +165,5 @@ fun HomeScreenTopBar(context: Context) {
                 modifier = Modifier.size(38.dp)
             )
         }
-    }
-}
-
-/**
- * Composable function [HomeScreenContent] that shows the main content of the home screen,
- * including ride request and offer cards.
- */
-@Composable
-fun HomeScreenContent(
-    context: Context,
-    requests: List<Pair<String, Map<String, String>>>,
-    offers: List<Pair<String, Map<String, String>>>,
-    currentUserId: String?,
-    showDialog: Boolean,
-    setShowDialog: (Boolean) -> Unit,
-    selectedRequest: Pair<String, Map<String, String>>?,
-    setSelectedRequest: (Pair<String, Map<String, String>>?) -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 130.dp)
-    ) {
-        Text(
-            text = "RideSharingHC",
-            fontSize = 24.sp,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(vertical = 16.dp)
-        )
-
-        HomeScreenActionRow(context)
-
-        RideRequestCard(
-            requests = requests,
-            currentUserId = currentUserId,
-            setSelectedRequest = setSelectedRequest,
-            setShowDialog = setShowDialog
-        )
-
-        RideOfferCard(
-            offers = offers,
-            currentUserId = currentUserId,
-            setSelectedRequest = setSelectedRequest,
-            setShowDialog = setShowDialog
-        )
     }
 }
