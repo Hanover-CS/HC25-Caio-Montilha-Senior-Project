@@ -39,6 +39,7 @@ import com.example.ridesharinghc.composables.screens.HomeScreen.RideOfferCard
 import com.example.ridesharinghc.composables.screens.HomeScreen.RideRequestCard
 import com.example.ridesharinghc.composables.screens.HomeScreen.HomeScreenActionRow
 import com.example.ridesharinghc.composables.screens.HomeScreen.HomeScreenContent
+import com.example.ridesharinghc.composables.screens.HomeScreen.HomeScreenTopBar
 
 /**
  * [HomeScreenActivity] serves as the main screen of the RideSharingHC app.
@@ -129,41 +130,5 @@ fun HomeScreen() {
             selectedRequest = selectedRequest,
             setSelectedRequest = { selectedRequest = it }
         )
-    }
-}
-
-/**
- * Composable function [HomeScreenTopBar] that displays the top row of buttons for navigation.
- */
-@Composable
-fun HomeScreenTopBar(context: Context) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = {
-            val intent = Intent(context, MenuScreen::class.java)
-            context.startActivity(intent)
-        }) {
-            Icon(
-                painter = painterResource(id = R.drawable.menu_three_lines),
-                contentDescription = "Menu",
-                modifier = Modifier.size(42.dp)
-            )
-        }
-
-        IconButton(onClick = {
-            val intent = Intent(context, UserProfileScreen::class.java)
-            context.startActivity(intent)
-        }) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_person),
-                contentDescription = "Profile",
-                modifier = Modifier.size(38.dp)
-            )
-        }
     }
 }
