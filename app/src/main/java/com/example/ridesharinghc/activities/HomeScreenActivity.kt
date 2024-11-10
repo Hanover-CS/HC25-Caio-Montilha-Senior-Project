@@ -36,6 +36,7 @@ import com.example.ridesharinghc.utils.deleteOffer
 import com.example.ridesharinghc.composables.screens.HomeScreen.handleAcceptRequest
 import com.example.ridesharinghc.composables.screens.HomeScreen.ConfirmationDialog
 import com.example.ridesharinghc.composables.screens.HomeScreen.RideOfferCard
+import com.example.ridesharinghc.composables.screens.HomeScreen.RideRequestCard
 
 /**
  * [HomeScreenActivity] serves as the main screen of the RideSharingHC app.
@@ -242,73 +243,3 @@ fun HomeScreenActionRow(context: Context) {
         )
     }
 }
-
-/**
- * Composable function [RideRequestCard] that displays the current ride requests.
- */
-@Composable
-fun RideRequestCard(
-    requests: List<Pair<String, Map<String, String>>>,
-    currentUserId: String?,
-    setSelectedRequest: (Pair<String, Map<String, String>>?) -> Unit,
-    setShowDialog: (Boolean) -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .border(1.dp, Color.Black, RoundedCornerShape(8.dp)),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.elevatedCardElevation()
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "Current Requests:",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            requests.forEach { (key, request) ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "${request["dropOffLocation"]} - ${request["time"]}",
-                        fontSize = 16.sp
-                    )
-                    Row {
-                        if (request["userId"] == currentUserId) {
-                            IconButton(onClick = { deleteRequest(key) }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_delete),
-                                    contentDescription = "Delete",
-                                    modifier = Modifier.size(24.dp)
-                                )
-                            }
-                        } else {
-                            IconButton(onClick = {
-                                setSelectedRequest(key to request)
-                                setShowDialog(true)
-                            }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_check),
-                                    contentDescription = "Accept",
-                                    modifier = Modifier.size(24.dp)
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
