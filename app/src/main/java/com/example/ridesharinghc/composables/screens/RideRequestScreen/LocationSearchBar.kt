@@ -6,6 +6,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.example.ridesharinghc.components.SearchLocationBar
+import com.google.android.gms.maps.CameraUpdateFactory
 
 /**
  * Composable function [LocationSearchBar] displays a search bar allowing users to select a drop-off location.
@@ -28,8 +29,8 @@ fun LocationSearchBar(
     val markerState = remember { mutableStateOf(MarkerState(LatLng(-33.852, 151.211))) }
 
     SearchLocationBar { latLng, address ->
-        dropOffLocation.value = address
         markerState.value = MarkerState(latLng)
-        cameraPositionState.position = com.google.android.gms.maps.model.CameraPosition.fromLatLngZoom(latLng, 12f)
+        cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
+        dropOffLocation.value = address
     }
 }
