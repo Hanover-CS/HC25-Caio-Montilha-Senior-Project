@@ -53,7 +53,6 @@ class HomeScreenActivity : ComponentActivity() {
     }
 }
 
-
 /**
  * Composable function [HomeScreen] that displays the main content of the home screen.
  * It shows current ride requests and offers and allows users to accept or delete them.
@@ -115,193 +114,263 @@ fun HomeScreen() {
             .fillMaxSize()
             .background(SoftBlue)
     ) {
-        // Top row with navigation buttons for Menu and Profile
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = {
-                val intent = Intent(context, MenuScreen::class.java)
-                context.startActivity(intent)
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.menu_three_lines),
-                    contentDescription = "Menu",
-                    modifier = Modifier.size(42.dp)
-                )
-            }
+        HomeScreenTopBar(context)
+        HomeScreenContent(
+            context = context,
+            requests = requests,
+            offers = offers,
+            currentUserId = currentUserId,
+            showDialog = showDialog,
+            setShowDialog = { showDialog = it },
+            selectedRequest = selectedRequest,
+            setSelectedRequest = { selectedRequest = it }
+        )
+    }
+}
 
-            IconButton(onClick = {
-                val intent = Intent(context, UserProfileScreen::class.java)
-                context.startActivity(intent)
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_person),
-                    contentDescription = "Profile",
-                    modifier = Modifier.size(38.dp)
-                )
-            }
+/**
+ * Composable function [HomeScreenTopBar] that displays the top row of buttons for navigation.
+ */
+@Composable
+fun HomeScreenTopBar(context: Context) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = {
+            val intent = Intent(context, MenuScreen::class.java)
+            context.startActivity(intent)
+        }) {
+            Icon(
+                painter = painterResource(id = R.drawable.menu_three_lines),
+                contentDescription = "Menu",
+                modifier = Modifier.size(42.dp)
+            )
         }
 
-        // Main content with ride request and offer cards
+        IconButton(onClick = {
+            val intent = Intent(context, UserProfileScreen::class.java)
+            context.startActivity(intent)
+        }) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_person),
+                contentDescription = "Profile",
+                modifier = Modifier.size(38.dp)
+            )
+        }
+    }
+}
+
+/**
+ * Composable function [HomeScreenContent] that shows the main content of the home screen,
+ * including ride request and offer cards.
+ */
+@Composable
+fun HomeScreenContent(
+    context: Context,
+    requests: List<Pair<String, Map<String, String>>>,
+    offers: List<Pair<String, Map<String, String>>>,
+    currentUserId: String?,
+    showDialog: Boolean,
+    setShowDialog: (Boolean) -> Unit,
+    selectedRequest: Pair<String, Map<String, String>>?,
+    setSelectedRequest: (Pair<String, Map<String, String>>?) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 130.dp)
+    ) {
+        Text(
+            text = "RideSharingHC",
+            fontSize = 24.sp,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(vertical = 16.dp)
+        )
+
+        HomeScreenActionRow(context)
+
+        RideRequestCard(
+            requests = requests,
+            currentUserId = currentUserId,
+            setSelectedRequest = setSelectedRequest,
+            setShowDialog = setShowDialog
+        )
+
+        RideOfferCard(
+            offers = offers,
+            currentUserId = currentUserId,
+            setSelectedRequest = setSelectedRequest,
+            setShowDialog = setShowDialog
+        )
+    }
+}
+
+/**
+ * Composable function [HomeScreenActionRow] that displays the action buttons for "Get a Ride" and "Offer a Ride".
+ */
+@Composable
+fun HomeScreenActionRow(context: Context) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        ActionBox(
+            icon = painterResource(id = R.drawable.ic_get_ride),
+            text = "Get a Ride",
+            onClick = {
+                val intent = Intent(context, RideRequestScreen::class.java)
+                context.startActivity(intent)
+            },
+            tag = "getARideButton"
+        )
+        ActionBox(
+            icon = painterResource(id = R.drawable.ic_offer_ride),
+            text = "Offer a Ride",
+            onClick = {
+                val intent = Intent(context, OfferRideScreen::class.java)
+                context.startActivity(intent)
+            },
+            tag = "offerARideButton"
+        )
+    }
+}
+
+/**
+ * Composable function [RideRequestCard] that displays the current ride requests.
+ */
+@Composable
+fun RideRequestCard(
+    requests: List<Pair<String, Map<String, String>>>,
+    currentUserId: String?,
+    setSelectedRequest: (Pair<String, Map<String, String>>?) -> Unit,
+    setShowDialog: (Boolean) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .border(1.dp, Color.Black, RoundedCornerShape(8.dp)),
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.elevatedCardElevation()
+    ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 130.dp)
+                .padding(16.dp)
         ) {
             Text(
-                text = "RideSharingHC",
-                fontSize = 24.sp,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 16.dp)
+                text = "Current Requests:",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                ActionBox(
-                    icon = painterResource(id = R.drawable.ic_get_ride),
-                    text = "Get a Ride",
-                    onClick = {
-                        val intent = Intent(context, RideRequestScreen::class.java)
-                        context.startActivity(intent)
-                    },
-                    tag = "getARideButton"
-                )
-                ActionBox(
-                    icon = painterResource(id = R.drawable.ic_offer_ride),
-                    text = "Offer a Ride",
-                    onClick = {
-                        val intent = Intent(context, OfferRideScreen::class.java)
-                        context.startActivity(intent)
-                    },
-                    tag = "offerARideButton"
-                )
-            }
-
-            // Card displaying current ride requests
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .border(1.dp, Color.Black, RoundedCornerShape(8.dp)),
-                shape = RoundedCornerShape(8.dp),
-                elevation = CardDefaults.elevatedCardElevation()
-            ) {
-                Column(
+            requests.forEach { (key, request) ->
+                Row(
                     modifier = Modifier
-                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Current Requests:",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        text = "${request["dropOffLocation"]} - ${request["time"]}",
+                        fontSize = 16.sp
                     )
-
-                    requests.forEach { (key, request) ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "${request["dropOffLocation"]} - ${request["time"]}",
-                                fontSize = 16.sp
-                            )
-                            Row {
-                                if (request["userId"] == currentUserId) {
-                                    IconButton(onClick = {
-                                        deleteRequest(key)
-                                    }) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_delete),
-                                            contentDescription = "Delete",
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                } else {
-                                    IconButton(onClick = {
-                                        selectedRequest = key to request
-                                        showDialog = true
-                                    }) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_check),
-                                            contentDescription = "Accept",
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                }
+                    Row {
+                        if (request["userId"] == currentUserId) {
+                            IconButton(onClick = { deleteRequest(key) }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_delete),
+                                    contentDescription = "Delete",
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                        } else {
+                            IconButton(onClick = {
+                                setSelectedRequest(key to request)
+                                setShowDialog(true)
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_check),
+                                    contentDescription = "Accept",
+                                    modifier = Modifier.size(24.dp)
+                                )
                             }
                         }
                     }
                 }
             }
+        }
+    }
+}
 
-            // Card displaying current rides offered
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .border(1.dp, Color.Black, RoundedCornerShape(8.dp)),
-                shape = RoundedCornerShape(8.dp),
-                elevation = CardDefaults.elevatedCardElevation()
-            ) {
-                Column(
+/**
+ * Composable function [RideOfferCard] that displays the current rides offered.
+ */
+@Composable
+fun RideOfferCard(
+    offers: List<Pair<String, Map<String, String>>>,
+    currentUserId: String?,
+    setSelectedRequest: (Pair<String, Map<String, String>>?) -> Unit,
+    setShowDialog: (Boolean) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .border(1.dp, Color.Black, RoundedCornerShape(8.dp)),
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.elevatedCardElevation()
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Current Rides Offered:",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            offers.forEach { (key, offer) ->
+                Row(
                     modifier = Modifier
-                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Current Rides Offered:",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        text = "${offer["pickupLocation"]} - ${offer["time"]}",
+                        fontSize = 16.sp
                     )
-
-                    offers.forEach { (key, offer) ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "${offer["pickupLocation"]} - ${offer["time"]}",
-                                fontSize = 16.sp
-                            )
-                            Row {
-                                if (offer["userId"] == currentUserId) {
-                                    IconButton(onClick = {
-                                        deleteOffer(key)
-                                    }) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_delete),
-                                            contentDescription = "Delete",
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                } else {
-                                    IconButton(onClick = {
-                                        selectedRequest = key to offer
-                                        showDialog = true
-                                    }) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_check),
-                                            contentDescription = "Accept",
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                }
+                    Row {
+                        if (offer["userId"] == currentUserId) {
+                            IconButton(onClick = { deleteOffer(key) }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_delete),
+                                    contentDescription = "Delete",
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                        } else {
+                            IconButton(onClick = {
+                                setSelectedRequest(key to offer)
+                                setShowDialog(true)
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_check),
+                                    contentDescription = "Accept",
+                                    modifier = Modifier.size(24.dp)
+                                )
                             }
                         }
                     }
