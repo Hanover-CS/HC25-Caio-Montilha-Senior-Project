@@ -35,6 +35,7 @@ import com.example.ridesharinghc.utils.deleteRequest
 import com.example.ridesharinghc.utils.deleteOffer
 import com.example.ridesharinghc.composables.screens.HomeScreen.handleAcceptRequest
 import com.example.ridesharinghc.composables.screens.HomeScreen.ConfirmationDialog
+import com.example.ridesharinghc.composables.screens.HomeScreen.RideOfferCard
 
 /**
  * [HomeScreenActivity] serves as the main screen of the RideSharingHC app.
@@ -311,71 +312,3 @@ fun RideRequestCard(
     }
 }
 
-/**
- * Composable function [RideOfferCard] that displays the current rides offered.
- */
-@Composable
-fun RideOfferCard(
-    offers: List<Pair<String, Map<String, String>>>,
-    currentUserId: String?,
-    setSelectedRequest: (Pair<String, Map<String, String>>?) -> Unit,
-    setShowDialog: (Boolean) -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .border(1.dp, Color.Black, RoundedCornerShape(8.dp)),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.elevatedCardElevation()
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "Current Rides Offered:",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            offers.forEach { (key, offer) ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "${offer["pickupLocation"]} - ${offer["time"]}",
-                        fontSize = 16.sp
-                    )
-                    Row {
-                        if (offer["userId"] == currentUserId) {
-                            IconButton(onClick = { deleteOffer(key) }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_delete),
-                                    contentDescription = "Delete",
-                                    modifier = Modifier.size(24.dp)
-                                )
-                            }
-                        } else {
-                            IconButton(onClick = {
-                                setSelectedRequest(key to offer)
-                                setShowDialog(true)
-                            }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_check),
-                                    contentDescription = "Accept",
-                                    modifier = Modifier.size(24.dp)
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
