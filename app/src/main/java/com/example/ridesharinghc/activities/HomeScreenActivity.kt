@@ -371,11 +371,3 @@ fun handleAcceptRequest(context: Context, request: Map<String, String>) {
             Toast.makeText(context, "Error creating chat: ${e.message}", Toast.LENGTH_SHORT).show()
         }
 }
-
-
-
-
-
-
-
-

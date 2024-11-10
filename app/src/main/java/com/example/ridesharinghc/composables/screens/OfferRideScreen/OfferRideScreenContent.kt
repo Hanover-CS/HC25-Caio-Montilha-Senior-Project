@@ -1,4 +1,4 @@
-package com.example.ridesharinghc.composables.screens.OfferRideScreen
+package com.example.ridesharinghc.composables.screens
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.ridesharinghc.R
-import com.example.ridesharinghc.composables.screens.OfferRideScreen.OfferRideScreenContent
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -38,14 +37,6 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.example.ridesharinghc.components.SearchLocationBar
 
-/**
- * Composable function [OfferRideScreenContent] displays the UI for offering a ride.
- * It includes a map for selecting the pickup location, fields for the driver's name,
- * pickup location, date, time, and seats available, and a button to submit the offer.
- * On submission, the data is saved to Firebase Firestore.
- *
- * @param onBackClick Lambda function to handle the back button action.
- */
 @Composable
 fun OfferRideScreenContent(onBackClick: () -> Unit) {
     val driverName = remember { mutableStateOf("") }
@@ -72,7 +63,6 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
                 1
             )
         } else {
-            // Get the user's current location and update the map
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 location?.let {
                     val currentLocation = LatLng(it.latitude, it.longitude)
@@ -85,7 +75,6 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
         }
     }
 
-    // Main UI layout with map and form fields for ride offer details
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -93,7 +82,6 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        // Back button
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -101,18 +89,21 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             IconButton(onClick = onBackClick) {
-                Icon(painterResource(id = R.drawable.arrow), contentDescription = "Back", modifier = Modifier.size(32.dp))
+                Icon(
+                    painter = painterResource(id = R.drawable.arrow),
+                    contentDescription = "Back",
+                    modifier = Modifier.size(32.dp),
+                    tint = Color.Black
+                )
             }
         }
 
-        // Search bar for selecting pickup location
         SearchLocationBar { latLng, address ->
             markerState.value = MarkerState(latLng)
-            cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(latLng, 12f)) // Set camera zoom level
-            pickupLocation.value = address // Automatically set the pickup location with the selected address
+            cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
+            pickupLocation.value = address
         }
 
-        // Google Map showing the selected pickup location
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -131,7 +122,6 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
         }
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Input fields for driver's name, pickup location, date, time, and available seats
         TextField(
             value = driverName.value,
             onValueChange = { driverName.value = it },
@@ -146,15 +136,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
         )
         TextField(
             value = date.value,
-            onValueChange = {
-                if (it.length <= 10) {
-                    val formatted = it
-                        .replace(Regex("[^0-9]"), "")
-                        .chunked(2)
-                        .joinToString("/")
-                    date.value = formatted
-                }
-            },
+            onValueChange = { date.value = it },
             label = { Text("Date (MM/DD/YYYY)") },
             modifier = Modifier
                 .fillMaxWidth()
@@ -169,7 +151,6 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Button to submit the ride offer to Firebase Firestore
         Button(
             onClick = {
                 val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
@@ -179,12 +160,10 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
                     "date" to date.value,
                     "time" to time.value,
                     "seatsAvailable" to seatsAvailable.value,
-                    "userId" to userId // Adds userId for deletion control
+                    "userId" to userId
                 )
 
-                // Submit the offer to Firebase Firestore
-                val firestore = FirebaseFirestore.getInstance()
-                firestore.collection("rideOffers")
+                FirebaseFirestore.getInstance().collection("rideOffers")
                     .add(offer)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Ride offered successfully", Toast.LENGTH_SHORT).show()
