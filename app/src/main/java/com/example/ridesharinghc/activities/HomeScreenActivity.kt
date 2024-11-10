@@ -37,6 +37,7 @@ import com.example.ridesharinghc.composables.screens.HomeScreen.handleAcceptRequ
 import com.example.ridesharinghc.composables.screens.HomeScreen.ConfirmationDialog
 import com.example.ridesharinghc.composables.screens.HomeScreen.RideOfferCard
 import com.example.ridesharinghc.composables.screens.HomeScreen.RideRequestCard
+import com.example.ridesharinghc.composables.screens.HomeScreen.HomeScreenActionRow
 
 /**
  * [HomeScreenActivity] serves as the main screen of the RideSharingHC app.
@@ -208,38 +209,6 @@ fun HomeScreenContent(
             currentUserId = currentUserId,
             setSelectedRequest = setSelectedRequest,
             setShowDialog = setShowDialog
-        )
-    }
-}
-
-/**
- * Composable function [HomeScreenActionRow] that displays the action buttons for "Get a Ride" and "Offer a Ride".
- */
-@Composable
-fun HomeScreenActionRow(context: Context) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceAround
-    ) {
-        ActionBox(
-            icon = painterResource(id = R.drawable.ic_get_ride),
-            text = "Get a Ride",
-            onClick = {
-                val intent = Intent(context, RideRequestScreen::class.java)
-                context.startActivity(intent)
-            },
-            tag = "getARideButton"
-        )
-        ActionBox(
-            icon = painterResource(id = R.drawable.ic_offer_ride),
-            text = "Offer a Ride",
-            onClick = {
-                val intent = Intent(context, OfferRideScreen::class.java)
-                context.startActivity(intent)
-            },
-            tag = "offerARideButton"
         )
     }
 }
