@@ -15,22 +15,16 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 
 class ChatScreenKtTest {
-
     @Mock
     private lateinit var mockFirestore: FirebaseFirestore
-
     @Mock
     private lateinit var mockChatsCollection: CollectionReference
-
     @Mock
     private lateinit var mockMessagesCollection: CollectionReference
-
     @Mock
     private lateinit var mockAuth: FirebaseAuth
-
     @Mock
     private lateinit var mockUser: FirebaseUser
-
     private lateinit var chatId: String
     private lateinit var messageText: String
 
@@ -53,10 +47,8 @@ class ChatScreenKtTest {
     fun `sendMessage adds message to Firestore`() {
         // Arrange
         `when`(mockMessagesCollection.add(any<Map<String, Any>>())).thenReturn(Tasks.forResult(null))
-
         // Act
         sendMessage(mockFirestore, mockAuth, chatId, messageText)
-
         // Assert
         verify(mockMessagesCollection, times(1)).add(any<Map<String, Any>>())
     }

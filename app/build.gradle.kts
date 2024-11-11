@@ -37,11 +37,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 
     // Enable BuildConfig generation
@@ -57,6 +57,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
         }
     }
 }
@@ -91,7 +93,8 @@ dependencies {
     implementation("com.google.maps.android:maps-compose:2.8.0") // Compose support for Google Maps
     implementation("com.google.android.gms:play-services-maps:19.0.0") // Google Maps API for Android
     implementation("com.google.android.gms:play-services-location:21.3.0") // Google Play services location API
-    implementation("com.google.android.libraries.places:places:4.0.0") // Google Places API
+    implementation("com.google.android.libraries.places:places:4.0.0")
+    testImplementation("junit:junit:4.12")
 
     dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.9.20")
 
@@ -105,7 +108,9 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    testImplementation("org.robolectric:robolectric:4.8.1")
+
+    // Robolectric for local unit tests
+    testImplementation("org.robolectric:robolectric:4.9")
 
     // Mockito for testing
     testImplementation("org.mockito:mockito-core:4.6.1")
