@@ -106,7 +106,7 @@ fun ChatScreen(chatId: String, otherUserId: String, onBackClick: () -> Unit) {
                     .padding(12.dp)
             )
             Button(onClick = {
-                sendMessage(db, chatId, messageText)
+                sendMessage(db, FirebaseAuth.getInstance(), chatId, messageText) // Added FirebaseAuth.getInstance() as the second parameter
                 messageText = ""
             }) {
                 Text("Send")

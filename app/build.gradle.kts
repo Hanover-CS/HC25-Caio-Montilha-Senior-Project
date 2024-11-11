@@ -87,7 +87,6 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("com.google.firebase:firebase-storage:21.0.1")
 
-
     // Google Maps and Location Services
     implementation("com.google.maps.android:maps-compose:2.8.0") // Compose support for Google Maps
     implementation("com.google.android.gms:play-services-maps:19.0.0") // Google Maps API for Android
@@ -106,9 +105,12 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    testImplementation("org.robolectric:robolectric:4.8.1")
 
     // Mockito for testing
     testImplementation("org.mockito:mockito-core:4.6.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-}
 
+    // Mockk framework for Kotlin mocking
+    testImplementation("io.mockk:mockk:1.12.0")
+}
