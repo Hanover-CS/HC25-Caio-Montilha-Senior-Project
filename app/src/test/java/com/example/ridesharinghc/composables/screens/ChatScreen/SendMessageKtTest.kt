@@ -29,16 +29,15 @@ class SendMessageKtTest {
     private lateinit var mockMessagesCollection: CollectionReference
     private lateinit var chatId: String
     private lateinit var messageText: String
+
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         chatId = "sampleChatId"
-        messageText = "Hello, world!"
-
+        messageText = "Hello, I am Caio!"
         // Mock authentication to simulate a logged-in user
         `when`(mockAuth.currentUser).thenReturn(mockUser)
         `when`(mockUser.uid).thenReturn("user123")
-
         // Mock Firestore structure
         `when`(mockFirestore.collection("chats")).thenReturn(mockMessagesCollection)
         `when`(mockMessagesCollection.document(chatId)).thenReturn(mockChatDocument)
@@ -65,10 +64,8 @@ class SendMessageKtTest {
     fun `sendMessage does nothing if user is not logged in`() {
         // Arrange
         `when`(mockAuth.currentUser).thenReturn(null)
-
         // Act
         sendMessage(mockFirestore, mockAuth, chatId, messageText)
-
         // Verify that no message is added when the user is not logged in
         verify(mockMessagesCollection, never()).add(anyMap<String, Any>())
     }
