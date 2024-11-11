@@ -95,6 +95,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.3.0") // Google Play services location API
     implementation("com.google.android.libraries.places:places:4.0.0")
     testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.12")
 
     dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.9.20")
 
