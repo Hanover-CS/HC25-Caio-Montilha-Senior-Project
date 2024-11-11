@@ -94,7 +94,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:19.0.0") // Google Maps API for Android
     implementation("com.google.android.gms:play-services-location:21.3.0") // Google Play services location API
     implementation("com.google.android.libraries.places:places:4.0.0")
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.13.2")
     testImplementation("junit:junit:4.12")
 
     dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.9.20")
@@ -119,4 +119,7 @@ dependencies {
 
     // Mockk framework for Kotlin mocking
     testImplementation("io.mockk:mockk:1.12.0")
+
+    androidTestImplementation("androidx.test:runner:1.6.2")
+    androidTestImplementation("androidx.test:rules:1.6.1")
 }
