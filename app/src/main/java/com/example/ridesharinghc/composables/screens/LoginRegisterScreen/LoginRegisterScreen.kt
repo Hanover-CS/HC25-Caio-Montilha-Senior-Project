@@ -20,11 +20,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.LoginActivity
+import com.example.ridesharinghc.firebase.FirebaseAuthHelper
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.example.ridesharinghc.ui.theme.SoftBlue
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-import com.example.ridesharinghc.composables.screens.LoginRegisterScreen.signUpUser
 
 /**
  * Composable function [LoginRegisterScreen] that displays the registration form.
@@ -41,8 +40,6 @@ fun LoginRegisterScreen(navController: NavController?) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-
-    val auth = remember { FirebaseAuth.getInstance() }
 
     Box(
         modifier = Modifier
@@ -103,11 +100,13 @@ fun LoginRegisterScreen(navController: NavController?) {
                         password != confirmPassword -> scope.launch {
                             snackbarHostState.showSnackbar("Passwords do not match, please try again.")
                         }
-                        else -> signUpUser(auth, email, password, context) {
-                            scope.launch {
-                                snackbarHostState.showSnackbar("Congratulations! You have created your account.")
-                                val intent = Intent(context, LoginActivity::class.java)
-                                context.startActivity(intent)
+                        else -> {
+                            FirebaseAuthHelper.signUpUser(email, password, context) {
+                                scope.launch {
+                                    snackbarHostState.showSnackbar("Congratulations! You have created your account.")
+                                    val intent = Intent(context, LoginActivity::class.java)
+                                    context.startActivity(intent)
+                                }
                             }
                         }
                     }

@@ -7,6 +7,12 @@ import com.example.ridesharinghc.activities.HomeScreenActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * FirebaseAuthHelper handles Firebase Authentication and Firestore operations.
+ * It consolidates functions previously spread across multiple files such as
+ * signUpUser.kt, saveAuthDataToFirebase.kt, saveUserProfileToFirebase.kt, and
+ * checkUserInFirestore.kt, centralizing authentication and user data management.
+ */
 object FirebaseAuthHelper {
     private val auth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
@@ -73,7 +79,7 @@ object FirebaseAuthHelper {
      * @param password The user's password.
      * @param onSuccess Lambda function to execute after successful data save.
      */
-    private fun saveAuthData(userId: String, email: String, password: String, onSuccess: () -> Unit) {
+    fun saveAuthData(userId: String, email: String, password: String, onSuccess: () -> Unit) {
         val authData = mapOf("email" to email, "password" to password)
         firestore.collection("userAuthData").document(userId).set(authData)
             .addOnSuccessListener { onSuccess() }
@@ -87,7 +93,7 @@ object FirebaseAuthHelper {
      * @param email The user's email address.
      * @param onSuccess Lambda function to execute after successful profile save.
      */
-    private fun saveUserProfile(userId: String, email: String, onSuccess: () -> Unit) {
+    fun saveUserProfile(userId: String, email: String, onSuccess: () -> Unit) {
         val profileData = mapOf("email" to email, "name" to "", "phone" to "")
         firestore.collection("userProfiles").document(userId).set(profileData)
             .addOnSuccessListener { onSuccess() }
