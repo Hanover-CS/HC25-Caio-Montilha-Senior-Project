@@ -110,27 +110,28 @@ jobs:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - App Bundle AAB Release Generated
           path: ${{ env.main_project_module }}/build/outputs/bundle/release/
 
-      - run: ./gradlew dokkahtml
-
-      - name: Copy Over the Dokka
+      # Run Dokka and place output in outputdir/api
+      - name: Run dokka
+        run: ./gradlew dokkaHtml
+      - name: Copy Dokka output
         run: |
-            mkdir -p outputdir
-            mv app/build/dokka outputdir/api
+          mkdir -p outputdir/api
+          mv app/build/dokka/html outputdir/api
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Build Docs
+      # Build Jekyll documentation and place in outputdir/docs
+      - name: Build Jekyll Documentation
         uses: actions/jekyll-build-pages@v1
         with:
           source: docs
           destination: outputdir/docs
 
+      # Upload all static files
       - name: Upload Static Files
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-            path: outputdir
+          path: outputdir
+
   deploy:
     environment:
       name: github-pages
@@ -138,9 +139,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     permissions:
-      pages: write      # to deploy to Pages
+      pages: write
       id-token: write
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
