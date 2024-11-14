@@ -10,11 +10,12 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.example.ridesharinghc.utils.deleteRequest
+import com.example.ridesharinghc.firebase.FirebaseAuthHelper
 import com.example.ridesharinghc.composables.screens.HomeScreen.HomeScreenTopBar
 import com.example.ridesharinghc.composables.screens.HomeScreen.HomeScreenContent
 import com.example.ridesharinghc.composables.screens.HomeScreen.ConfirmationDialog
 import com.example.ridesharinghc.composables.screens.HomeScreen.handleAcceptRequest
+import com.example.ridesharinghc.firebase.FirebaseAuthHelper.deleteRequest
 
 /**
  * Composable function [HomeScreen] that displays the main content of the home screen.

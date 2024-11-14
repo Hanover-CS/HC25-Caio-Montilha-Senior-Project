@@ -10,10 +10,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
-import com.example.ridesharinghc.utils.deleteRequest
+import com.example.ridesharinghc.firebase.FirebaseAuthHelper
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
+import com.example.ridesharinghc.firebase.FirebaseAuthHelper.deleteRequest
 
 /**
  * Composable function [RideRequestCard] that displays the current ride requests.

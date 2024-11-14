@@ -18,6 +18,34 @@ object FirebaseAuthHelper {
     private val firestore = FirebaseFirestore.getInstance()
 
     /**
+     * Deletes a ride offer from Firebase Firestore.
+     *
+     * @param offerId The ID of the offer to delete.
+     */
+    fun deleteOffer(offerId: String) {
+        val offerRef = firestore.collection("rideOffers").document(offerId)
+        offerRef.delete()
+            .addOnFailureListener { e ->
+                // Handle the failure, e.g., log or show an error message if needed
+                e.printStackTrace()
+            }
+    }
+
+    /**
+     * Deletes a ride request from Firebase Firestore.
+     *
+     * @param requestId The ID of the request to delete.
+     */
+    fun deleteRequest(requestId: String) {
+        val requestRef = firestore.collection("rideRequests").document(requestId)
+        requestRef.delete()
+            .addOnFailureListener { e ->
+                // Handle the failure, e.g., log or show an error message if needed
+                e.printStackTrace()
+            }
+    }
+
+    /**
      * Signs up a new user with email and password, saving their authentication and profile data.
      *
      * @param email The user's email address.
