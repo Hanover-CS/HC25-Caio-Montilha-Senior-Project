@@ -40,6 +40,7 @@ import com.google.maps.android.compose.CameraPositionState
 import com.example.ridesharinghc.composables.screens.common.checkLocationPermissionAndSetLocation
 import com.example.ridesharinghc.composables.screens.common.BackButton
 import com.example.ridesharinghc.composables.screens.common.MapSection
+import com.example.ridesharinghc.composables.screens.OfferRideScreen.OfferSubmitButton
 
 @Composable
 fun OfferRideScreenContent(onBackClick: () -> Unit) {
@@ -124,44 +125,4 @@ fun OfferInputFields(pickupLocation: MutableState<String>) {
         label = { Text("Seats Available") },
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
     )
-}
-
-@Composable
-fun OfferSubmitButton(
-    onBackClick: () -> Unit,
-    pickupLocation: String
-) {
-    val context = LocalContext.current
-    val driverName = remember { mutableStateOf("") }
-    val date = remember { mutableStateOf("") }
-    val time = remember { mutableStateOf("") }
-    val seatsAvailable = remember { mutableStateOf("") }
-
-    Button(
-        onClick = {
-            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-            val offer = hashMapOf(
-                "driverName" to driverName.value,
-                "pickupLocation" to pickupLocation,
-                "date" to date.value,
-                "time" to time.value,
-                "seatsAvailable" to seatsAvailable.value,
-                "userId" to userId
-            )
-
-            FirebaseFirestore.getInstance().collection("rideOffers")
-                .add(offer)
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Ride offered successfully", Toast.LENGTH_SHORT).show()
-                    onBackClick()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Failed to offer ride", Toast.LENGTH_SHORT).show()
-                }
-        },
-        modifier = Modifier.fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
-    ) {
-        Text("Offer Ride", color = Color.White, fontSize = 16.sp)
-    }
 }
