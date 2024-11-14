@@ -14,6 +14,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.ridesharinghc.R
 
+/**
+ * Composable function [BackButton] displays a back navigation button with an arrow icon.
+ * When clicked, it triggers the [onBackClick] action.
+ *
+ * @param onBackClick Lambda function to handle the back button action, enabling navigation back.
+ */
 @Composable
 fun BackButton(onBackClick: () -> Unit) {
     Row(

@@ -17,6 +17,13 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 
+/**
+ * Composable function [MapSection] displays a Google Map with a marker at a specified location.
+ * It includes a blue border and rounded corners to enhance its appearance.
+ *
+ * @param markerState Mutable state representing the marker's position on the map.
+ * @param cameraPositionState Controls the camera position on the map, enabling map view adjustments.
+ */
 @Composable
 fun MapSection(
     markerState: MutableState<MarkerState>,
