@@ -37,7 +37,6 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
     LaunchedEffect(Unit) {
         checkLocationPermissionAndSetLocation(context, cameraPositionState, markerState)
     }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,7 +45,6 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
             .verticalScroll(rememberScrollState())
     ) {
         BackButton(onBackClick)
-
         // Use LocationSearchBar
         LocationSearchBar(
             dropOffLocation = pickupLocation,
@@ -56,9 +54,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
                 pickupLocation.value = address
             }
         )
-
         Spacer(modifier = Modifier.height(16.dp))
-
         MapSection(markerState = markerState, cameraPositionState = cameraPositionState)
         OfferInputFields(pickupLocation)
         OfferSubmitButton(
