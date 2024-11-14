@@ -20,6 +20,13 @@ import com.example.ridesharinghc.composables.screens.common.BackButton
 import com.example.ridesharinghc.composables.screens.RideRequestScreen.SubmitButton
 import com.example.ridesharinghc.composables.screens.RideRequestScreen.RequestInputFields
 
+/**
+ * Composable function [RideRequestScreenContent] displays the main content for the Ride Request screen,
+ * allowing users to enter details for a ride request, including drop-off location, date, time, and notes.
+ * It includes a map view, location search bar, and back navigation.
+ *
+ * @param onBackClick Lambda function to handle the back button action, enabling navigation back.
+ */
 @Composable
 fun RideRequestScreenContent(onBackClick: () -> Unit) {
     val context = LocalContext.current
