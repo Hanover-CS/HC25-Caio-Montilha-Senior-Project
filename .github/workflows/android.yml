@@ -110,6 +110,8 @@ jobs:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - App Bundle AAB Release Generated
           path: ${{ env.main_project_module }}/build/outputs/bundle/release/
 
+      - run: ./gradlew dokkahtml
+
       - name: Copy Over the Dokka
         run: |
             mkdir -p outputdir
