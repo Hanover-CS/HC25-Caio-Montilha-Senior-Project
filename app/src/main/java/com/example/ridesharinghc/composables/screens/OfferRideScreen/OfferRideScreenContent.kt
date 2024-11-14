@@ -20,6 +20,12 @@ import com.example.ridesharinghc.composables.screens.common.MapSection
 import com.example.ridesharinghc.composables.screens.OfferRideScreen.OfferSubmitButton
 import com.example.ridesharinghc.composables.screens.OfferRideScreen.OfferInputFields
 
+/**
+ * Composable function [OfferRideScreenContent] displays the main screen content for offering a ride.
+ * It includes location search functionality, a map view, and input fields for ride details.
+ *
+ * @param onBackClick Lambda function to handle the back button action, allowing navigation back.
+ */
 @Composable
 fun OfferRideScreenContent(onBackClick: () -> Unit) {
     val context = LocalContext.current

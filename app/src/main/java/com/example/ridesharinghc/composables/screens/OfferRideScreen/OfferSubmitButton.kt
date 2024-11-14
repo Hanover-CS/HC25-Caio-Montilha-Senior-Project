@@ -13,6 +13,14 @@ import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * Composable function [OfferSubmitButton] displays a button that, when clicked, submits
+ * a ride offer to Firebase Firestore with the provided details, including driver name,
+ * pickup location, date, time, and available seats.
+ *
+ * @param onBackClick Lambda function to handle navigation back after a successful offer submission.
+ * @param pickupLocation String representing the selected pickup location.
+ */
 @Composable
 fun OfferSubmitButton(
     onBackClick: () -> Unit,

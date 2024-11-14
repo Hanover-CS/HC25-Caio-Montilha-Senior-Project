@@ -13,6 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.KeyboardType
 
+
+/**
+ * Composable function [OfferInputFields] displays input fields for offering a ride,
+ * including driver's name, pickup location, date, time, and available seats.
+ *
+ * @param pickupLocation Mutable state holding the pickup location.
+ */
 @Composable
 fun OfferInputFields(pickupLocation: MutableState<String>) {
     val driverName = remember { mutableStateOf("") }
