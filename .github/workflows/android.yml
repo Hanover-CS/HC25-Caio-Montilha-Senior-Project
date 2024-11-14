@@ -115,7 +115,7 @@ jobs:
       - name: Copy Over the Dokka
         run: |
             mkdir -p outputdir
-            mv app/build/dokka/html outputdir/api
+            mv app/build/dokka outputdir/api
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
