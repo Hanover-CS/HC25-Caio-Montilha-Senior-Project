@@ -116,9 +116,9 @@ jobs:
       - name: Copy Dokka output
         run: |
           mkdir -p outputdir/api
-          mv app/build/dokka/html outputdir/api
+          mv app/build/dokka/html/* outputdir/api
 
-      # Build Jekyll documentation and place in outputdir/docs
+      # Build Jekyll documentation with Moonwalk theme and place in outputdir/docs
       - name: Build Jekyll Documentation
         uses: actions/jekyll-build-pages@v1
         with:
