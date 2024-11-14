@@ -35,44 +35,22 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.example.ridesharinghc.components.SearchLocationBar
+import com.example.ridesharinghc.composables.screens.common.LocationSearchBar
+import com.google.maps.android.compose.CameraPositionState
+import com.example.ridesharinghc.composables.screens.common.checkLocationPermissionAndSetLocation
+import com.example.ridesharinghc.composables.screens.common.BackButton
+import com.example.ridesharinghc.composables.screens.common.MapSection
 
 @Composable
 fun OfferRideScreenContent(onBackClick: () -> Unit) {
-    val driverName = remember { mutableStateOf("") }
-    val pickupLocation = remember { mutableStateOf("") }
-    val date = remember { mutableStateOf("") }
-    val time = remember { mutableStateOf("") }
-    val seatsAvailable = remember { mutableStateOf("") }
     val context = LocalContext.current
-
-    val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-    val markerState = remember { mutableStateOf(MarkerState(LatLng(-33.852, 151.211))) }
+    val pickupLocation = remember { mutableStateOf("") }
     val cameraPositionState = rememberCameraPositionState()
+    val markerState = remember { mutableStateOf(MarkerState(LatLng(-33.852, 151.211))) }
 
-    // Check and request location permissions
-    LaunchedEffect(key1 = Unit) {
-        if (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                context as ComponentActivity,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1
-            )
-        } else {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                location?.let {
-                    val currentLocation = LatLng(it.latitude, it.longitude)
-                    markerState.value = MarkerState(currentLocation)
-                    cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(currentLocation, 10f))
-                } ?: run {
-                    Toast.makeText(context, "Unable to get location", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+    // Request location permission and initialize FusedLocationProviderClient
+    LaunchedEffect(Unit) {
+        checkLocationPermissionAndSetLocation(context, cameraPositionState, markerState)
     }
 
     Column(
@@ -82,101 +60,108 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            IconButton(onClick = onBackClick) {
-                Icon(
-                    painter = painterResource(id = R.drawable.arrow),
-                    contentDescription = "Back",
-                    modifier = Modifier.size(32.dp),
-                    tint = Color.Black
-                )
+        BackButton(onBackClick)
+
+        // Use LocationSearchBar
+        LocationSearchBar(
+            dropOffLocation = pickupLocation,
+            onLocationSelected = { latLng, address ->
+                markerState.value = MarkerState(latLng)
+                cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+                pickupLocation.value = address
             }
-        }
+        )
 
-        SearchLocationBar { latLng, address ->
-            markerState.value = MarkerState(latLng)
-            cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
-            pickupLocation.value = address
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(400.dp)
-                .border(2.dp, Color.Blue, RoundedCornerShape(8.dp))
-        ) {
-            GoogleMap(
-                modifier = Modifier.fillMaxSize(),
-                cameraPositionState = cameraPositionState
-            ) {
-                Marker(
-                    state = markerState.value,
-                    title = "Selected Location"
-                )
-            }
-        }
-        Spacer(modifier = Modifier.height(32.dp))
-
-        TextField(
-            value = driverName.value,
-            onValueChange = { driverName.value = it },
-            label = { Text("Driver's name") },
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
-        )
-        TextField(
-            value = pickupLocation.value,
-            onValueChange = { pickupLocation.value = it },
-            label = { Text("Pickup and Drop-off Location") },
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
-        )
-        TextField(
-            value = date.value,
-            onValueChange = { date.value = it },
-            label = { Text("Date (MM/DD/YYYY)") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-        )
-        TextField(
-            value = time.value,
-            onValueChange = { time.value = it },
-            label = { Text("Time") },
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
-        )
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = {
-                val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-                val offer = hashMapOf(
-                    "driverName" to driverName.value,
-                    "pickupLocation" to pickupLocation.value,
-                    "date" to date.value,
-                    "time" to time.value,
-                    "seatsAvailable" to seatsAvailable.value,
-                    "userId" to userId
-                )
+        MapSection(markerState = markerState, cameraPositionState = cameraPositionState)
+        OfferInputFields(pickupLocation)
+        OfferSubmitButton(
+            onBackClick = onBackClick,
+            pickupLocation = pickupLocation.value
+        )
+    }
+}
 
-                FirebaseFirestore.getInstance().collection("rideOffers")
-                    .add(offer)
-                    .addOnSuccessListener {
-                        Toast.makeText(context, "Ride offered successfully", Toast.LENGTH_SHORT).show()
-                        onBackClick()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(context, "Failed to offer ride", Toast.LENGTH_SHORT).show()
-                    }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
-        ) {
-            Text("Offer Ride", color = Color.White, fontSize = 16.sp)
-        }
+
+@Composable
+fun OfferInputFields(pickupLocation: MutableState<String>) {
+    val driverName = remember { mutableStateOf("") }
+    val date = remember { mutableStateOf("") }
+    val time = remember { mutableStateOf("") }
+    val seatsAvailable = remember { mutableStateOf("") }
+
+    TextField(
+        value = driverName.value,
+        onValueChange = { driverName.value = it },
+        label = { Text("Driver's Name") },
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+    )
+    TextField(
+        value = pickupLocation.value,
+        onValueChange = { pickupLocation.value = it },
+        label = { Text("Pickup Location") },
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+    )
+    TextField(
+        value = date.value,
+        onValueChange = { date.value = it },
+        label = { Text("Date (MM/DD/YYYY)") },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+    )
+    TextField(
+        value = time.value,
+        onValueChange = { time.value = it },
+        label = { Text("Time") },
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+    )
+    TextField(
+        value = seatsAvailable.value,
+        onValueChange = { seatsAvailable.value = it },
+        label = { Text("Seats Available") },
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+    )
+}
+
+@Composable
+fun OfferSubmitButton(
+    onBackClick: () -> Unit,
+    pickupLocation: String
+) {
+    val context = LocalContext.current
+    val driverName = remember { mutableStateOf("") }
+    val date = remember { mutableStateOf("") }
+    val time = remember { mutableStateOf("") }
+    val seatsAvailable = remember { mutableStateOf("") }
+
+    Button(
+        onClick = {
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+            val offer = hashMapOf(
+                "driverName" to driverName.value,
+                "pickupLocation" to pickupLocation,
+                "date" to date.value,
+                "time" to time.value,
+                "seatsAvailable" to seatsAvailable.value,
+                "userId" to userId
+            )
+
+            FirebaseFirestore.getInstance().collection("rideOffers")
+                .add(offer)
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Ride offered successfully", Toast.LENGTH_SHORT).show()
+                    onBackClick()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Failed to offer ride", Toast.LENGTH_SHORT).show()
+                }
+        },
+        modifier = Modifier.fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+    ) {
+        Text("Offer Ride", color = Color.White, fontSize = 16.sp)
     }
 }

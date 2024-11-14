@@ -21,7 +21,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
         // Inject Google Maps API Key from the environment variable
         buildConfigField("String", "MAPS_API_KEY", "\"${System.getenv("MAPS_KEY") ?: ""}\"")
     }

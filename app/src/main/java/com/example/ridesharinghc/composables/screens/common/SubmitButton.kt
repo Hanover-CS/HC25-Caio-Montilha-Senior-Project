@@ -1,10 +1,12 @@
-package com.example.ridesharinghc.composables.screens.RideRequestScreen
+package com.example.ridesharinghc.composables.screens.common
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -14,10 +16,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
- * Composable function [SubmitButton] provides a button to submit the ride request.
- * On clicking, it saves the request details to Firebase Firestore and navigates back upon success.
+ * Composable function [SubmitButton] for submitting ride requests or offers.
  *
- * @param onBackClick Lambda function to handle back navigation after submission.
+ * @param onBackClick Action to perform after submission.
+ * @param dropOffLocation Drop-off location string.
+ * @param date Date of the ride.
+ * @param time Time of the ride.
+ * @param notes Additional notes for the ride.
  */
 @Composable
 fun SubmitButton(
@@ -32,7 +37,7 @@ fun SubmitButton(
     Button(
         onClick = {
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-            val request = hashMapOf(
+            val request = mapOf(
                 "dropOffLocation" to dropOffLocation,
                 "date" to date,
                 "time" to time,
@@ -40,8 +45,7 @@ fun SubmitButton(
                 "userId" to userId
             )
 
-            val firestore = FirebaseFirestore.getInstance()
-            firestore.collection("rideRequests")
+            FirebaseFirestore.getInstance().collection("rideRequests")
                 .add(request)
                 .addOnSuccessListener {
                     Toast.makeText(context, "Request submitted", Toast.LENGTH_SHORT).show()
@@ -51,7 +55,9 @@ fun SubmitButton(
                     Toast.makeText(context, "Failed to submit request", Toast.LENGTH_SHORT).show()
                 }
         },
-        modifier = Modifier.fillMaxWidth().height(48.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
     ) {
         Text("Request Ride", color = Color.White, fontSize = 16.sp)
