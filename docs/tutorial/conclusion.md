@@ -40,5 +40,5 @@ I hope this tutorial has been helpful. If you have any questions, check out the 
 
 ---
 
-Go back to [HOME](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/)
+Go back to [HOME](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/docs/)
 

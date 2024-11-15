@@ -1,14 +1,17 @@
 navbar_entries:
   - title: Home
-    url: https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/
+    url: https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/docs/
 
   - title: Project Proposal
-    url: https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/proposal.html
+    url: https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/docs/proposal.html
 
   - title: Presentation
-    url: https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/presentation.html
+    url: https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/docs/presentation.html
+
+  - title: Dokka Documentation
+    url: https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/api/
 
   - title: Tutorial
-    url: https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/tutorial/index.html
+    url: https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/docs/tutorial/index.html
 
 
