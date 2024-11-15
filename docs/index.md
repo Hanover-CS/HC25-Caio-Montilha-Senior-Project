@@ -12,19 +12,25 @@ RideSharingHC is designed to facilitate ride-sharing for students. By focusing o
 
 ## 📂 **Project Documents**
 
-- **[Project Proposal](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/proposal.html)**
+- **[Project Proposal](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/docs/proposal.html)**
 
 ---
 
 ## 🎤 **Project Presentations**
 
-- **[Presentation](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/presentation.html)**
+- **[Presentation](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/docs/presentation.html)**
+
+---
+
+## 🎤 **Project Dokka Documentation**
+
+- **[Dokka Documentation](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/api/)**
 
 ---
 
 ## 📘 **Tutorial**
 
-- **[UI Design with Jetpack Compose](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/tutorial/index.html)**
+- **[UI Design with Jetpack Compose](https://hanover-cs.github.io/HC25-Caio-Montilha-Senior-Project/docs/tutorial/index.html)**
 
 ---
 
