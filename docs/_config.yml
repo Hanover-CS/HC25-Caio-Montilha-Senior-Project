@@ -11,7 +11,7 @@ plugins:
   - jekyll-remote-theme
 remote_theme: abhinavs/moonwalk
 
-baseurl: docs
+baseurl: HC25-Caio-Montilha-Senior-Project/docs
 
 theme_config:
   appearance: "dark" # can be "light", "dark" or "auto"
