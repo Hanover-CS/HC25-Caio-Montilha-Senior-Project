@@ -10,6 +10,9 @@ kramdown:
 plugins:
   - jekyll-remote-theme
 remote_theme: abhinavs/moonwalk
+
+baseurl: docs
+
 theme_config:
   appearance: "dark" # can be "light", "dark" or "auto"
   appearance_toggle: true # if appearance can be switched by user
