@@ -46,8 +46,8 @@ RideSharingHC is designed to facilitate ride-sharing for students. By focusing o
 ## 📈 **Project Milestones**
 
 - **Phase 1:** Research and proposal development (Completed)
-- **Phase 2:** Initial app development and feature implementation (Ongoing)
-- **Phase 3:** Testing, feedback, and iterations (Upcoming)
+- **Phase 2:** Initial app development and feature implementation (Completed)
+- **Phase 3:** Testing, feedback, and iterations (Ongoing)
 - **Phase 4:** Final presentation (Upcoming)
 
 ---
