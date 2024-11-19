@@ -21,6 +21,7 @@ import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.LoginActivity
 import com.example.ridesharinghc.data.CREATE_ACCOUNT_
 import com.example.ridesharinghc.data.EMAIL
+import com.example.ridesharinghc.data.PASSWORD
 import com.example.ridesharinghc.firebase.FirebaseAuthHelper
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.example.ridesharinghc.ui.theme.SoftBlue
@@ -77,7 +78,7 @@ fun LoginRegisterScreen(navController: NavController?) {
             TextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password") },
+                label = { Text(PASSWORD) },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation()
             )
