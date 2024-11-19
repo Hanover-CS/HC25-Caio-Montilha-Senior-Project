@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.OfferRideScreen
 import com.example.ridesharinghc.activities.RideRequestScreen
-import com.example.ridesharinghc.composables.screens.HomeScreen.ActionBox
+import com.example.ridesharinghc.data.GET_A_RIDE
 
 /**
  * Composable function [HomeScreenActionRow] that displays the action buttons for "Get a Ride" and "Offer a Ride".
@@ -25,7 +25,7 @@ fun HomeScreenActionRow(context: Context) {
     ) {
         ActionBox(
             icon = painterResource(id = R.drawable.ic_get_ride),
-            text = "Get a Ride",
+            text = GET_A_RIDE,
             onClick = {
                 val intent = Intent(context, RideRequestScreen::class.java)
                 context.startActivity(intent)
