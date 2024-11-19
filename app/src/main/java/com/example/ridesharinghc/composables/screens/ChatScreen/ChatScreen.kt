@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.data.END_CHAT
+import com.example.ridesharinghc.data.UNKNOWN_USER
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.auth.FirebaseAuth
@@ -35,10 +36,10 @@ fun ChatScreen(chatId: String, otherUserId: String, onBackClick: () -> Unit) {
     val db = FirebaseFirestore.getInstance()
     var messageText by remember { mutableStateOf("") }
     var messages by remember { mutableStateOf(listOf<Map<String, Any>>()) }
-    var otherUserEmail by remember { mutableStateOf("Unknown User") }
+    var otherUserEmail by remember { mutableStateOf(UNKNOWN_USER) }
 
     fetchUserEmail(db, otherUserId) { email ->
-        otherUserEmail = email ?: "Unknown User"
+        otherUserEmail = email ?: UNKNOWN_USER
     }
 
     fetchMessages(db, chatId) { fetchedMessages ->
