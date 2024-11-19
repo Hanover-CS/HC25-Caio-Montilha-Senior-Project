@@ -22,6 +22,7 @@ import com.example.ridesharinghc.activities.LoginActivity
 import com.example.ridesharinghc.data.CONFIRM_PASSWORD
 import com.example.ridesharinghc.data.CREATE_ACCOUNT_
 import com.example.ridesharinghc.data.EMAIL
+import com.example.ridesharinghc.data.HANOVER_EMAIL_PROMPT
 import com.example.ridesharinghc.data.PASSWORD
 import com.example.ridesharinghc.firebase.FirebaseAuthHelper
 import com.example.ridesharinghc.ui.theme.LogoBlue
@@ -98,7 +99,7 @@ fun LoginRegisterScreen(navController: NavController?) {
                 onClick = {
                     when {
                         !email.endsWith("@hanover.edu") -> scope.launch {
-                            snackbarHostState.showSnackbar("Please use your @hanover.edu email address to register.")
+                            snackbarHostState.showSnackbar(HANOVER_EMAIL_PROMPT)
                         }
                         password != confirmPassword -> scope.launch {
                             snackbarHostState.showSnackbar("Passwords do not match, please try again.")
