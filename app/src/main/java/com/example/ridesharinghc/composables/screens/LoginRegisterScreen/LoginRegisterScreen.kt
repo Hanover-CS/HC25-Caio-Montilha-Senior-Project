@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.LoginActivity
 import com.example.ridesharinghc.data.ACCOUNT_CREATION_SUCCESS_MESSAGE
+import com.example.ridesharinghc.data.ALREADY_HAVE_ACCOUNT_PROMPT
 import com.example.ridesharinghc.data.CONFIRM_PASSWORD
 import com.example.ridesharinghc.data.CREATE_ACCOUNT_
 import com.example.ridesharinghc.data.EMAIL
@@ -121,7 +122,7 @@ fun LoginRegisterScreen(navController: NavController?) {
             ) { Text("Sign Up") }
 
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Already have an account?")
+            Text(text = ALREADY_HAVE_ACCOUNT_PROMPT)
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
