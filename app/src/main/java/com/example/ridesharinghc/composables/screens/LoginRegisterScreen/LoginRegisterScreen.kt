@@ -24,6 +24,7 @@ import com.example.ridesharinghc.data.CREATE_ACCOUNT_
 import com.example.ridesharinghc.data.EMAIL
 import com.example.ridesharinghc.data.HANOVER_EMAIL_PROMPT
 import com.example.ridesharinghc.data.PASSWORD
+import com.example.ridesharinghc.data.PASSWORD_MISMATCH_ERROR
 import com.example.ridesharinghc.firebase.FirebaseAuthHelper
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.example.ridesharinghc.ui.theme.SoftBlue
@@ -102,7 +103,7 @@ fun LoginRegisterScreen(navController: NavController?) {
                             snackbarHostState.showSnackbar(HANOVER_EMAIL_PROMPT)
                         }
                         password != confirmPassword -> scope.launch {
-                            snackbarHostState.showSnackbar("Passwords do not match, please try again.")
+                            snackbarHostState.showSnackbar(PASSWORD_MISMATCH_ERROR)
                         }
                         else -> {
                             FirebaseAuthHelper.signUpUser(email, password, context) {
