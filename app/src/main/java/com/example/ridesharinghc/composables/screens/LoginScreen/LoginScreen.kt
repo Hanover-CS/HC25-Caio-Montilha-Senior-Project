@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
+import com.example.ridesharinghc.data.FILL_ALL_FIELDS_WARNING
 import com.example.ridesharinghc.data.LOGIN_FAILED_INVALID_CREDENTIALS
 import com.example.ridesharinghc.data.USER_ID_NOT_FOUND_ERROR
 import com.example.ridesharinghc.ui.theme.SoftBlue
@@ -111,7 +112,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
                                 }
                             }
                     } else {
-                        Toast.makeText(context, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, FILL_ALL_FIELDS_WARNING, Toast.LENGTH_SHORT).show()
                     }
                 },
                 modifier = Modifier.fillMaxWidth()

@@ -24,3 +24,4 @@ public const val ACCOUNT_CREATION_SUCCESS_MESSAGE = "Congratulations! You have c
 public const val ALREADY_HAVE_ACCOUNT_PROMPT = "Already have an account?"
 public const val USER_ID_NOT_FOUND_ERROR = "User ID not found. Login failed."
 public const val LOGIN_FAILED_INVALID_CREDENTIALS = "Login failed. Please check your credentials."
+public const val FILL_ALL_FIELDS_WARNING = "Please fill in all fields."
