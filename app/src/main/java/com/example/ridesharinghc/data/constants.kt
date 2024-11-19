@@ -15,3 +15,4 @@ public const val ERROR_CREATING_CHAT_INVALID_USER_ID_ = "Error creating chat: In
 public const val CURRENT_RIDES_OFFERED_ = "Current Rides Offered:"
 public const val CURRENT_REQUESTS_ = "Current Requests:"
 public const val CREATE_ACCOUNT_ = "Create Account"
+public const val EMAIL = "Email"

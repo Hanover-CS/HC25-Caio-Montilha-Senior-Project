@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.LoginActivity
 import com.example.ridesharinghc.data.CREATE_ACCOUNT_
+import com.example.ridesharinghc.data.EMAIL
 import com.example.ridesharinghc.firebase.FirebaseAuthHelper
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.example.ridesharinghc.ui.theme.SoftBlue
@@ -68,7 +69,7 @@ fun LoginRegisterScreen(navController: NavController?) {
             TextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email") },
+                label = { Text(EMAIL) },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(16.dp))
