@@ -10,3 +10,4 @@ public const val ARE_YOU_SURE_YOU_WANT_TO_ACCEPT_THIS_REQUEST_ = "Are you sure y
 public const val CONFIRMATION = "Confirmation"
 public const val GET_A_RIDE = "Get a Ride"
 public const val OFFER_A_RIDE = "Offer a Ride"
+public const val RIDE_SHARING_HC = "RideSharingHC"

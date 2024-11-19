@@ -5,13 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ridesharinghc.composables.screens.HomeScreen.HomeScreenActionRow
-import com.example.ridesharinghc.composables.screens.HomeScreen.RideOfferCard
-import com.example.ridesharinghc.composables.screens.HomeScreen.RideRequestCard
 import androidx.compose.ui.Alignment
+import com.example.ridesharinghc.data.RIDE_SHARING_HC
 
 /**
  * Composable function [HomeScreenContent] that shows the main content of the home screen,
@@ -34,7 +31,7 @@ fun HomeScreenContent(
             .padding(top = 130.dp)
     ) {
         Text(
-            text = "RideSharingHC",
+            text = RIDE_SHARING_HC,
             fontSize = 24.sp,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
