@@ -11,6 +11,7 @@ import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.OfferRideScreen
 import com.example.ridesharinghc.activities.RideRequestScreen
 import com.example.ridesharinghc.data.GET_A_RIDE
+import com.example.ridesharinghc.data.OFFER_A_RIDE
 
 /**
  * Composable function [HomeScreenActionRow] that displays the action buttons for "Get a Ride" and "Offer a Ride".
@@ -34,7 +35,7 @@ fun HomeScreenActionRow(context: Context) {
         )
         ActionBox(
             icon = painterResource(id = R.drawable.ic_offer_ride),
-            text = "Offer a Ride",
+            text = OFFER_A_RIDE,
             onClick = {
                 val intent = Intent(context, OfferRideScreen::class.java)
                 context.startActivity(intent)
