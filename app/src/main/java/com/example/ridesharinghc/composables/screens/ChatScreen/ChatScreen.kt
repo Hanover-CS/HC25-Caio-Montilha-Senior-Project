@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
+import com.example.ridesharinghc.data.END_CHAT
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.auth.FirebaseAuth
@@ -169,6 +170,6 @@ fun EndChatButton(onClick: () -> Unit) {
             .padding(8.dp)
             .background(Color.Red, shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp))
     ) {
-        Text("End Chat", color = Color.White)
+        Text(END_CHAT, color = Color.White)
     }
 }
