@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
+import com.example.ridesharinghc.data.USER_ID_NOT_FOUND_ERROR
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.google.firebase.auth.FirebaseAuth
@@ -103,7 +104,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
                                 if (task.isSuccessful) {
                                     auth.currentUser?.uid?.let { userId ->
                                         checkUserInFirestore(userId, context)
-                                    } ?: Toast.makeText(context, "User ID not found. Login failed.", Toast.LENGTH_SHORT).show()
+                                    } ?: Toast.makeText(context, USER_ID_NOT_FOUND_ERROR, Toast.LENGTH_SHORT).show()
                                 } else {
                                     Toast.makeText(context, task.exception?.message ?: "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show()
                                 }
