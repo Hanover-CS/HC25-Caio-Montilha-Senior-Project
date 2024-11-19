@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.example.ridesharinghc.data.SEARCH_DROP_OFF_LOCATION
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -47,7 +48,7 @@ fun LocationSearchBar(
         },
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text("Search Drop-off Location")
+        Text(SEARCH_DROP_OFF_LOCATION)
     }
 }
 
