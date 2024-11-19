@@ -10,10 +10,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
-import com.example.ridesharinghc.firebase.FirebaseAuthHelper
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
+import com.example.ridesharinghc.data.CURRENT_REQUESTS_
 import com.example.ridesharinghc.firebase.FirebaseAuthHelper.deleteRequest
 
 /**
@@ -39,7 +39,7 @@ fun RideRequestCard(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Current Requests:",
+                text = CURRENT_REQUESTS_,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 8.dp)
