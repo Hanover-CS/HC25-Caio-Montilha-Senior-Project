@@ -1,6 +1,5 @@
 package com.example.ridesharinghc.composables.screens.LoginRegisterScreen
 
-import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.LoginActivity
+import com.example.ridesharinghc.data.CREATE_ACCOUNT_
 import com.example.ridesharinghc.firebase.FirebaseAuthHelper
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.example.ridesharinghc.ui.theme.SoftBlue
@@ -62,7 +62,7 @@ fun LoginRegisterScreen(navController: NavController?) {
                 modifier = Modifier.size(120.dp)
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Text(text = "Create Account", fontSize = 24.sp)
+            Text(text = CREATE_ACCOUNT_, fontSize = 24.sp)
             Spacer(modifier = Modifier.height(16.dp))
 
             TextField(
