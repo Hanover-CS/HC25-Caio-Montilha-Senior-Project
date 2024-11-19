@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.ridesharinghc.activities.ChatActivity
+import com.example.ridesharinghc.data.ERROR_CREATING_CHAT_INVALID_USER_ID_
 import java.util.UUID
 
 /**
@@ -22,7 +23,7 @@ fun handleAcceptRequest(context: Context, request: Map<String, String>) {
 
     if (currentUserId == null || requesterId == null) {
         // If either ID is null, display an error message and return
-        Toast.makeText(context, "Error creating chat: Invalid user ID.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, ERROR_CREATING_CHAT_INVALID_USER_ID_, Toast.LENGTH_SHORT).show()
         return
     }
 
