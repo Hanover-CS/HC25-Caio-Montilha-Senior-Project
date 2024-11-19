@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
+import com.example.ridesharinghc.data.LOGIN_FAILED_INVALID_CREDENTIALS
 import com.example.ridesharinghc.data.USER_ID_NOT_FOUND_ERROR
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.example.ridesharinghc.ui.theme.LogoBlue
@@ -106,7 +107,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
                                         checkUserInFirestore(userId, context)
                                     } ?: Toast.makeText(context, USER_ID_NOT_FOUND_ERROR, Toast.LENGTH_SHORT).show()
                                 } else {
-                                    Toast.makeText(context, task.exception?.message ?: "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, task.exception?.message ?: LOGIN_FAILED_INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show()
                                 }
                             }
                     } else {
