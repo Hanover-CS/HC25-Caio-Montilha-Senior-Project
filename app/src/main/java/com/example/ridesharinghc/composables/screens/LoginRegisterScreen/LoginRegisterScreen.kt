@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.LoginActivity
+import com.example.ridesharinghc.data.ACCOUNT_CREATION_SUCCESS_MESSAGE
 import com.example.ridesharinghc.data.CONFIRM_PASSWORD
 import com.example.ridesharinghc.data.CREATE_ACCOUNT_
 import com.example.ridesharinghc.data.EMAIL
@@ -108,7 +109,7 @@ fun LoginRegisterScreen(navController: NavController?) {
                         else -> {
                             FirebaseAuthHelper.signUpUser(email, password, context) {
                                 scope.launch {
-                                    snackbarHostState.showSnackbar("Congratulations! You have created your account.")
+                                    snackbarHostState.showSnackbar(ACCOUNT_CREATION_SUCCESS_MESSAGE)
                                     val intent = Intent(context, LoginActivity::class.java)
                                     context.startActivity(intent)
                                 }
