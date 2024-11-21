@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import com.example.ridesharinghc.data.DATE_FORMAT
 import com.example.ridesharinghc.data.DRIVER_NAME
 import com.example.ridesharinghc.data.PICKUP_LOCATION
+import com.example.ridesharinghc.data.SEATS_AVAILABLE
 
 
 /**
@@ -66,7 +67,7 @@ fun OfferInputFields(pickupLocation: MutableState<String>) {
     TextField(
         value = seatsAvailable.value,
         onValueChange = { seatsAvailable.value = it },
-        label = { Text("Seats Available") },
+        label = { Text(SEATS_AVAILABLE) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
