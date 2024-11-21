@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.KeyboardType
+import com.example.ridesharinghc.data.DRIVER_NAME
 
 
 /**
@@ -30,7 +31,7 @@ fun OfferInputFields(pickupLocation: MutableState<String>) {
     TextField(
         value = driverName.value,
         onValueChange = { driverName.value = it },
-        label = { Text("Driver's Name") },
+        label = { Text(DRIVER_NAME) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
