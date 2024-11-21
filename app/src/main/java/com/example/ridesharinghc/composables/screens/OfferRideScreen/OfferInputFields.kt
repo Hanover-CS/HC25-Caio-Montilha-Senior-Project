@@ -12,7 +12,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.KeyboardType
+import com.example.ridesharinghc.data.DATE_FORMAT
 import com.example.ridesharinghc.data.DRIVER_NAME
+import com.example.ridesharinghc.data.PICKUP_LOCATION
 
 
 /**
@@ -39,7 +41,7 @@ fun OfferInputFields(pickupLocation: MutableState<String>) {
     TextField(
         value = pickupLocation.value,
         onValueChange = { pickupLocation.value = it },
-        label = { Text("Pickup Location") },
+        label = { Text(PICKUP_LOCATION) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
@@ -47,7 +49,7 @@ fun OfferInputFields(pickupLocation: MutableState<String>) {
     TextField(
         value = date.value,
         onValueChange = { date.value = it },
-        label = { Text("Date (MM/DD/YYYY)") },
+        label = { Text(DATE_FORMAT) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),

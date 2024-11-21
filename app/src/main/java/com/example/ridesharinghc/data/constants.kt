@@ -27,3 +27,5 @@ public const val LOGIN_FAILED_INVALID_CREDENTIALS = "Login failed. Please check 
 public const val FILL_ALL_FIELDS_WARNING = "Please fill in all fields."
 public const val NO_MESSAGES_YET = "No messages yet"
 public const val DRIVER_NAME = "Driver's Name"
+public const val PICKUP_LOCATION = "Pickup Location"
+public const val DATE_FORMAT = "Date (MM/DD/YYYY)"
