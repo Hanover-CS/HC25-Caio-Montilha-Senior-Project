@@ -19,6 +19,7 @@ import com.example.ridesharinghc.composables.screens.common.BackButton
 import com.example.ridesharinghc.composables.screens.common.MapSection
 import com.example.ridesharinghc.composables.screens.OfferRideScreen.OfferSubmitButton
 import com.example.ridesharinghc.composables.screens.OfferRideScreen.OfferInputFields
+import com.example.ridesharinghc.data.constants
 
 /**
  * Composable function [OfferRideScreenContent] displays the main screen content for offering a ride.
@@ -31,7 +32,7 @@ fun OfferRideScreenContent(onBackClick: () -> Unit) {
     val context = LocalContext.current
     val pickupLocation = remember { mutableStateOf("") }
     val cameraPositionState = rememberCameraPositionState()
-    val markerState = remember { mutableStateOf(MarkerState(LatLng(-33.852, 151.211))) }
+    val markerState = remember { mutableStateOf(MarkerState(LatLng(constants.DefaultCoordinates.DEFAULT_LATITUDE, constants. DefaultCoordinates.DEFAULT_LONGITUDE))) }
 
     // Request location permission and initialize FusedLocationProviderClient
     LaunchedEffect(Unit) {
