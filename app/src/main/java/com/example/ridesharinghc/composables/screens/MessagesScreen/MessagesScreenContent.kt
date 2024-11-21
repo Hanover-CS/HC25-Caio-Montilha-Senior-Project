@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
+import com.example.ridesharinghc.data.NO_MESSAGES_YET
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -77,7 +78,7 @@ fun MessagesScreenContent(onBackClick: () -> Unit) {
         // Display message if no chats are available
         if (chats.isEmpty()) {
             Text(
-                text = "No messages yet",
+                text = NO_MESSAGES_YET,
                 fontSize = 18.sp,
                 color = Color.Gray,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
