@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.LoginActivity
-import com.example.ridesharinghc.data.ACCOUNT_CREATION_SUCCESS_MESSAGE
+import com.example.ridesharinghc.data.constants.SuccessMessages.ACCOUNT_CREATION_SUCCESS_MESSAGE
 import com.example.ridesharinghc.data.constants.Prompts.ALREADY_HAVE_ACCOUNT_PROMPT
 import com.example.ridesharinghc.data.CONFIRM_PASSWORD
 import com.example.ridesharinghc.data.CREATE_ACCOUNT_

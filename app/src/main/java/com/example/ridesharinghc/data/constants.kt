@@ -25,6 +25,12 @@ object constants {
         const val ALREADY_HAVE_ACCOUNT_PROMPT = "Already have an account?"
         const val FILL_ALL_FIELDS_WARNING = "Please fill in all fields."
     }
+
+    // Success and informational messages
+    object SuccessMessages {
+        const val ACCOUNT_CREATION_SUCCESS_MESSAGE = "Congratulations! You have created your account."
+        const val NO_MESSAGES_YET = "No messages yet"
+    }
 }
 
 public const val END_CHAT = "End Chat"
@@ -39,8 +45,6 @@ public const val CREATE_ACCOUNT_ = "Create Account"
 public const val EMAIL = "Email"
 public const val PASSWORD = "Password"
 public const val CONFIRM_PASSWORD = "Confirm Password"
-public const val ACCOUNT_CREATION_SUCCESS_MESSAGE = "Congratulations! You have created your account."
-public const val NO_MESSAGES_YET = "No messages yet"
 public const val DRIVER_NAME = "Driver's Name"
 public const val PICKUP_LOCATION = "Pickup Location"
 public const val DATE_FORMAT = "Date (MM/DD/YYYY)"
