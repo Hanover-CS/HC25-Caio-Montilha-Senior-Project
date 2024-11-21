@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import com.example.ridesharinghc.data.constants.Prompts.ARE_YOU_SURE_YOU_WANT_TO_ACCEPT_THIS_REQUEST
-import com.example.ridesharinghc.data.CONFIRMATION
+import com.example.ridesharinghc.data.constants.Labels.CONFIRMATION
 import com.example.ridesharinghc.data.constants
 
 /**

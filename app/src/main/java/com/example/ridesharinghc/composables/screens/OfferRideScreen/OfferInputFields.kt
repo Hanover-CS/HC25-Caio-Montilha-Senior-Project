@@ -12,11 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.KeyboardType
-import com.example.ridesharinghc.data.DATE_FORMAT
-import com.example.ridesharinghc.data.DRIVER_NAME
-import com.example.ridesharinghc.data.PICKUP_LOCATION
-import com.example.ridesharinghc.data.SEATS_AVAILABLE
-import com.example.ridesharinghc.data.TIME
+import com.example.ridesharinghc.data.constants.Labels.DATE_FORMAT
+import com.example.ridesharinghc.data.constants.Labels.DRIVER_NAME
+import com.example.ridesharinghc.data.constants.Labels.PICKUP_LOCATION
+import com.example.ridesharinghc.data.constants.Labels.SEATS_AVAILABLE
+import com.example.ridesharinghc.data.constants.Labels.TIME
 
 
 /**

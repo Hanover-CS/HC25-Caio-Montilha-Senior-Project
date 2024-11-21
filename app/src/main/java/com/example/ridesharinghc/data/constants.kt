@@ -31,22 +31,27 @@ object constants {
         const val ACCOUNT_CREATION_SUCCESS_MESSAGE = "Congratulations! You have created your account."
         const val NO_MESSAGES_YET = "No messages yet"
     }
+
+    // UI titles and labels
+    object Labels {
+        const val CONFIRMATION = "Confirmation"
+        const val GET_A_RIDE = "Get a Ride"
+        const val OFFER_A_RIDE = "Offer a Ride"
+        const val RIDE_SHARING_HC = "RideSharingHC"
+        const val DRIVER_NAME = "Driver's Name"
+        const val PICKUP_LOCATION = "Pickup Location"
+        const val DATE_FORMAT = "Date (MM/DD/YYYY)"
+        const val SEATS_AVAILABLE = "Seats Available"
+        const val TIME = "Time"
+        const val EMAIL = "Email"
+        const val PASSWORD = "Password"
+        const val CONFIRM_PASSWORD = "Confirm Password"
+    }
 }
 
 public const val END_CHAT = "End Chat"
 public const val UNKNOWN_USER = "Unknown User"
-public const val CONFIRMATION = "Confirmation"
-public const val GET_A_RIDE = "Get a Ride"
-public const val OFFER_A_RIDE = "Offer a Ride"
-public const val RIDE_SHARING_HC = "RideSharingHC"
 public const val CURRENT_RIDES_OFFERED_ = "Current Rides Offered:"
 public const val CURRENT_REQUESTS_ = "Current Requests:"
 public const val CREATE_ACCOUNT_ = "Create Account"
-public const val EMAIL = "Email"
-public const val PASSWORD = "Password"
-public const val CONFIRM_PASSWORD = "Confirm Password"
-public const val DRIVER_NAME = "Driver's Name"
-public const val PICKUP_LOCATION = "Pickup Location"
-public const val DATE_FORMAT = "Date (MM/DD/YYYY)"
-public const val SEATS_AVAILABLE = "Seats Available"
-public const val TIME = "Time"
+

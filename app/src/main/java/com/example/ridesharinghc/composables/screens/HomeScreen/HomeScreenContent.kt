@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Alignment
-import com.example.ridesharinghc.data.RIDE_SHARING_HC
+import com.example.ridesharinghc.data.constants.Labels.RIDE_SHARING_HC
 
 /**
  * Composable function [HomeScreenContent] that shows the main content of the home screen,

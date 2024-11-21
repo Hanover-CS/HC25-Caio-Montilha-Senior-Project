@@ -10,8 +10,8 @@ import androidx.compose.ui.unit.dp
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.OfferRideScreen
 import com.example.ridesharinghc.activities.RideRequestScreen
-import com.example.ridesharinghc.data.GET_A_RIDE
-import com.example.ridesharinghc.data.OFFER_A_RIDE
+import com.example.ridesharinghc.data.constants.Labels.GET_A_RIDE
+import com.example.ridesharinghc.data.constants.Labels.OFFER_A_RIDE
 
 /**
  * Composable function [HomeScreenActionRow] that displays the action buttons for "Get a Ride" and "Offer a Ride".
