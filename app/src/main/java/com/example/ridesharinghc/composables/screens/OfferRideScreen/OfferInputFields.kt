@@ -16,6 +16,7 @@ import com.example.ridesharinghc.data.DATE_FORMAT
 import com.example.ridesharinghc.data.DRIVER_NAME
 import com.example.ridesharinghc.data.PICKUP_LOCATION
 import com.example.ridesharinghc.data.SEATS_AVAILABLE
+import com.example.ridesharinghc.data.TIME
 
 
 /**
@@ -59,7 +60,7 @@ fun OfferInputFields(pickupLocation: MutableState<String>) {
     TextField(
         value = time.value,
         onValueChange = { time.value = it },
-        label = { Text("Time") },
+        label = { Text(TIME) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
