@@ -18,8 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.data.FILL_ALL_FIELDS_WARNING
-import com.example.ridesharinghc.data.LOGIN_FAILED_INVALID_CREDENTIALS
-import com.example.ridesharinghc.data.USER_ID_NOT_FOUND_ERROR
+import com.example.ridesharinghc.data.constants.ErrorMessages.LOGIN_FAILED_INVALID_CREDENTIALS
+import com.example.ridesharinghc.data.constants.ErrorMessages.USER_ID_NOT_FOUND_ERROR
+import com.example.ridesharinghc.data.constants
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.google.firebase.auth.FirebaseAuth
@@ -106,9 +107,9 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
                                 if (task.isSuccessful) {
                                     auth.currentUser?.uid?.let { userId ->
                                         checkUserInFirestore(userId, context)
-                                    } ?: Toast.makeText(context, USER_ID_NOT_FOUND_ERROR, Toast.LENGTH_SHORT).show()
+                                    } ?: Toast.makeText(context, constants.ErrorMessages.USER_ID_NOT_FOUND_ERROR, Toast.LENGTH_SHORT).show()
                                 } else {
-                                    Toast.makeText(context, task.exception?.message ?: LOGIN_FAILED_INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, task.exception?.message ?: constants.ErrorMessages.LOGIN_FAILED_INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show()
                                 }
                             }
                     } else {

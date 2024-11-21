@@ -8,7 +8,8 @@ import androidx.activity.ComponentActivity
 import androidx.compose.runtime.MutableState
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.ridesharinghc.data.UNABLE_TO_GET_LOCATION
+import com.example.ridesharinghc.data.constants.ErrorMessages.UNABLE_TO_GET_LOCATION
+import com.example.ridesharinghc.data.constants
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -50,7 +51,7 @@ fun checkLocationPermissionAndSetLocation(
                 markerState.value = MarkerState(currentLocation)
                 cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(currentLocation, 10f))
             } ?: run {
-                Toast.makeText(context, UNABLE_TO_GET_LOCATION, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, constants.ErrorMessages.UNABLE_TO_GET_LOCATION, Toast.LENGTH_SHORT).show()
             }
         }
     }
