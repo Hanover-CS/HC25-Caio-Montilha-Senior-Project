@@ -4,8 +4,9 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import com.example.ridesharinghc.data.ARE_YOU_SURE_YOU_WANT_TO_ACCEPT_THIS_REQUEST_
+import com.example.ridesharinghc.data.constants.Prompts.ARE_YOU_SURE_YOU_WANT_TO_ACCEPT_THIS_REQUEST
 import com.example.ridesharinghc.data.CONFIRMATION
+import com.example.ridesharinghc.data.constants
 
 /**
  * Displays a confirmation dialog for accepting a ride request or offer.
@@ -18,7 +19,7 @@ fun ConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(text = CONFIRMATION) },
-        text = { Text(ARE_YOU_SURE_YOU_WANT_TO_ACCEPT_THIS_REQUEST_) },
+        text = { Text(constants.Prompts.ARE_YOU_SURE_YOU_WANT_TO_ACCEPT_THIS_REQUEST) },
         confirmButton = {
             TextButton(onClick = onConfirm) {
                 Text("Yes")

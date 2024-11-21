@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
-import com.example.ridesharinghc.data.FILL_ALL_FIELDS_WARNING
+import com.example.ridesharinghc.data.constants.Prompts.FILL_ALL_FIELDS_WARNING
 import com.example.ridesharinghc.data.constants.ErrorMessages.LOGIN_FAILED_INVALID_CREDENTIALS
 import com.example.ridesharinghc.data.constants.ErrorMessages.USER_ID_NOT_FOUND_ERROR
 import com.example.ridesharinghc.data.constants

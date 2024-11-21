@@ -20,11 +20,11 @@ import androidx.navigation.NavController
 import com.example.ridesharinghc.R
 import com.example.ridesharinghc.activities.LoginActivity
 import com.example.ridesharinghc.data.ACCOUNT_CREATION_SUCCESS_MESSAGE
-import com.example.ridesharinghc.data.ALREADY_HAVE_ACCOUNT_PROMPT
+import com.example.ridesharinghc.data.constants.Prompts.ALREADY_HAVE_ACCOUNT_PROMPT
 import com.example.ridesharinghc.data.CONFIRM_PASSWORD
 import com.example.ridesharinghc.data.CREATE_ACCOUNT_
 import com.example.ridesharinghc.data.EMAIL
-import com.example.ridesharinghc.data.HANOVER_EMAIL_PROMPT
+import com.example.ridesharinghc.data.constants.Prompts.HANOVER_EMAIL_PROMPT
 import com.example.ridesharinghc.data.PASSWORD
 import com.example.ridesharinghc.data.constants.ErrorMessages.PASSWORD_MISMATCH_ERROR
 import com.example.ridesharinghc.data.constants
