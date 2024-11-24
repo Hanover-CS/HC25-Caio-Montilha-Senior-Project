@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ridesharinghc.R
@@ -44,7 +46,10 @@ fun MenuScreenContent(onBackClick: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Back arrow to return to HomeScreenActivity
-        IconButton(onClick = onBackClick) {
+        IconButton(
+            onClick = onBackClick,
+            modifier = Modifier.semantics { testTag = "BackButton" }
+        ) {
             Icon(
                 painter = painterResource(id = R.drawable.arrow2),
                 contentDescription = "Back",
