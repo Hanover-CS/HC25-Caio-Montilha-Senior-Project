@@ -22,8 +22,6 @@ Explore each document to understand the vision, architecture, and functionalitie
 
 ## 📋 Project Overview
 
-RideSharingHC is designed to make ride-sharing simple, secure, and accessible to students within the college community. Key features include:
-
 - **Secure Sign-Up & Login:** Uses Firebase for user authentication tied to college email credentials.
 - **User Verification:** Ensures only verified users can access ride-sharing services.
 - **In-App Communication:** Users can connect directly within the app to coordinate rides.
@@ -64,6 +62,6 @@ This documentation provides in-depth details on the structure, functions, and cl
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License.
