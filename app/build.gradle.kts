@@ -111,12 +111,13 @@ dependencies {
     testImplementation("org.robolectric:robolectric:4.9")
 
     // Mockito for testing
-    testImplementation("org.mockito:mockito-core:4.6.1")
+    testImplementation("org.mockito:mockito-core:4.11.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 
     // Mockk framework for Kotlin mocking
-    testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation("io.mockk:mockk:1.13.5")
+    androidTestImplementation("io.mockk:mockk-android:1.13.5")
 
-    androidTestImplementation("androidx.test:runner:1.6.1")
+    androidTestImplementation("androidx.test:runner:1.6.2")
     androidTestImplementation("androidx.test:rules:1.6.1")
 }

@@ -13,6 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,7 +22,6 @@ import com.example.ridesharinghc.R
 import com.example.ridesharinghc.data.constants.Prompts.FILL_ALL_FIELDS_WARNING
 import com.example.ridesharinghc.data.constants.ErrorMessages.LOGIN_FAILED_INVALID_CREDENTIALS
 import com.example.ridesharinghc.data.constants.ErrorMessages.USER_ID_NOT_FOUND_ERROR
-import com.example.ridesharinghc.data.constants
 import com.example.ridesharinghc.ui.theme.SoftBlue
 import com.example.ridesharinghc.ui.theme.LogoBlue
 import com.google.firebase.auth.FirebaseAuth
@@ -35,10 +36,12 @@ import com.google.firebase.auth.FirebaseAuth
  */
 @Composable
 fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
+    // State variables for email and password
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
 
+    // Main column container
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,6 +50,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             .border(8.dp, LogoBlue)
             .padding(16.dp)
     ) {
+        // Row for back button
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -55,7 +59,10 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
         ) {
             IconButton(
                 onClick = onBackClick,
-                modifier = Modifier.size(48.dp).padding(start = 8.dp)
+                modifier = Modifier
+                    .size(48.dp)
+                    .padding(start = 8.dp)
+                    .semantics { testTag = "BackButton" }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
@@ -65,6 +72,7 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             }
         }
 
+        // Login form content
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -77,46 +85,71 @@ fun LoginScreen(auth: FirebaseAuth, onBackClick: () -> Unit) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "App Logo",
-                modifier = Modifier.size(150.dp)
+                modifier = Modifier
+                    .size(150.dp)
+                    .semantics { testTag = "AppLogo" }
             )
 
             Spacer(modifier = Modifier.height(24.dp))
-            Text(text = "Login", fontSize = 24.sp)
+            Text(
+                text = "Login",
+                fontSize = 24.sp,
+                modifier = Modifier.semantics { testTag = "LoginTitle" }
+            )
             Spacer(modifier = Modifier.height(16.dp))
 
             TextField(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics { testTag = "EmailInput" }
             )
             Spacer(modifier = Modifier.height(16.dp))
             TextField(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics { testTag = "PasswordInput" },
                 visualTransformation = PasswordVisualTransformation()
             )
             Spacer(modifier = Modifier.height(24.dp))
             Button(
                 onClick = {
+                    // Validate email and password inputs
                     if (email.isNotBlank() && password.isNotBlank()) {
+                        // Firebase Authentication process
                         auth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     auth.currentUser?.uid?.let { userId ->
+                                        // Check user in Firestore
                                         checkUserInFirestore(userId, context)
-                                    } ?: Toast.makeText(context, constants.ErrorMessages.USER_ID_NOT_FOUND_ERROR, Toast.LENGTH_SHORT).show()
+                                    } ?: Toast.makeText(
+                                        context,
+                                        USER_ID_NOT_FOUND_ERROR,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 } else {
-                                    Toast.makeText(context, task.exception?.message ?: constants.ErrorMessages.LOGIN_FAILED_INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        context,
+                                        task.exception?.message
+                                            ?: LOGIN_FAILED_INVALID_CREDENTIALS,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                     } else {
+                        // Show a warning message if fields are empty
                         Toast.makeText(context, FILL_ALL_FIELDS_WARNING, Toast.LENGTH_SHORT).show()
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics { testTag = "LoginButton" }
             ) {
                 Text("Login")
             }
