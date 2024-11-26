@@ -1,5 +1,6 @@
 package com.example.ridesharinghc.composables.screens
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -26,6 +27,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.example.ridesharinghc.composables.screens.UserProfileScreen.UserProfileTextField
+import android.graphics.BitmapFactory
+import android.util.Base64
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 
 /**
  * Composable function [UserProfileScreenContent] displays the user profile UI.
@@ -39,25 +46,19 @@ import com.example.ridesharinghc.composables.screens.UserProfileScreen.UserProfi
 fun UserProfileScreenContent(onBackClick: () -> Unit) {
     val currentUser = FirebaseAuth.getInstance().currentUser
     val db = FirebaseFirestore.getInstance()
-    val storage = FirebaseStorage.getInstance()
     val context = LocalContext.current
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
-    var profileImageUrl by remember { mutableStateOf<String?>(null) }
+    var profileImageBase64 by remember { mutableStateOf<String?>(null) }
+    var showImageOptionsDialog by remember { mutableStateOf(false) }
 
     // Image picker launcher for selecting a profile picture
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
-            uploadProfilePicture(uri, currentUser?.uid, storage, context) { imageUrl ->
-                profileImageUrl = imageUrl
-                currentUser?.uid?.let { uid ->
-                    db.collection("userProfiles").document(uid).update("profileImageUrl", imageUrl)
-                        .addOnFailureListener {
-                            Toast.makeText(context, "Failed to update profile URL in Firestore", Toast.LENGTH_SHORT).show()
-                        }
-                }
+            uploadProfilePicture(uri, currentUser?.uid, context, db) {
+                Toast.makeText(context, "Profile image updated successfully", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -70,7 +71,7 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
                     name = document.getString("name") ?: ""
                     email = document.getString("email") ?: ""
                     phoneNumber = document.getString("phone") ?: ""
-                    profileImageUrl = document.getString("profileImageUrl")
+                    profileImageBase64 = document.getString("profileImageBase64")
                 }
                 .addOnFailureListener {
                     Toast.makeText(context, "Failed to load profile", Toast.LENGTH_SHORT).show()
@@ -97,18 +98,28 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Profile picture with click-to-change functionality
-        Image(
-            painter = rememberAsyncImagePainter(model = profileImageUrl ?: R.drawable.ic_person),
-            contentDescription = "Profile Picture",
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-                .border(2.dp, Color.Black, CircleShape)
-                .clickable {
-                    launcher.launch("image/*")
-                }
-        )
+        // Profile picture with click-to-change and remove functionality
+        if (profileImageBase64 != null) {
+            Image(
+                bitmap = decodeBase64ToBitmap(profileImageBase64)?.asImageBitmap()!!,
+                contentDescription = "Profile Picture",
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape)
+                    .border(2.dp, Color.Black, CircleShape)
+                    .clickable { showImageOptionsDialog = true }
+            )
+        } else {
+            Image(
+                painter = painterResource(id = R.drawable.ic_person),
+                contentDescription = "Profile Picture",
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape)
+                    .border(2.dp, Color.Black, CircleShape)
+                    .clickable { launcher.launch("image/*") }
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -141,5 +152,50 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
         ) {
             Text(text = "Save", color = Color.White, fontSize = 16.sp)
         }
+    }
+
+    if (showImageOptionsDialog) {
+        AlertDialog(
+            onDismissRequest = { showImageOptionsDialog = false },
+            title = { Text(text = "Profile Picture Options") },
+            text = { Text(text = "Choose an action:") },
+            confirmButton = {
+                TextButton(onClick = {
+                    // Open Photos Gallery
+                    launcher.launch("image/*")
+                    showImageOptionsDialog = false
+                }) {
+                    Text("Select New Image")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    // Remove Image
+                    profileImageBase64 = null
+                    currentUser?.uid?.let { uid ->
+                        db.collection("userProfiles").document(uid).update("profileImageBase64", null)
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "Profile image removed", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(context, "Failed to remove image", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                    showImageOptionsDialog = false
+                }) {
+                    Text("Remove Image")
+                }
+            }
+        )
+    }
+}
+
+
+fun decodeBase64ToBitmap(base64Str: String?): Bitmap? {
+    return try {
+        val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)
+        BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+    } catch (e: IllegalArgumentException) {
+        null
     }
 }
