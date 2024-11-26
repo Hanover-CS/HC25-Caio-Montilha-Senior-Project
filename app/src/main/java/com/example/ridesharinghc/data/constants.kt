@@ -1,5 +1,7 @@
 package com.example.ridesharinghc.data
 
+import androidx.compose.runtime.Composable
+
 
 object constants {
     // Default coordinates
@@ -54,4 +56,6 @@ public const val UNKNOWN_USER = "Unknown User"
 public const val CURRENT_RIDES_OFFERED_ = "Current Rides Offered:"
 public const val CURRENT_REQUESTS_ = "Current Requests:"
 public const val CREATE_ACCOUNT_ = "Create Account"
-
+public const val SELECT_TIME = "Select time"
+public const val ADD_NOTES = "Add notes"
+public const val DROP_OFF_LOCATION = "Drop-off Location"

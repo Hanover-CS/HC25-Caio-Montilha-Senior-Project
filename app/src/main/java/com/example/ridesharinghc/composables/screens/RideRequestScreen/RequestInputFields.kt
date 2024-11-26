@@ -12,6 +12,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.KeyboardType
+import com.example.ridesharinghc.data.ADD_NOTES
+import com.example.ridesharinghc.data.DROP_OFF_LOCATION
+import com.example.ridesharinghc.data.SELECT_TIME
+import com.example.ridesharinghc.data.constants.Labels.DATE_FORMAT
 
 /**
  * Composable function [RequestInputFields] displays input fields for ride request details.
@@ -28,7 +32,7 @@ fun RequestInputFields(dropOffLocation: MutableState<String>) {
     TextField(
         value = dropOffLocation.value,
         onValueChange = { dropOffLocation.value = it },
-        label = { Text("Drop-off Location") },
+        label = { Text(DROP_OFF_LOCATION) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
@@ -36,7 +40,7 @@ fun RequestInputFields(dropOffLocation: MutableState<String>) {
     TextField(
         value = date.value,
         onValueChange = { date.value = it },
-        label = { Text("Date (MM/DD/YYYY)") },
+        label = { Text(DATE_FORMAT) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
@@ -45,7 +49,7 @@ fun RequestInputFields(dropOffLocation: MutableState<String>) {
     TextField(
         value = time.value,
         onValueChange = { time.value = it },
-        label = { Text("Select time") },
+        label = { Text(SELECT_TIME) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
@@ -53,7 +57,7 @@ fun RequestInputFields(dropOffLocation: MutableState<String>) {
     TextField(
         value = notes.value,
         onValueChange = { notes.value = it },
-        label = { Text("Add notes") },
+        label = { Text(ADD_NOTES) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
