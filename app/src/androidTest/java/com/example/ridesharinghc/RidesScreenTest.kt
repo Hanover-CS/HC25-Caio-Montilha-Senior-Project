@@ -103,7 +103,7 @@ class RidesScreenTest {
     @Test
     fun rideHistorySection_displaysHistory() {
         val mockHistory = listOf(
-            mapOf("dropOffLocation" to "Park", "time" to "9:00 AM"),
+            mapOf("dropOffLocation" to "Clifty Falls Park", "time" to "9:00 AM"),
             mapOf("pickupLocation" to "Office", "time" to "6:00 PM")
         )
         composeTestRule.setContent {
@@ -112,7 +112,7 @@ class RidesScreenTest {
             }
         }
         // Verify history items
-        composeTestRule.onNodeWithText("Location: Park").assertExists()
+        composeTestRule.onNodeWithText("Location: Clifty Falls Park").assertExists()
         composeTestRule.onNodeWithText("Time: 9:00 AM").assertExists()
         composeTestRule.onNodeWithText("Location: Office").assertExists()
         composeTestRule.onNodeWithText("Time: 6:00 PM").assertExists()
@@ -120,14 +120,14 @@ class RidesScreenTest {
 
     @Test
     fun rideItem_displaysDetails() {
-        val mockRide = mapOf("dropOffLocation" to "Cafeteria", "time" to "2:00 PM")
+        val mockRide = mapOf("dropOffLocation" to "Campus Center", "time" to "2:00 PM")
         composeTestRule.setContent {
             RideSharingHCTheme {
                 RideItem(request = mockRide, completed = true)
             }
         }
         // Verify ride item details
-        composeTestRule.onNodeWithText("Location: Cafeteria").assertExists()
+        composeTestRule.onNodeWithText("Location: Campus Center").assertExists()
         composeTestRule.onNodeWithText("Time: 2:00 PM").assertExists()
         composeTestRule.onNodeWithText("Status: Completed").assertExists()
     }
