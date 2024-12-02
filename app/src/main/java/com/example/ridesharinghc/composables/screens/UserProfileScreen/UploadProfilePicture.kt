@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
 import java.io.ByteArrayOutputStream
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.ridesharinghc.composables.screens.UserProfileScreen.decodeBase64ToBitmap
 
 /**
  * Encodes an image to Base64 and saves it to Firestore for the specified user.

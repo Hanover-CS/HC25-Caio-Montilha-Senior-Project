@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.example.ridesharinghc.composables.screens.UserProfileScreen.decodeBase64ToBitmap
 
 /**
  * Composable function [UserProfileTextField] provides a customizable text field

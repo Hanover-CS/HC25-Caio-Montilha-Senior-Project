@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import com.example.ridesharinghc.composables.screens.UserProfileScreen.decodeBase64ToBitmap
 
 /**
  * Composable function [UserProfileScreenContent] displays the user profile UI.
@@ -47,7 +48,6 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
     val currentUser = FirebaseAuth.getInstance().currentUser
     val db = FirebaseFirestore.getInstance()
     val context = LocalContext.current
-
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
@@ -62,7 +62,6 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
             }
         }
     }
-
     // Load existing profile data from Firestore
     LaunchedEffect(currentUser) {
         currentUser?.uid?.let { uid ->
@@ -78,7 +77,6 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
                 }
         }
     }
-
     // UI layout for displaying and editing user profile information
     Column(
         modifier = Modifier
@@ -95,9 +93,7 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
                 modifier = Modifier.size(32.dp)
             )
         }
-
         Spacer(modifier = Modifier.height(16.dp))
-
         // Profile picture with click-to-change and remove functionality
         if (profileImageBase64 != null) {
             Image(
@@ -120,16 +116,12 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
                     .clickable { launcher.launch("image/*") }
             )
         }
-
         Spacer(modifier = Modifier.height(16.dp))
-
         // Editable text fields for user profile data
         UserProfileTextField(value = name, onValueChange = { name = it }, label = "Name")
         UserProfileTextField(value = email, onValueChange = { email = it }, label = "Email", isEnabled = false)
         UserProfileTextField(value = phoneNumber, onValueChange = { phoneNumber = it }, label = "Phone Number", keyboardType = KeyboardType.Phone)
-
         Spacer(modifier = Modifier.height(24.dp))
-
         // Save button to update profile information in Firestore
         Button(
             onClick = {
@@ -187,27 +179,5 @@ fun UserProfileScreenContent(onBackClick: () -> Unit) {
                 }
             }
         )
-    }
-}
-
-
-
-/**
- * Decodes a Base64-encoded string into a [Bitmap].
- *
- * This function converts a Base64-encoded string into a [Bitmap] object.
- * It uses Android's [Base64] class to decode the input string and
- * [BitmapFactory.decodeByteArray] to convert the resulting byte array into a [Bitmap].
- * If the input string is null or invalid, it returns `null`.
- *
- * @param base64Str The Base64-encoded string representing image data.
- * @return A [Bitmap] object if decoding is successful, or `null` if the input is invalid.
- */
-fun decodeBase64ToBitmap(base64Str: String?): Bitmap? {
-    return try {
-        val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)
-        BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-    } catch (e: IllegalArgumentException) {
-        null
     }
 }
