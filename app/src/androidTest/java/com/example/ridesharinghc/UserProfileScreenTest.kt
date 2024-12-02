@@ -99,4 +99,15 @@ class UserProfileScreenTest {
         composeTestRule.onNodeWithText("Save").assertExists()
         composeTestRule.onNodeWithText("Save").assertHasClickAction()
     }
+
+    @Test
+    fun userProfileScreenContent_profilePictureIsDisplayed() {
+        composeTestRule.setContent {
+            RideSharingHCTheme {
+                UserProfileScreenContent(onBackClick = {})
+            }
+        }
+        // Verify that a default profile picture is displayed when no image is set
+        composeTestRule.onNodeWithContentDescription("Profile Picture").assertExists()
+    }
 }
