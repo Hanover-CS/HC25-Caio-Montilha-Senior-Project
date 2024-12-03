@@ -31,6 +31,9 @@ import com.example.ridesharinghc.composables.screens.RideRequestScreen.RequestIn
 fun RideRequestScreenContent(onBackClick: () -> Unit) {
     val context = LocalContext.current
     val dropOffLocation = remember { mutableStateOf("") }
+    val date = remember { mutableStateOf("") }
+    val time = remember { mutableStateOf("") }
+    val notes = remember { mutableStateOf("") }
     val cameraPositionState = rememberCameraPositionState()
     val markerState = remember { mutableStateOf(MarkerState(LatLng(0.0, 0.0))) }
 
@@ -38,6 +41,7 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
     LaunchedEffect(Unit) {
         checkLocationPermissionAndSetLocation(context, cameraPositionState, markerState)
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -57,10 +61,19 @@ fun RideRequestScreenContent(onBackClick: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         MapSection(markerState = markerState, cameraPositionState = cameraPositionState)
-        RequestInputFields(dropOffLocation)
+        Spacer(modifier = Modifier.height(16.dp))
+        RequestInputFields(
+            dropOffLocation = dropOffLocation,
+            date = date,
+            time = time,
+            notes = notes
+        )
+        Spacer(modifier = Modifier.height(16.dp))
         SubmitButton(
             onBackClick = onBackClick,
-            dropOffLocation = dropOffLocation.value
+            dropOffLocation = dropOffLocation.value,
+            date = date.value,
+            time = time.value
         )
     }
 }

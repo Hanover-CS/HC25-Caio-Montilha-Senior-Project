@@ -24,11 +24,12 @@ import com.example.ridesharinghc.data.constants.Labels.DATE_FORMAT
  * @param dropOffLocation Mutable state holding the selected drop-off location.
  */
 @Composable
-fun RequestInputFields(dropOffLocation: MutableState<String>) {
-    val date = remember { mutableStateOf("") }
-    val time = remember { mutableStateOf("") }
-    val notes = remember { mutableStateOf("") }
-
+fun RequestInputFields(
+    dropOffLocation: MutableState<String>,
+    date: MutableState<String>,
+    time: MutableState<String>,
+    notes: MutableState<String>
+) {
     TextField(
         value = dropOffLocation.value,
         onValueChange = { dropOffLocation.value = it },

@@ -22,7 +22,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 @Composable
 fun SubmitButton(
     onBackClick: () -> Unit,
-    dropOffLocation: String
+    dropOffLocation: String,
+    date: String,
+    time: String
 ) {
     val context = LocalContext.current
 
@@ -31,6 +33,8 @@ fun SubmitButton(
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
             val request = hashMapOf(
                 "dropOffLocation" to dropOffLocation,
+                "date" to date,
+                "time" to time,
                 "userId" to userId
             )
 
