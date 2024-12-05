@@ -62,6 +62,12 @@ This documentation provides in-depth details on the structure, functions, and cl
 
 ---
 
+## Download RideSharingHC
+
+- Download it here: [**RideSharingHC_App**](https://github.com/Hanover-CS/HC25-Caio-Montilha-Senior-Project/releases/download/v0.0.1/app-debug.apk.zip)
+
+---
+
 ## License
 
 This project is licensed under the MIT License.
