@@ -68,7 +68,7 @@ This documentation provides in-depth details on the structure, functions, and cl
 
 Or scan the **QR Code** below to download directly:
 
-<img src="docs/images/DownloadRideSharingHC_App.png" alt="QR Code" width="200">
+<img src="docs/images/QRCode_Senior_Project_Link.png" alt="QR Code" width="200">
 
 ---
 
