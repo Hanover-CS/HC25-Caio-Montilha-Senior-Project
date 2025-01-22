@@ -115,7 +115,9 @@ fun ChatHeader(otherUserEmail: String, onBackClick: () -> Unit) {
 }
 
 /**
- * Displays the list of messages.
+ * Displays chat messages, aligning messages from the current user to the right and from others to the left.
+ * Utilizes a Box for alignment, adjusting based on the sender's ID. Messages are color-coded for clarity:
+ * light gray for others, cyan for the user.
  */
 @Composable
 fun MessageList(messages: List<Map<String, Any>>, otherUserId: String, modifier: Modifier = Modifier) {
@@ -125,13 +127,26 @@ fun MessageList(messages: List<Map<String, Any>>, otherUserId: String, modifier:
             .verticalScroll(rememberScrollState())
     ) {
         messages.forEach { message ->
-            Text(
-                text = message["text"].toString(),
-                color = if (message["senderId"] == otherUserId) Color.Blue else Color.Black
-            )
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = if (message["senderId"] == FirebaseAuth.getInstance().currentUser?.uid) Alignment.CenterEnd else Alignment.CenterStart
+            ) {
+                Text(
+                    text = message["text"].toString(),
+                    color = if (message["senderId"] == otherUserId) Color.Blue else Color.Black,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .background(
+                            color = if (message["senderId"] == otherUserId) Color.LightGray else Color.Cyan,
+                            shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+                        )
+                        .padding(horizontal = 12.dp, vertical = 8.dp)
+                )
+            }
         }
     }
 }
+
 
 /**
  * Displays the input field and send button for messages.
