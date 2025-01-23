@@ -64,7 +64,7 @@ This documentation provides in-depth details on the structure, functions, and cl
 
 ## 📲 Download
 
-- Get the app here: [**Download RideSharingHC_App**](https://github.com/Hanover-CS/HC25-Caio-Montilha-Senior-Project/releases/download/v0.0.1/app-debug.apk.zip)
+- Get the app here: [**Download RideSharingHC_App**](https://github.com/Hanover-CS/HC25-Caio-Montilha-Senior-Project/releases/download/v0.0.2/app-debug.apk)
 
 Or scan the **QR Code** below to download directly:
 
