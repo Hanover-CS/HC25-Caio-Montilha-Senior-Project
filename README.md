@@ -42,7 +42,7 @@ Explore each document to understand the vision, architecture, and functionalitie
 
 Below is a diagram illustrating the data flow of RideSharingHC. This visualization shows the interaction between the app's major components and how data moves through the system, providing insight into the technical framework and operational logic of my app:
 
-<img src="docs/images/dataflowdiagram.png" alt="Data Flow Diagram" width="500">
+<img src="docs/images/dataflowdiagram.png" alt="Data Flow Diagram" width="700">
 
 The diagram highlights the use of Firebase for authentication, data storage, and real-time database management, as well as the Google Maps API for accurate location services and route planning. These technologies ensure a seamless and efficient user experience.
 
