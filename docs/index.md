@@ -6,7 +6,7 @@ Welcome to my RideSharingHC app, an innovative solution aimed at providing a sec
 
 ## 🚗 **Project Overview**
 
-RideSharingHC is designed to facilitate ride-sharing for students. By focusing on security, ease of use, and community integration. The key features include secure sign-up and login process, with user verification tied to college credentials. A rating and review system, and in-app communication between users. Also, integration with Google Maps for real-time navigation.
+RideSharingHC is designed to facilitate ride-sharing for students. By focusing on security, ease of use, and community integration. The key features include secure sign-up and login process, with user verification tied to college credentials. In-app communication between users. Also, integration with Google Maps for real-time navigation.
 
 ---
 
@@ -47,8 +47,8 @@ RideSharingHC is designed to facilitate ride-sharing for students. By focusing o
 
 - **Phase 1:** Research and proposal development (Completed)
 - **Phase 2:** Initial app development and feature implementation (Completed)
-- **Phase 3:** Testing, feedback, and iterations (Ongoing)
-- **Phase 4:** Final presentation (Upcoming)
+- **Phase 3:** Testing, feedback, and iterations (Completed)
+- **Phase 4:** Final presentation Demo Day (Upcoming)
 
 ---
 
